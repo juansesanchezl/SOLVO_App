@@ -44,7 +44,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener, AW
 
     @Override
     public void onSignInSuccess() {
-        Login.this.startActivity(new Intent(Login.this, MenuPrincipal.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+            Login.this.startActivity(new Intent(Login.this, MenuPrincipal.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
     }
 
     @Override

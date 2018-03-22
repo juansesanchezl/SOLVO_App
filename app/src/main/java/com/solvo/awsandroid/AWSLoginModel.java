@@ -92,6 +92,7 @@ public class AWSLoginModel {
         @Override
         public void authenticationChallenge(ChallengeContinuation continuation) {
             // Not implemented for this Model
+
         }
 
         @Override
@@ -99,6 +100,7 @@ public class AWSLoginModel {
             mCallback.onFailure(PROCESS_SIGN_IN, exception);
         }
     };
+
 
 
     /**
@@ -124,6 +126,8 @@ public class AWSLoginModel {
 
         mCallback = callback;
     }
+
+
 
 
     /**
