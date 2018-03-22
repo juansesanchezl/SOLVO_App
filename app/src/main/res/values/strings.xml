@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">SOLVO</string>
+    <string name="usernam">pepe123</string>
+    <string name="correoe">pepe123@gmail.com</string>
+    <string name="pass">*******</string>
+    <string name="numTel">+573103186693</string>
+    <string name="confNum">000000</string>
+    <string name="title_activity_menu_prin">MenuPrin</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+</resources>
