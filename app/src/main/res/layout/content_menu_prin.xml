@@ -10,15 +10,95 @@
 
     <TextView
         android:id="@+id/TituloE"
-        android:layout_width="147dp"
+        android:layout_width="243dp"
         android:layout_height="44dp"
-        android:layout_marginBottom="205dp"
-        android:layout_marginEnd="86dp"
-        android:layout_marginStart="87dp"
-        android:layout_marginTop="203dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="7dp"
+        android:layout_marginEnd="38dp"
+        android:layout_marginStart="39dp"
+        android:layout_marginTop="28dp"
+        android:fontFamily="sans-serif-condensed"
+        android:text="Bienvenido Chucho !"
+        android:textAlignment="center"
+        android:textColor="@android:color/background_dark"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="344dp"
+        android:layout_marginBottom="29dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="7dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TituloE">
+
+        <Button
+            android:id="@+id/btnRestaurante"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#ffb400"
+            android:drawableLeft="@drawable/ic_restaurant_black_24dp"
+            android:text=" Restaurante"
+            tools:layout_editor_absoluteX="39dp"
+            tools:layout_editor_absoluteY="104dp" />
+
+        <Button
+            android:id="@+id/btnParqueadero"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#00aeef"
+            android:drawableLeft="@drawable/ic_local_parking_black_24dp"
+            android:text=" Parqueadero"
+            tools:layout_editor_absoluteX="191dp"
+            tools:layout_editor_absoluteY="104dp" />
+
+        <Button
+            android:id="@+id/btnAlojamiento"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#2fbdb9"
+            android:drawableLeft="@drawable/ic_local_hotel_black_24dp"
+            android:text=" Alojamiento"
+            tools:layout_editor_absoluteX="39dp"
+            tools:layout_editor_absoluteY="202dp" />
+
+        <Button
+            android:id="@+id/btnEstServicio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#f15555"
+            android:drawableLeft="@drawable/ic_local_gas_station_black_24dp"
+            android:text=" Estación de Servicio"
+            tools:layout_editor_absoluteX="191dp"
+            tools:layout_editor_absoluteY="202dp" />
+
+        <Button
+            android:id="@+id/btnPeaje"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#8cd867"
+            android:drawableLeft="@drawable/ic_monetization_on_black_24dp"
+            android:text=" Peaje"
+            tools:layout_editor_absoluteX="39dp"
+            tools:layout_editor_absoluteY="302dp" />
+
+        <Button
+            android:id="@+id/btnTaller"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#ed7d3a"
+            android:drawableLeft="@drawable/ic_build_black_24dp"
+            android:text=" Taller"
+            tools:layout_editor_absoluteX="191dp"
+            tools:layout_editor_absoluteY="302dp" />
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

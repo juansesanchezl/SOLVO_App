@@ -130,7 +130,7 @@ public class MenuPrincipal extends AppCompatActivity
         navUsername.setText(who);
         navMail.setText(mail);
 
-        hello.setText("Hello " + who + "!");
+        hello.setText("Bienvenido " + who + "!");
 
     }
 
