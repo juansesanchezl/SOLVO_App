@@ -1,9 +1,7 @@
 package com.example.solvo.solvo;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -15,23 +13,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.amazonaws.auth.AWSCognitoIdentityProvider;
 import com.amazonaws.mobile.auth.core.IdentityManager;
 import com.amazonaws.mobile.auth.core.StartupAuthResult;
 import com.amazonaws.mobile.auth.core.StartupAuthResultHandler;
 import com.amazonaws.mobile.client.AWSMobileClient;
 import com.amazonaws.mobile.client.AWSStartupHandler;
 import com.amazonaws.mobile.client.AWSStartupResult;
-import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUser;
 import com.solvo.awsandroid.AWSLoginModel;
-import com.solvo.awsandroid.AWSRegistryHandler;
 
 public class MenuPrincipal extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    AWSLoginModel awsLoginModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +57,14 @@ public class MenuPrincipal extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         //BUTTONS
+        Button btnRestaurante = (Button) findViewById(R.id.btnRestaurante);
+        btnRestaurante.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MenuPrincipal.this.startActivity(new Intent(MenuPrincipal.this, Restaurante.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+
+            }
+        });
 
         /*
         Button b = (Button) findViewById(R.id.button);
@@ -162,23 +168,24 @@ public class MenuPrincipal extends AppCompatActivity
 
     private void cerrarSesionAction(){
         System.out.println("VA A CERRAR SESIÓN");
-        MenuPrincipal.this.finish();
-        AWSLoginModel.getCognitoU().signOut();
-        /*AWSMobileClient.getInstance().initialize(MenuPrincipal.this, new AWSStartupHandler() {
+        //MenuPrincipal.this.finish();
+        //AWSLoginModel.getCognitoU().signOut();
+
+
+
+        AWSMobileClient.getInstance().initialize(MenuPrincipal.this, new AWSStartupHandler() {
             @Override
             public void onComplete(AWSStartupResult awsStartupResult) {
                 IdentityManager identityManager = IdentityManager.getDefaultIdentityManager();
                 try{
-
-
+                    MenuPrincipal.this.finish();
                     identityManager.signOut();
-
 
                 }catch (NullPointerException n){
                     System.out.println("EXP-Null: "+n.getStackTrace());
                 }
             }
-        }).execute();*/
+        }).execute();
 
         MenuPrincipal.this.startActivity(new Intent(MenuPrincipal.this, PagPrincipal.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
 
