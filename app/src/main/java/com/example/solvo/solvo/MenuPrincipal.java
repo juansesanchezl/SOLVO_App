@@ -54,6 +54,29 @@ public class MenuPrincipal extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        //BUTTONS
+
+        /*
+        Button b = (Button) findViewById(R.id.button);
+        b.setText("start");
+        b.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Button b = (Button) v;
+                if (b.getText().equals("stop")) {
+                    timerHandler.removeCallbacks(timerRunnable);
+                    b.setText("start");
+                } else {
+                    startTime = System.currentTimeMillis();
+                    timerHandler.postDelayed(timerRunnable, 0);
+                    b.setText("stop");
+                }
+            }
+        });
+        */
+
     }
 
     @Override
@@ -141,7 +164,13 @@ public class MenuPrincipal extends AppCompatActivity
             @Override
             public void onComplete(AWSStartupResult awsStartupResult) {
                 IdentityManager identityManager = IdentityManager.getDefaultIdentityManager();
-                identityManager.signOut();
+                try{
+                    MenuPrincipal.this.finish();
+                    identityManager.signOut();
+
+                }catch (NullPointerException n){
+                    System.out.println("EXP-Null: "+n.getStackTrace());
+                }
             }
         }).execute();
 
