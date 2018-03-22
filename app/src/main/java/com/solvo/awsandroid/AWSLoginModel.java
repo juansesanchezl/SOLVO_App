@@ -47,7 +47,9 @@ public class AWSLoginModel {
     private String userName, userPassword;
     private Context mContext;
     private CognitoUserPool mCognitoUserPool;
-    private CognitoUser mCognitoUser;
+    private static CognitoUser mCognitoUser;
+
+
 
     private final AuthenticationHandler authenticationHandler = new AuthenticationHandler() {
         @Override
@@ -212,6 +214,9 @@ public class AWSLoginModel {
         return savedValues.getString(PREFERENCE_USER_NAME, "");
     }
 
+    public static CognitoUser getCognitoU (){
+        return mCognitoUser;
+    }
     /**
      * Gets the user e-mail saved in SharedPreferences.
      *

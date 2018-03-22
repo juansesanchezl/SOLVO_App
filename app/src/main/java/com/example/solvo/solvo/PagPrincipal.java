@@ -18,28 +18,24 @@ public class PagPrincipal extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pag_principal);
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                //Do something after 100ms
-            }
-        }, 3000);
         try{
             AWSMobileClient.getInstance().initialize(PagPrincipal.this, new AWSStartupHandler() {
                 @Override
                 public void onComplete(AWSStartupResult awsStartupResult) {
+
                     IdentityManager identityManager = IdentityManager.getDefaultIdentityManager();
+                    System.out.println("ANTES****");
                     identityManager.resumeSession(PagPrincipal.this, new StartupAuthResultHandler() {
                         @Override
                         public void onComplete(StartupAuthResult authResults) {
                             if (authResults.isUserSignedIn()) {
+                                System.out.println("DESPUES****");
                                 startActivity(new Intent(PagPrincipal.this, MenuPrincipal.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                             } else {
                                 startActivity(new Intent(PagPrincipal.this, Login.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                             }
                         }
-                    }, 3000);
+                    }, 5000);
                 }
             }).execute();
         }catch (NullPointerException n){
