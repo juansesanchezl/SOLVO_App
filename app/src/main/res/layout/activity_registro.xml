@@ -20,18 +20,57 @@
             android:layout_height="wrap_content"
             android:layout_margin="25dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_span="3"
-                android:text="Register Section" />
+            <TableRow
+                android:id="@+id/TRNombre"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <TableRow>
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nombre:" />
+
+                <EditText
+                    android:id="@+id/NombreU"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Pepe Cadena"
+                    android:inputType="textPersonName"
+                    android:textSize="12sp" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/TRNumero"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Número:" />
+
+                <EditText
+                    android:id="@+id/phoneU"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/numTel"
+                    android:inputType="textPersonName"
+                    android:textSize="12sp" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/TRUsuario"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Username:" />
+                    android:text="Usuario:" />
 
                 <EditText
                     android:id="@+id/registerUsername"
@@ -40,16 +79,80 @@
                     android:ems="10"
                     android:hint="@string/usernam"
                     android:inputType="text"
-                    android:lines="1" />
+                    android:lines="1"
+                    android:textSize="12sp" />
 
             </TableRow>
 
-            <TableRow>
+            <TableRow
+                android:id="@+id/TRFechaNac"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Fecha Nacimiento:" />
+
+                <EditText
+                    android:id="@+id/FechaNacU"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="YYYY-MM-DD"
+                    android:inputType="textPersonName"
+                    android:textSize="12sp" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/TRGen"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Género:" />
+
+                <EditText
+                    android:id="@+id/GenU"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="M/F"
+                    android:inputType="textPersonName"
+                    android:textSize="12sp" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/TRCiudad"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ciudad:" />
+
+                <EditText
+                    android:id="@+id/CiudadU"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Bogotá"
+                    android:inputType="textPersonName"
+                    android:textSize="12sp" />
+            </TableRow>
+
+            <TableRow android:id="@+id/TREmail">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="E-mail:" />
+                    android:text="Correo E:" />
 
                 <EditText
                     android:id="@+id/registerEmail"
@@ -57,16 +160,17 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/correoe"
                     android:inputType="textWebEmailAddress"
-                    android:lines="1" />
+                    android:lines="1"
+                    android:textSize="12sp" />
 
             </TableRow>
 
-            <TableRow>
+            <TableRow android:id="@+id/TRPass">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Password:" />
+                    android:text="Contraseña:" />
 
                 <EditText
                     android:id="@+id/registerPassword"
@@ -74,42 +178,31 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/pass"
                     android:inputType="textPassword"
-                    android:lines="1" />
+                    android:lines="1"
+                    android:textSize="12sp" />
 
             </TableRow>
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Phone:" />
-
-                <EditText
-                    android:id="@+id/phoneU"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="@string/numTel"
-                    android:inputType="textPersonName" />
-            </TableRow>
 
             <Button
                 android:id="@+id/registerButton"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Register" />
+                android:layout_height="36dp"
+                android:text="Register"
+                android:textSize="12sp" />
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
             <TableRow>
 
                 <Button
                     android:id="@+id/confirmButton"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="confirm" />
+                    android:layout_height="32dp"
+                    android:text="confirm"
+                    android:textSize="12sp" />
 
                 <EditText
                     android:id="@+id/confirmationCode"
@@ -122,8 +215,9 @@
             <Button
                 android:id="@+id/continuarButton"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Iniciar Sesión" />
+                android:layout_height="32dp"
+                android:text="Iniciar Sesión"
+                android:textSize="11sp" />
 
 
         </TableLayout>

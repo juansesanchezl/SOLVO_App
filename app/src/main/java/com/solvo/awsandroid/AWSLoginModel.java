@@ -37,7 +37,6 @@ public class AWSLoginModel {
     private final String ATTR_GENERO = "gender";
     private final String ATTR_CIUDAD = "locale";
     private final String ATTR_NOMBRE = "name";
-    //private final String ATTR_NUMCELULAR = "NumCelular";
     private static final String SHARED_PREFERENCE = "SavedValues";
     private static final String PREFERENCE_USER_NAME = "awsUserName";
     private static final String PREFERENCE_USER_EMAIL = "awsUserEmail";
@@ -145,15 +144,16 @@ public class AWSLoginModel {
      * @param userPassword     REQUIRED: Password of this new account.
      *
      */
-    public void registerUser(String userName, String userEmail, String userPassword, String phone) {
+    public void registerUser(String userName, String userEmail, String userPassword, String phone,String nombreU, String fechaNacU,
+                             String ciudadU, String genU) {
         CognitoUserAttributes userAttributes = new CognitoUserAttributes();
         userAttributes.addAttribute(ATTR_EMAIL, userEmail);
         userAttributes.addAttribute(ATTR_PHONE, phone);
-        userAttributes.addAttribute(ATTR_NOMBRE,"Juan Sebastián");
-        userAttributes.addAttribute(ATTR_FECHANAC, "1993-11-22");
-        userAttributes.addAttribute(ATTR_CIUDAD,"Colombia/Bogotá");
-        userAttributes.addAttribute(ATTR_GENERO,"male");
-        //userAttributes.addAttribute(ATTR_NUMCELULAR,phone);
+        userAttributes.addAttribute(ATTR_NOMBRE,nombreU);
+        userAttributes.addAttribute(ATTR_FECHANAC, fechaNacU);
+        userAttributes.addAttribute(ATTR_CIUDAD,ciudadU);
+        userAttributes.addAttribute(ATTR_GENERO,genU);
+
 
         final SignUpHandler signUpHandler = new SignUpHandler() {
             @Override

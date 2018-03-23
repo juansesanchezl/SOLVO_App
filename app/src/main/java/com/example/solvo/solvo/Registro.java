@@ -87,13 +87,20 @@ public class Registro extends AppCompatActivity implements View.OnClickListener,
     }
 
     private void registerAction() {
+        EditText nombreU = findViewById(R.id.NombreU);
+        EditText phone = findViewById(R.id.phoneU);
         EditText userName = findViewById(R.id.registerUsername);
+        EditText fechaNac = findViewById(R.id.FechaNacU);
+        EditText genU = findViewById(R.id.GenU);
+        EditText ciudadU = findViewById(R.id.CiudadU);
         EditText email = findViewById(R.id.registerEmail);
         EditText password = findViewById(R.id.registerPassword);
-        EditText phone = findViewById(R.id.phoneU);
+
 
         // do register and handles on interface
-        awsLoginModel.registerUser(userName.getText().toString(), email.getText().toString(), password.getText().toString(),phone.getText().toString());
+        
+        awsLoginModel.registerUser(userName.getText().toString(), email.getText().toString(), password.getText().toString(),phone.getText().toString(),nombreU.getText().toString(),
+                fechaNac.getText().toString(),ciudadU.getText().toString(),genU.getText().toString());
     }
 
     private void confirmAction() {

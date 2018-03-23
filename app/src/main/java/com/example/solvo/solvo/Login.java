@@ -84,6 +84,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener, AW
         EditText userOrEmail = findViewById(R.id.loginUserOrEmail);
         EditText password = findViewById(R.id.loginPassword);
 
+
         if(userOrEmail.getText().toString().equals("") && password.getText().toString().equals("")) {
             // do sign in and handles on interface
             Toast.makeText(getApplicationContext(),
