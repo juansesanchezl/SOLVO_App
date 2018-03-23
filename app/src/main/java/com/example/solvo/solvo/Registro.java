@@ -98,7 +98,7 @@ public class Registro extends AppCompatActivity implements View.OnClickListener,
 
 
         // do register and handles on interface
-        
+
         awsLoginModel.registerUser(userName.getText().toString(), email.getText().toString(), password.getText().toString(),phone.getText().toString(),nombreU.getText().toString(),
                 fechaNac.getText().toString(),ciudadU.getText().toString(),genU.getText().toString());
     }

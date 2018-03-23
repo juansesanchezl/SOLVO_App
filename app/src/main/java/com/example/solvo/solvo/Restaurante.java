@@ -1,7 +1,15 @@
 package com.example.solvo.solvo;
 
+import android.Manifest;
+
+import android.content.pm.PackageManager;
+
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+
+
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -9,6 +17,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
 
 public class Restaurante extends FragmentActivity implements OnMapReadyCallback {
 
@@ -18,12 +27,37 @@ public class Restaurante extends FragmentActivity implements OnMapReadyCallback 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurante);
+        permisosLocalizacion();
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+
     }
 
+    public void permisosLocalizacion(){
+
+
+        if (ContextCompat.checkSelfPermission(Restaurante.this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(Restaurante.this,
+                    Manifest.permission.ACCESS_FINE_LOCATION)) {
+                mMap.setMyLocationEnabled(true);
+
+
+            } else {
+
+
+                ActivityCompat.requestPermissions(Restaurante.this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},1);
+
+            }
+        }
+    }
 
     /**
      * Manipulates the map once available.
@@ -39,8 +73,33 @@ public class Restaurante extends FragmentActivity implements OnMapReadyCallback 
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(4.624335, -74.063644);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("BOGOTA"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        LatLng bogota = new LatLng(4.624335, -74.063644);
+
+        addMarkerMap(4.630474, -74.066813, "SUBWAY");
+        addMarkerMap(4.633597, -74.068273, "POPEYE");
+        addMarkerMap(4.631736, -74.064067, "DOMINO'S PIZZA");
+        addMarkerMap(4.624335, -74.063644, "BOGOTÁ");
+
+
+
+
+
     }
+
+    public void addMarkerMap (double Lat, double Log, String Titulo){
+
+        LatLng latLng = new LatLng(Lat,Log);
+        mMap.addMarker(new MarkerOptions().position(latLng).title(Titulo));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14));
+        /*mMap.addMarker(new MarkerOptions()
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_location_on_black_24dp))
+                .anchor(0.0f, 1.0f) // Anchors the marker on the bottom left
+                .position(new LatLng(latLng.latitude, latLng.longitude)));*/
+
+
+    }
+
+
+
 }

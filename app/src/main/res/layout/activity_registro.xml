@@ -208,14 +208,15 @@
                     android:id="@+id/confirmationCode"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="@string/confNum" />
+                    android:hint="@string/confNum"
+                    android:textSize="12sp" />
 
             </TableRow>
 
             <Button
                 android:id="@+id/continuarButton"
                 android:layout_width="wrap_content"
-                android:layout_height="32dp"
+                android:layout_height="35dp"
                 android:text="Iniciar Sesión"
                 android:textSize="11sp" />
 
