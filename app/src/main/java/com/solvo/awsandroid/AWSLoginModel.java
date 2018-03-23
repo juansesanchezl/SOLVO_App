@@ -33,6 +33,11 @@ public class AWSLoginModel {
     // constants
     private final String ATTR_EMAIL = "email";
     private final String ATTR_PHONE = "phone_number";
+    private final String ATTR_FECHANAC = "birthdate";
+    private final String ATTR_GENERO = "gender";
+    private final String ATTR_CIUDAD = "locale";
+    private final String ATTR_NOMBRE = "name";
+    //private final String ATTR_NUMCELULAR = "NumCelular";
     private static final String SHARED_PREFERENCE = "SavedValues";
     private static final String PREFERENCE_USER_NAME = "awsUserName";
     private static final String PREFERENCE_USER_EMAIL = "awsUserEmail";
@@ -144,6 +149,11 @@ public class AWSLoginModel {
         CognitoUserAttributes userAttributes = new CognitoUserAttributes();
         userAttributes.addAttribute(ATTR_EMAIL, userEmail);
         userAttributes.addAttribute(ATTR_PHONE, phone);
+        userAttributes.addAttribute(ATTR_NOMBRE,"Juan Sebastián");
+        userAttributes.addAttribute(ATTR_FECHANAC, "1993-11-22");
+        userAttributes.addAttribute(ATTR_CIUDAD,"Colombia/Bogotá");
+        userAttributes.addAttribute(ATTR_GENERO,"male");
+        //userAttributes.addAttribute(ATTR_NUMCELULAR,phone);
 
         final SignUpHandler signUpHandler = new SignUpHandler() {
             @Override

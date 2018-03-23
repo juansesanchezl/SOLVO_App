@@ -39,8 +39,8 @@ public class Restaurante extends FragmentActivity implements OnMapReadyCallback 
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        LatLng sydney = new LatLng(4.624335, -74.063644);
+        mMap.addMarker(new MarkerOptions().position(sydney).title("BOGOTA"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
 }
