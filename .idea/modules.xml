@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://C:\Users\Trabajo\Documents\Proyectos_Android\SOLVO_App\SOLVO.iml" filepath="C:\Users\Trabajo\Documents\Proyectos_Android\SOLVO_App\SOLVO.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SOLVO.iml" filepath="$PROJECT_DIR$/SOLVO.iml" />
       <module fileurl="file://$PROJECT_DIR$/SOLVO_App.iml" filepath="$PROJECT_DIR$/SOLVO_App.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>

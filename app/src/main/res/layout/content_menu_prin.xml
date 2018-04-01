@@ -29,11 +29,11 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="344dp"
+        android:layout_height="390dp"
         android:layout_marginBottom="29dp"
         android:layout_marginEnd="30dp"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="7dp"
+        android:layout_marginTop="12dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -43,60 +43,60 @@
         <Button
             android:id="@+id/btnRestaurante"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="64dp"
             android:backgroundTint="#ffb400"
             android:drawableLeft="@drawable/ic_restaurant_black_24dp"
-            android:text=" Restaurante"
+            android:text=" Restaurantes"
             tools:layout_editor_absoluteX="39dp"
             tools:layout_editor_absoluteY="104dp" />
 
         <Button
             android:id="@+id/btnParqueadero"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="64dp"
             android:backgroundTint="#00aeef"
             android:drawableLeft="@drawable/ic_local_parking_black_24dp"
-            android:text=" Parqueadero"
+            android:text=" Parqueaderos"
             tools:layout_editor_absoluteX="191dp"
             tools:layout_editor_absoluteY="104dp" />
 
         <Button
             android:id="@+id/btnAlojamiento"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#2fbdb9"
+            android:layout_height="64dp"
+            android:backgroundTint="#f15555"
             android:drawableLeft="@drawable/ic_local_hotel_black_24dp"
-            android:text=" Alojamiento"
+            android:text=" Alojamientos"
             tools:layout_editor_absoluteX="39dp"
             tools:layout_editor_absoluteY="202dp" />
 
         <Button
             android:id="@+id/btnEstServicio"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#f15555"
+            android:layout_height="64dp"
+            android:backgroundTint="#2fbdb9"
             android:drawableLeft="@drawable/ic_local_gas_station_black_24dp"
-            android:text=" Estación de Servicio"
+            android:text=" Estaciones de Servicio"
             tools:layout_editor_absoluteX="191dp"
             tools:layout_editor_absoluteY="202dp" />
 
         <Button
             android:id="@+id/btnPeaje"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="64dp"
             android:backgroundTint="#8cd867"
             android:drawableLeft="@drawable/ic_monetization_on_black_24dp"
-            android:text=" Peaje"
+            android:text=" Peajes"
             tools:layout_editor_absoluteX="39dp"
             tools:layout_editor_absoluteY="302dp" />
 
         <Button
             android:id="@+id/btnTaller"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="64dp"
             android:backgroundTint="#ed7d3a"
             android:drawableLeft="@drawable/ic_build_black_24dp"
-            android:text=" Taller"
+            android:text=" Talleres"
             tools:layout_editor_absoluteX="191dp"
             tools:layout_editor_absoluteY="302dp" />
     </LinearLayout>

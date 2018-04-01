@@ -53,6 +53,9 @@ public class Restaurante extends FragmentActivity implements
     private Location lastLocation;
     private Marker currentLocationMarker;
     public static final int REQUEST_LOCATION_CODE = 99;
+    int PROXIMITY_RADIUS = 10000;
+    double latitude, longitude;
+    String API_PLACES_KEY = "AIzaSyCdzg_lWvwmqIAFkB2mNL-yqyIsJ99o8GI";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,7 +153,79 @@ public class Restaurante extends FragmentActivity implements
     }
 
     public void onClick(View view){
-        if(view.getId() == R.id.btnBusq){
+
+        Object dataTransfer[] = new Object[2];
+        String url = "";
+        GetNearByPlacesData getNearByPlacesData;
+
+        if(view.getId() == R.id.btnBusq) {
+            EditText locDestino = this.findViewById(R.id.TextBusqu);
+            String location = locDestino.getText().toString();
+            List<Address> addressList = null;
+            MarkerOptions mo = new MarkerOptions();
+            if (!location.equals("")) {
+                Geocoder geocoder = new Geocoder(this);
+                try {
+                    addressList = geocoder.getFromLocationName(location, 5);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                for (int i = 0; i < addressList.size(); ++i) {
+                    Address miDireccion = addressList.get(i);
+                    LatLng latLng = new LatLng(miDireccion.getLatitude(), miDireccion.getLongitude());
+                    mo.position(latLng);
+                    mo.title("Tu búsqueda");
+                    mMap.addMarker(mo);
+                    mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+                }
+
+            }
+        }else if(view.getId() == R.id.btnRest) {
+
+
+            System.out.println("RESTAURANTES");
+            mMap.clear();
+            String restaurante = "restaurant";
+            url = getUrl(latitude, longitude, restaurante);
+
+            dataTransfer[0] = mMap;
+            dataTransfer[1] = url;
+            getNearByPlacesData = new GetNearByPlacesData();
+            getNearByPlacesData.execute(dataTransfer);
+
+            Toast.makeText(Restaurante.this, "Mostrando Restaurantes Cercanos", Toast.LENGTH_LONG).show();
+
+        }else if(view.getId() == R.id.btnPark) {
+
+            System.out.println("PARQUEADEROS");
+            mMap.clear();
+            String parking = "parking";
+            url = getUrl(latitude, longitude, parking);
+
+            dataTransfer[0] = mMap;
+            dataTransfer[1] = url;
+            getNearByPlacesData = new GetNearByPlacesData();
+            getNearByPlacesData.execute(dataTransfer);
+            Toast.makeText(Restaurante.this, "Mostrando Parqueaderos Cercanos", Toast.LENGTH_LONG).show();
+
+
+        }else if(view.getId() == R.id.btnEstSer) {
+
+            System.out.println("ESTACIONES-DE-SERVICIO");
+            mMap.clear();
+            String EstServicio = "gas_station";
+            url = getUrl(latitude, longitude, EstServicio);
+
+            dataTransfer[0] = mMap;
+            dataTransfer[1] = url;
+            getNearByPlacesData = new GetNearByPlacesData();
+            getNearByPlacesData.execute(dataTransfer);
+            Toast.makeText(Restaurante.this, "Mostrando Estaciones de Servicio Cercanos", Toast.LENGTH_LONG).show();
+        }
+
+
+        /*if(view.getId() == R.id.btnBusq){
             EditText locDestino = this.findViewById(R.id.TextBusqu);
             String location = locDestino.getText().toString();
             List<Address> addressList = null;
@@ -173,7 +248,27 @@ public class Restaurante extends FragmentActivity implements
                 }
 
             }
+        }*/
+    }
+
+    private String getUrl(double latitude, double longitude, String nearbyPlace){
+
+        if(latitude == 0.0 && longitude == 0.0){
+            checkLocationPermission();
         }
+        StringBuilder googlePlaceUrl = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
+        googlePlaceUrl.append("location="+latitude+","+longitude);
+        googlePlaceUrl.append("&radius="+PROXIMITY_RADIUS);
+        googlePlaceUrl.append("&types="+nearbyPlace);
+        googlePlaceUrl.append("&sensor=true");
+        //googlePlaceUrl.append("&sensor=true");
+        googlePlaceUrl.append("&key="+API_PLACES_KEY);
+        System.out.println("URL->"+googlePlaceUrl.toString());
+        StringBuilder googlePlaceUrl2 = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=500&type=restaurant");
+        googlePlaceUrl2.append("&key="+API_PLACES_KEY);
+        System.out.println("URL2->"+googlePlaceUrl2.toString());
+        return googlePlaceUrl.toString();
+        //return googlePlaceUrl2.toString();
     }
 
     @Override
@@ -192,6 +287,8 @@ public class Restaurante extends FragmentActivity implements
         //Mover la camara al haber un cambio de localización y hacerle un zoom x10
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         mMap.animateCamera(CameraUpdateFactory.zoomBy(10));
+        latitude = location.getLatitude();
+        longitude = location.getLongitude();
 
         if(googleApiClient != null){
             LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient,this);
