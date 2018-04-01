@@ -264,9 +264,9 @@ public class Restaurante extends FragmentActivity implements
         //googlePlaceUrl.append("&sensor=true");
         googlePlaceUrl.append("&key="+API_PLACES_KEY);
         System.out.println("URL->"+googlePlaceUrl.toString());
-        StringBuilder googlePlaceUrl2 = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=500&type=restaurant");
+        /*StringBuilder googlePlaceUrl2 = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=500&type=restaurant");
         googlePlaceUrl2.append("&key="+API_PLACES_KEY);
-        System.out.println("URL2->"+googlePlaceUrl2.toString());
+        System.out.println("URL2->"+googlePlaceUrl2.toString());*/
         return googlePlaceUrl.toString();
         //return googlePlaceUrl2.toString();
     }

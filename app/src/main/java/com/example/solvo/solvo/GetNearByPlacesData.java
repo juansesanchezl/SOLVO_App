@@ -2,6 +2,8 @@ package com.example.solvo.solvo;
 
 import android.os.AsyncTask;
 
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -48,19 +50,62 @@ public class GetNearByPlacesData extends AsyncTask<Object,String,String> {
 
     private void showNearbyPlaces(List<HashMap<String,String>> nearbyPlaceList){
         System.out.println("Cantidad:"+nearbyPlaceList.size());
+        System.out.println("INFORMACION TOTAL:");
+        for(int j=0; j<nearbyPlaceList.size(); ++j ){
+
+            HashMap<String,String> hashMap = nearbyPlaceList.get(j);
+            for (String name: hashMap.keySet()){
+
+                String key =name.toString();
+                String value = hashMap.get(name).toString();
+                System.out.println("<"+key+">" + "-> " + value);
+
+
+            }
+        }
 
         for (int i = 0; i < nearbyPlaceList.size(); ++i) {
+            /*
+            NOMBRE:  place_name
+            DIRECCIÓN: vicinity y/o formatted_address
+            LATITUD: lat
+            LONGITUD: lng
+            NIVEL DE PRECIO: price_level (0: gratis,1: barato,2: moderado,3: caro,4: muy caro)
+            CALIFICACIÓN: rating
+            DISPONIBILIDAD: open_now
+
+
+
+            */
             MarkerOptions markerOptions = new MarkerOptions();
             HashMap<String,String> googlePlace =  nearbyPlaceList.get(i);
 
-            String placeName = googlePlace.get("place_name");
-            String vicinity = googlePlace.get("vicinity");
+
+            int nivel_precio = 0;
+            int disponibilidad = 2;
+            double calificacion = 0.0;
+            String id_lugar = googlePlace.get("place_id");
+            String nombre_estbl = googlePlace.get("place_name");
+            String direccion = googlePlace.get("vicinity");
+            if(!googlePlace.get("price_level").isEmpty()) {
+                nivel_precio = Integer.parseInt(googlePlace.get("price_level"));
+            }
+            if(!googlePlace.get("rating").isEmpty()) {
+                calificacion = Double.parseDouble(googlePlace.get("rating"));
+            }
+            if((Boolean.parseBoolean(googlePlace.get("open_now")))==true){
+                disponibilidad = 1;
+            }else{
+                disponibilidad = 0;
+            }
             double lat = Double.parseDouble(googlePlace.get("lat"));
             double lng = Double.parseDouble(googlePlace.get("lng"));
-            System.out.println("-Nombre:"+placeName+"-Cercania:"+vicinity+"-Latitud:"+lat+"-Longitud:"+lng);
+            System.out.println("-Nombre:"+nombre_estbl+"-Cercania:"+direccion+"-Latitud:"+lat+"-Longitud:"+lng);
+            System.out.println("-ID:"+id_lugar+"-NivelPrecio:"+nivel_precio+"-Calificacion:"+calificacion+"-Disponibilidad"+disponibilidad);
             LatLng latLng = new LatLng(lat,lng);
             markerOptions.position(latLng);
-            markerOptions.title(placeName+" : "+vicinity);
+            markerOptions.title(nombre_estbl+" : "+direccion);
+            markerOptions.snippet("-NivelPrecio:"+nivel_precio+"-Calificacion:"+calificacion+"-Disponibilidad"+disponibilidad);
             markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
             mMap.addMarker(markerOptions);
             mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));

@@ -22,6 +22,10 @@ public class DataParser {
         String latitude = "";
         String longitude = "";
         String reference = "";
+        String id = "";
+        String price_level = "";
+        String rating = "";
+        String open_now = "";
 
         try {
             if(!googlePlaceJSON.isNull("name")) {
@@ -29,10 +33,19 @@ public class DataParser {
             }
             if(!googlePlaceJSON.isNull("vicinity")){
                 vicinity = googlePlaceJSON.getString("vicinity");
-
+            }
+            if(!googlePlaceJSON.isNull("opening_hours")){
+                open_now = googlePlaceJSON.getJSONObject("opening_hours").getString("open_now");
+            }
+            if(!googlePlaceJSON.isNull("price_level")){
+                price_level = googlePlaceJSON.getString("price_level");
+            }
+            if(!googlePlaceJSON.isNull("rating")){
+                rating = googlePlaceJSON.getString("rating");
             }
             latitude = googlePlaceJSON.getJSONObject("geometry").getJSONObject("location").getString("lat");
             longitude = googlePlaceJSON.getJSONObject("geometry").getJSONObject("location").getString("lng");
+            id = googlePlaceJSON.getString("id");
 
             reference = googlePlaceJSON.getString("reference");
             googlePlacesMap.put("place_name",placeName);
@@ -40,6 +53,10 @@ public class DataParser {
             googlePlacesMap.put("lat",latitude);
             googlePlacesMap.put("lng",longitude);
             googlePlacesMap.put("reference",reference);
+            googlePlacesMap.put("place_id",id);
+            googlePlacesMap.put("open_now",open_now);
+            googlePlacesMap.put("price_level",price_level);
+            googlePlacesMap.put("rating",rating);
 
         } catch (JSONException e) {
             e.printStackTrace();
