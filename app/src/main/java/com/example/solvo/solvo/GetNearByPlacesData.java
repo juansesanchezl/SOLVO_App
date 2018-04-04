@@ -81,22 +81,42 @@ public class GetNearByPlacesData extends AsyncTask<Object,String,String> {
             HashMap<String,String> googlePlace =  nearbyPlaceList.get(i);
 
 
-            int nivel_precio = 0;
-            int disponibilidad = 2;
+            int valoracionPrecio = 0;
+            String nivel_precio = "No Disponible";
+            String disponibilidad = "No Disponible";
             double calificacion = 0.0;
             String id_lugar = googlePlace.get("place_id");
             String nombre_estbl = googlePlace.get("place_name");
             String direccion = googlePlace.get("vicinity");
             if(!googlePlace.get("price_level").isEmpty()) {
-                nivel_precio = Integer.parseInt(googlePlace.get("price_level"));
+                valoracionPrecio = Integer.parseInt(googlePlace.get("price_level"));
+                switch (valoracionPrecio){
+                    case 0:
+                        nivel_precio = "Gratis";
+                    break;
+                    case 1:
+                        nivel_precio = "Barato";
+                    break;
+                    case 2:
+                        nivel_precio = "Moderado";
+                    break;
+                    case 3:
+                        nivel_precio = "Costoso";
+                    break;
+                    case 4:
+                        nivel_precio = "Muy Costoso";
+                    break;
+
+                }
+
             }
             if(!googlePlace.get("rating").isEmpty()) {
                 calificacion = Double.parseDouble(googlePlace.get("rating"));
             }
             if((Boolean.parseBoolean(googlePlace.get("open_now")))==true){
-                disponibilidad = 1;
-            }else{
-                disponibilidad = 0;
+                disponibilidad = "Abierto";
+            }else if((Boolean.parseBoolean(googlePlace.get("open_now")))== false){
+                disponibilidad = "Cerrado";
             }
             double lat = Double.parseDouble(googlePlace.get("lat"));
             double lng = Double.parseDouble(googlePlace.get("lng"));
@@ -105,8 +125,12 @@ public class GetNearByPlacesData extends AsyncTask<Object,String,String> {
             LatLng latLng = new LatLng(lat,lng);
             markerOptions.position(latLng);
             markerOptions.title(nombre_estbl+" : "+direccion);
-            markerOptions.snippet("-NivelPrecio:"+nivel_precio+"-Calificacion:"+calificacion+"-Disponibilidad"+disponibilidad);
+            markerOptions.snippet("Precio:"+nivel_precio+", Calif:"+calificacion+", Disp:"+disponibilidad);
             markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+
+            //CustomInfoWindowAdapter adapter = new CustomInfoWindowAdapter();
+            //mMap.setInfoWindowAdapter(adapter);
+
             mMap.addMarker(markerOptions);
             mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
             mMap.animateCamera(CameraUpdateFactory.zoomTo(10));
