@@ -10,6 +10,9 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="360dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         tools:context="com.example.solvo.solvo.Restaurante" />
 
     <LinearLayout
@@ -24,11 +27,11 @@
         <TableRow
             android:id="@+id/TRBuscar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="46dp">
 
             <EditText
                 android:id="@+id/TextBusqu"
-                android:layout_width="284dp"
+                android:layout_width="172dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentLeft="true"
@@ -40,7 +43,7 @@
 
             <Button
                 android:id="@+id/btnBusq"
-                android:layout_width="wrap_content"
+                android:layout_width="144dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true"
@@ -54,8 +57,8 @@
 
         <TableRow
             android:id="@+id/TRBotones"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
             <Button
                 android:id="@+id/btnRest"

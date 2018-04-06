@@ -2,6 +2,8 @@ package com.example.solvo.solvo;
 
 import android.Manifest;
 
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 
 import android.location.Address;
@@ -17,8 +19,10 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -37,6 +41,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -44,6 +49,7 @@ public class Restaurante extends FragmentActivity implements
         OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
+
         LocationListener{
 
     //Objetos
@@ -52,15 +58,18 @@ public class Restaurante extends FragmentActivity implements
     private LocationRequest locationRequest;
     private Location lastLocation;
     private Marker currentLocationMarker;
+    public static Context contexta;
     public static final int REQUEST_LOCATION_CODE = 99;
-    int PROXIMITY_RADIUS = 10000;
+    int PROXIMITY_RADIUS = 1000000;
     double latitude, longitude;
     String API_PLACES_KEY = "AIzaSyCdzg_lWvwmqIAFkB2mNL-yqyIsJ99o8GI";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurante);
+        contexta = getApplicationContext();
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             checkLocationPermission();
@@ -70,9 +79,10 @@ public class Restaurante extends FragmentActivity implements
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+    }
 
-
-
+    public static Context getContext(){
+        return contexta;
     }
 
     @Override
@@ -135,10 +145,6 @@ public class Restaurante extends FragmentActivity implements
         mMap.addMarker(new MarkerOptions().position(latLng).title(Titulo));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14));
-        /*mMap.addMarker(new MarkerOptions()
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_location_on_black_24dp))
-                .anchor(0.0f, 1.0f) // Anchors the marker on the bottom left
-                .position(new LatLng(latLng.latitude, latLng.longitude)));*/
     }
 
     public void permisosLocalizacion() {
@@ -189,6 +195,8 @@ public class Restaurante extends FragmentActivity implements
 
             System.out.println("RESTAURANTES");
             mMap.clear();
+            //String restaurante = "restaurant";
+            //String restaurante = "bakery";
             String restaurante = "restaurant";
             url = getUrl(latitude, longitude, restaurante);
 
@@ -196,8 +204,8 @@ public class Restaurante extends FragmentActivity implements
             dataTransfer[1] = url;
             getNearByPlacesData = new GetNearByPlacesData();
             getNearByPlacesData.execute(dataTransfer);
-
             Toast.makeText(Restaurante.this, "Mostrando Restaurantes Cercanos", Toast.LENGTH_LONG).show();
+            //nearbyPlaceList = getNearByPlacesData.datosLugaresCercanos();
 
         }else if(view.getId() == R.id.btnPark) {
 
@@ -211,6 +219,7 @@ public class Restaurante extends FragmentActivity implements
             getNearByPlacesData = new GetNearByPlacesData();
             getNearByPlacesData.execute(dataTransfer);
             Toast.makeText(Restaurante.this, "Mostrando Parqueaderos Cercanos", Toast.LENGTH_LONG).show();
+            //nearbyPlaceList = getNearByPlacesData.datosLugaresCercanos();
 
 
         }else if(view.getId() == R.id.btnEstSer) {
@@ -225,33 +234,8 @@ public class Restaurante extends FragmentActivity implements
             getNearByPlacesData = new GetNearByPlacesData();
             getNearByPlacesData.execute(dataTransfer);
             Toast.makeText(Restaurante.this, "Mostrando Estaciones de Servicio Cercanos", Toast.LENGTH_LONG).show();
+            //nearbyPlaceList = getNearByPlacesData.datosLugaresCercanos();
         }
-
-
-        /*if(view.getId() == R.id.btnBusq){
-            EditText locDestino = this.findViewById(R.id.TextBusqu);
-            String location = locDestino.getText().toString();
-            List<Address> addressList = null;
-            MarkerOptions mo = new MarkerOptions();
-            if(! location.equals("")){
-                Geocoder geocoder = new Geocoder(this);
-                try {
-                    addressList = geocoder.getFromLocationName(location,5);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                for(int i=0; i<addressList.size();++i){
-                    Address miDireccion = addressList.get(i);
-                    LatLng latLng = new LatLng(miDireccion.getLatitude(),miDireccion.getLongitude());
-                    mo.position(latLng);
-                    mo.title("Tu búsqueda");
-                    mMap.addMarker(mo);
-                    mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-                }
-
-            }
-        }*/
     }
 
     private String getUrl(double latitude, double longitude, String nearbyPlace){
@@ -289,7 +273,7 @@ public class Restaurante extends FragmentActivity implements
         currentLocationMarker = mMap.addMarker(markerOptions);
         //Mover la camara al haber un cambio de localización y hacerle un zoom x10
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.zoomBy(10));
+        mMap.animateCamera(CameraUpdateFactory.zoomBy(14));
         latitude = location.getLatitude();
         longitude = location.getLongitude();
 
@@ -297,6 +281,8 @@ public class Restaurante extends FragmentActivity implements
             LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient,this);
         }
     }
+
+
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
@@ -335,5 +321,8 @@ public class Restaurante extends FragmentActivity implements
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
+
+
+
 
 }

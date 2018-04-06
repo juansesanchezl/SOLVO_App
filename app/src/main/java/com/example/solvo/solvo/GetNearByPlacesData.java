@@ -1,9 +1,9 @@
 package com.example.solvo.solvo;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.AsyncTask;
 
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -23,6 +23,9 @@ public class GetNearByPlacesData extends AsyncTask<Object,String,String> {
     String googlePlacesData;
     GoogleMap mMap;
     String url;
+    List<HashMap<String,String>> nearbyPlaceList = null;
+
+
 
     @Override
     protected String doInBackground(Object... objects) {
@@ -42,7 +45,6 @@ public class GetNearByPlacesData extends AsyncTask<Object,String,String> {
     @Override
     protected void onPostExecute(String s){
         System.out.println("ENTRO A:"+s);
-        List<HashMap<String,String>> nearbyPlaceList = null;
         DataParser parser = new DataParser();
         nearbyPlaceList = parser.parse(s);
         showNearbyPlaces(nearbyPlaceList);
@@ -73,9 +75,6 @@ public class GetNearByPlacesData extends AsyncTask<Object,String,String> {
             NIVEL DE PRECIO: price_level (0: gratis,1: barato,2: moderado,3: caro,4: muy caro)
             CALIFICACIÓN: rating
             DISPONIBILIDAD: open_now
-
-
-
             */
             MarkerOptions markerOptions = new MarkerOptions();
             HashMap<String,String> googlePlace =  nearbyPlaceList.get(i);
@@ -124,18 +123,22 @@ public class GetNearByPlacesData extends AsyncTask<Object,String,String> {
             System.out.println("-ID:"+id_lugar+"-NivelPrecio:"+nivel_precio+"-Calificacion:"+calificacion+"-Disponibilidad"+disponibilidad);
             LatLng latLng = new LatLng(lat,lng);
             markerOptions.position(latLng);
-            markerOptions.title(nombre_estbl+" : "+direccion);
-            markerOptions.snippet("Precio:"+nivel_precio+", Calif:"+calificacion+", Disp:"+disponibilidad);
+            markerOptions.title("-"+nombre_estbl+"-"+direccion);
+            markerOptions.snippet("-"+nivel_precio+"-"+calificacion+"-"+disponibilidad);
             markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
-
-            //CustomInfoWindowAdapter adapter = new CustomInfoWindowAdapter();
-            //mMap.setInfoWindowAdapter(adapter);
-
-            mMap.addMarker(markerOptions);
+            Context context = Restaurante.getContext();
+            //GoogleMap.InfoWindowAdapter windowAdapter = new VentanaInfoMarcador( Restaurante.getContext(),nivel_precio,disponibilidad,calificacion,nombre_estbl,direccion);
+            //mMap.setInfoWindowAdapter(windowAdapter);
+            mMap.addMarker(markerOptions).showInfoWindow();
             mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-            mMap.animateCamera(CameraUpdateFactory.zoomTo(10));
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(16));
 
         }
+
+    }
+
+    public List<HashMap<String,String>> datosLugaresCercanos(){
+        return nearbyPlaceList;
 
     }
 
