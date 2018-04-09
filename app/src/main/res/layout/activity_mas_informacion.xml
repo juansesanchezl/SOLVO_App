@@ -10,10 +10,31 @@
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="84dp"
         android:text="MÁS INFORMACIÓN"
         android:textAlignment="center"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="96dp"
-        tools:layout_editor_absoluteY="42dp" />
+        app:layout_constraintBottom_toTopOf="@+id/ID_Marcador"
+        tools:layout_editor_absoluteX="128dp" />
+
+    <TextView
+        android:id="@+id/ID_Marcador"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="23dp"
+        android:layout_marginTop="83dp"
+        android:text="INFO MARCADOR"
+        app:layout_constraintBottom_toTopOf="@+id/NomMrk"
+        app:layout_constraintTop_toBottomOf="@+id/textView8"
+        tools:layout_editor_absoluteX="138dp" />
+
+    <TextView
+        android:id="@+id/NomMrk"
+        android:layout_width="104dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="32dp"
+        android:text="NOMBRE MRK"
+        app:layout_constraintTop_toBottomOf="@+id/ID_Marcador"
+        tools:layout_editor_absoluteX="140dp" />
 </android.support.constraint.ConstraintLayout>

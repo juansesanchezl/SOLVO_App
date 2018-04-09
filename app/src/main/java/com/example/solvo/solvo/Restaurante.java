@@ -43,13 +43,14 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 
 public class Restaurante extends FragmentActivity implements
         OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-
+        GoogleMap.OnMarkerClickListener,
         LocationListener{
 
     //Objetos
@@ -62,6 +63,7 @@ public class Restaurante extends FragmentActivity implements
     public static final int REQUEST_LOCATION_CODE = 99;
     int PROXIMITY_RADIUS = 1000000;
     double latitude, longitude;
+    public List<HashMap<String,String>> lugarCercano = null;
     String API_PLACES_KEY = "AIzaSyCdzg_lWvwmqIAFkB2mNL-yqyIsJ99o8GI";
 
 
@@ -117,7 +119,7 @@ public class Restaurante extends FragmentActivity implements
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
+        mMap.setOnMarkerClickListener(this);
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
             buildGoogleApiClient();
             mMap.setMyLocationEnabled(true);
@@ -163,9 +165,10 @@ public class Restaurante extends FragmentActivity implements
 
     public void onClick(View view){
 
-        Object dataTransfer[] = new Object[2];
+        Object dataTransfer[] = new Object[3];
         String url = "";
         GetNearByPlacesData getNearByPlacesData;
+        String googlePDRestaurante;
 
         if(view.getId() == R.id.btnBusq) {
             EditText locDestino = this.findViewById(R.id.TextBusqu);
@@ -203,9 +206,22 @@ public class Restaurante extends FragmentActivity implements
             dataTransfer[0] = mMap;
             dataTransfer[1] = url;
             getNearByPlacesData = new GetNearByPlacesData();
-            getNearByPlacesData.execute(dataTransfer);
+            try {
+                googlePDRestaurante = getNearByPlacesData.execute(dataTransfer).get();
+                DataParser parser = new DataParser();
+                lugarCercano = parser.parse(googlePDRestaurante);
+                guardarLugares(lugarCercano);
+
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+            if(lugarCercano == null){
+                System.out.println("Esta Vacio lugarCercano");
+                lugarCercano = getNearByPlacesData.nearbyPlaceList;
+            }
             Toast.makeText(Restaurante.this, "Mostrando Restaurantes Cercanos", Toast.LENGTH_LONG).show();
-            //nearbyPlaceList = getNearByPlacesData.datosLugaresCercanos();
 
         }else if(view.getId() == R.id.btnPark) {
 
@@ -219,7 +235,7 @@ public class Restaurante extends FragmentActivity implements
             getNearByPlacesData = new GetNearByPlacesData();
             getNearByPlacesData.execute(dataTransfer);
             Toast.makeText(Restaurante.this, "Mostrando Parqueaderos Cercanos", Toast.LENGTH_LONG).show();
-            //nearbyPlaceList = getNearByPlacesData.datosLugaresCercanos();
+
 
 
         }else if(view.getId() == R.id.btnEstSer) {
@@ -234,7 +250,7 @@ public class Restaurante extends FragmentActivity implements
             getNearByPlacesData = new GetNearByPlacesData();
             getNearByPlacesData.execute(dataTransfer);
             Toast.makeText(Restaurante.this, "Mostrando Estaciones de Servicio Cercanos", Toast.LENGTH_LONG).show();
-            //nearbyPlaceList = getNearByPlacesData.datosLugaresCercanos();
+
         }
     }
 
@@ -248,14 +264,10 @@ public class Restaurante extends FragmentActivity implements
         googlePlaceUrl.append("&radius="+PROXIMITY_RADIUS);
         googlePlaceUrl.append("&types="+nearbyPlace);
         googlePlaceUrl.append("&sensor=true");
-        //googlePlaceUrl.append("&sensor=true");
         googlePlaceUrl.append("&key="+API_PLACES_KEY);
         System.out.println("URL->"+googlePlaceUrl.toString());
-        /*StringBuilder googlePlaceUrl2 = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=500&type=restaurant");
-        googlePlaceUrl2.append("&key="+API_PLACES_KEY);
-        System.out.println("URL2->"+googlePlaceUrl2.toString());*/
         return googlePlaceUrl.toString();
-        //return googlePlaceUrl2.toString();
+
     }
 
     @Override
@@ -273,7 +285,7 @@ public class Restaurante extends FragmentActivity implements
         currentLocationMarker = mMap.addMarker(markerOptions);
         //Mover la camara al haber un cambio de localización y hacerle un zoom x10
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.zoomBy(14));
+        mMap.animateCamera(CameraUpdateFactory.zoomBy(12));
         latitude = location.getLatitude();
         longitude = location.getLongitude();
 
@@ -281,8 +293,6 @@ public class Restaurante extends FragmentActivity implements
             LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient,this);
         }
     }
-
-
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
@@ -323,6 +333,33 @@ public class Restaurante extends FragmentActivity implements
     }
 
 
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        System.out.println("ENTRO AL MARCADOR CON ID:"+marker.getId());
+        Intent i = new Intent(Restaurante.this,MasInformacion.class);
 
+        //markerOptions.title("-"+nombre_estbl+"-"+direccion);
+        //markerOptions.snippet("-"+nivel_precio+"-"+calificacion+"-"+disponibilidad);
+        System.out.println("TAMAÑO:"+lugarCercano.size());
+        for (int j = 0; j < lugarCercano.size(); ++j) {
+            HashMap<String,String> googlePlace =  lugarCercano.get(j);
+            String id_lugar = googlePlace.get("place_id");
+            System.out.println(id_lugar+"--|--"+marker.getSnippet());
+            if(id_lugar.equals(marker.getSnippet())){
+                String nombre_estbl = googlePlace.get("place_name");
+                i.putExtra("id",id_lugar);
+                i.putExtra("name",nombre_estbl);
+                System.out.println("ID:"+id_lugar+" NAME:"+nombre_estbl);
+                startActivity(i);
+            }
+        }
+        //startActivity(i);
+
+        return false;
+    }
+
+    private void guardarLugares(List<HashMap<String,String>> nearbyPlaceList){
+        System.out.println("Cantidad--LOCAL->"+nearbyPlaceList.size());
+    }
 
 }

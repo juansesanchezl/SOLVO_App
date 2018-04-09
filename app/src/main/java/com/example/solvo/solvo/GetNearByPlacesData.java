@@ -23,8 +23,8 @@ public class GetNearByPlacesData extends AsyncTask<Object,String,String> {
     String googlePlacesData;
     GoogleMap mMap;
     String url;
-    List<HashMap<String,String>> nearbyPlaceList = null;
-
+    public List<HashMap<String,String>> nearbyPlaceList = null;
+    boolean yaTermino = false;
 
 
     @Override
@@ -48,38 +48,15 @@ public class GetNearByPlacesData extends AsyncTask<Object,String,String> {
         DataParser parser = new DataParser();
         nearbyPlaceList = parser.parse(s);
         showNearbyPlaces(nearbyPlaceList);
+
     }
 
     private void showNearbyPlaces(List<HashMap<String,String>> nearbyPlaceList){
         System.out.println("Cantidad:"+nearbyPlaceList.size());
         System.out.println("INFORMACION TOTAL:");
-        for(int j=0; j<nearbyPlaceList.size(); ++j ){
-
-            HashMap<String,String> hashMap = nearbyPlaceList.get(j);
-            for (String name: hashMap.keySet()){
-
-                String key =name.toString();
-                String value = hashMap.get(name).toString();
-                System.out.println("<"+key+">" + "-> " + value);
-
-
-            }
-        }
-
         for (int i = 0; i < nearbyPlaceList.size(); ++i) {
-            /*
-            NOMBRE:  place_name
-            DIRECCIÓN: vicinity y/o formatted_address
-            LATITUD: lat
-            LONGITUD: lng
-            NIVEL DE PRECIO: price_level (0: gratis,1: barato,2: moderado,3: caro,4: muy caro)
-            CALIFICACIÓN: rating
-            DISPONIBILIDAD: open_now
-            */
             MarkerOptions markerOptions = new MarkerOptions();
             HashMap<String,String> googlePlace =  nearbyPlaceList.get(i);
-
-
             int valoracionPrecio = 0;
             String nivel_precio = "No Disponible";
             String disponibilidad = "No Disponible";
@@ -105,9 +82,7 @@ public class GetNearByPlacesData extends AsyncTask<Object,String,String> {
                     case 4:
                         nivel_precio = "Muy Costoso";
                     break;
-
                 }
-
             }
             if(!googlePlace.get("rating").isEmpty()) {
                 calificacion = Double.parseDouble(googlePlace.get("rating"));
@@ -123,23 +98,20 @@ public class GetNearByPlacesData extends AsyncTask<Object,String,String> {
             System.out.println("-ID:"+id_lugar+"-NivelPrecio:"+nivel_precio+"-Calificacion:"+calificacion+"-Disponibilidad"+disponibilidad);
             LatLng latLng = new LatLng(lat,lng);
             markerOptions.position(latLng);
-            markerOptions.title("-"+nombre_estbl+"-"+direccion);
-            markerOptions.snippet("-"+nivel_precio+"-"+calificacion+"-"+disponibilidad);
+            //markerOptions.title("-"+nombre_estbl+"-"+direccion);
+            //markerOptions.snippet("-"+nivel_precio+"-"+calificacion+"-"+disponibilidad);
+            markerOptions.snippet(id_lugar);
+            markerOptions.title(nombre_estbl);
             markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
-            Context context = Restaurante.getContext();
-            //GoogleMap.InfoWindowAdapter windowAdapter = new VentanaInfoMarcador( Restaurante.getContext(),nivel_precio,disponibilidad,calificacion,nombre_estbl,direccion);
-            //mMap.setInfoWindowAdapter(windowAdapter);
             mMap.addMarker(markerOptions).showInfoWindow();
             mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-            mMap.animateCamera(CameraUpdateFactory.zoomTo(16));
-
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(12));
         }
-
+        yaTermino = true;
     }
 
     public List<HashMap<String,String>> datosLugaresCercanos(){
         return nearbyPlaceList;
-
     }
 
 }
