@@ -19,10 +19,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -30,7 +28,6 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -63,7 +60,11 @@ public class Restaurante extends FragmentActivity implements
     public static final int REQUEST_LOCATION_CODE = 99;
     int PROXIMITY_RADIUS = 1000000;
     double latitude, longitude;
-    public List<HashMap<String,String>> lugarCercano = null;
+    public List<HashMap<String,String>> restaurantes = null;
+    public List<HashMap<String,String>> parqueaderos = null;
+    public List<HashMap<String,String>> estservicio = null;
+    String tipoServ = "Ninguno";
+
     String API_PLACES_KEY = "AIzaSyCdzg_lWvwmqIAFkB2mNL-yqyIsJ99o8GI";
 
 
@@ -199,27 +200,26 @@ public class Restaurante extends FragmentActivity implements
             System.out.println("RESTAURANTES");
             mMap.clear();
             //String restaurante = "restaurant";
-            //String restaurante = "bakery";
-            String restaurante = "restaurant";
+            String restaurante = "bakery";
             url = getUrl(latitude, longitude, restaurante);
-
             dataTransfer[0] = mMap;
             dataTransfer[1] = url;
             getNearByPlacesData = new GetNearByPlacesData();
             try {
                 googlePDRestaurante = getNearByPlacesData.execute(dataTransfer).get();
                 DataParser parser = new DataParser();
-                lugarCercano = parser.parse(googlePDRestaurante);
-                guardarLugares(lugarCercano);
+                restaurantes = parser.parse(googlePDRestaurante);
+                guardarLugares(restaurantes);
+                tipoServ = "RESTAURANTE";
 
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } catch (ExecutionException e) {
                 e.printStackTrace();
             }
-            if(lugarCercano == null){
-                System.out.println("Esta Vacio lugarCercano");
-                lugarCercano = getNearByPlacesData.nearbyPlaceList;
+            if(restaurantes == null){
+                System.out.println("Esta Vacio restaurantes");
+                restaurantes = getNearByPlacesData.nearbyPlaceList;
             }
             Toast.makeText(Restaurante.this, "Mostrando Restaurantes Cercanos", Toast.LENGTH_LONG).show();
 
@@ -233,7 +233,22 @@ public class Restaurante extends FragmentActivity implements
             dataTransfer[0] = mMap;
             dataTransfer[1] = url;
             getNearByPlacesData = new GetNearByPlacesData();
-            getNearByPlacesData.execute(dataTransfer);
+            try {
+                googlePDRestaurante = getNearByPlacesData.execute(dataTransfer).get();
+                DataParser parser = new DataParser();
+                parqueaderos = parser.parse(googlePDRestaurante);
+                guardarLugares(parqueaderos);
+                tipoServ = "PARQUEADERO";
+
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+            if(parqueaderos == null){
+                System.out.println("Esta Vacio parqueaderos");
+                parqueaderos = getNearByPlacesData.nearbyPlaceList;
+            }
             Toast.makeText(Restaurante.this, "Mostrando Parqueaderos Cercanos", Toast.LENGTH_LONG).show();
 
 
@@ -244,11 +259,25 @@ public class Restaurante extends FragmentActivity implements
             mMap.clear();
             String EstServicio = "gas_station";
             url = getUrl(latitude, longitude, EstServicio);
-
             dataTransfer[0] = mMap;
             dataTransfer[1] = url;
             getNearByPlacesData = new GetNearByPlacesData();
-            getNearByPlacesData.execute(dataTransfer);
+            try {
+                googlePDRestaurante = getNearByPlacesData.execute(dataTransfer).get();
+                DataParser parser = new DataParser();
+                estservicio = parser.parse(googlePDRestaurante);
+                guardarLugares(estservicio);
+                tipoServ = "ESTACION DE SERVICIO";
+
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+            if(estservicio == null){
+                System.out.println("Esta Vacio estacion de servicio");
+                estservicio = getNearByPlacesData.nearbyPlaceList;
+            }
             Toast.makeText(Restaurante.this, "Mostrando Estaciones de Servicio Cercanos", Toast.LENGTH_LONG).show();
 
         }
@@ -337,24 +366,166 @@ public class Restaurante extends FragmentActivity implements
     public boolean onMarkerClick(Marker marker) {
         System.out.println("ENTRO AL MARCADOR CON ID:"+marker.getId());
         Intent i = new Intent(Restaurante.this,MasInformacion.class);
-
-        //markerOptions.title("-"+nombre_estbl+"-"+direccion);
-        //markerOptions.snippet("-"+nivel_precio+"-"+calificacion+"-"+disponibilidad);
-        System.out.println("TAMAÑO:"+lugarCercano.size());
-        for (int j = 0; j < lugarCercano.size(); ++j) {
-            HashMap<String,String> googlePlace =  lugarCercano.get(j);
-            String id_lugar = googlePlace.get("place_id");
-            System.out.println(id_lugar+"--|--"+marker.getSnippet());
-            if(id_lugar.equals(marker.getSnippet())){
-                String nombre_estbl = googlePlace.get("place_name");
-                i.putExtra("id",id_lugar);
-                i.putExtra("name",nombre_estbl);
-                System.out.println("ID:"+id_lugar+" NAME:"+nombre_estbl);
-                startActivity(i);
+        if(tipoServ.equals("RESTAURANTE")) {
+            System.out.println("TAMAÑO:" + restaurantes.size());
+            for (int j = 0; j < restaurantes.size(); ++j) {
+                HashMap<String, String> googlePlace = restaurantes.get(j);
+                String id_lugar = googlePlace.get("place_id");
+                System.out.println(id_lugar + "--|--" + marker.getSnippet());
+                if (id_lugar.equals(marker.getSnippet())) {
+                    String nombre_estbl = googlePlace.get("place_name");
+                    String direccion = googlePlace.get("vicinity");
+                    String nivel_precio = "No Disponible";
+                    int valoracionPrecio;
+                    if (!googlePlace.get("price_level").isEmpty()) {
+                        valoracionPrecio = Integer.parseInt(googlePlace.get("price_level"));
+                        switch (valoracionPrecio) {
+                            case 0:
+                                nivel_precio = "Gratis";
+                                break;
+                            case 1:
+                                nivel_precio = "Barato";
+                                break;
+                            case 2:
+                                nivel_precio = "Moderado";
+                                break;
+                            case 3:
+                                nivel_precio = "Costoso";
+                                break;
+                            case 4:
+                                nivel_precio = "Muy Costoso";
+                                break;
+                        }
+                    }
+                    String calificacion = googlePlace.get("rating");
+                    String disponibilidad = "No Disponible";
+                    double lat = Double.parseDouble(googlePlace.get("lat"));
+                    double lng = Double.parseDouble(googlePlace.get("lng"));
+                    if ((Boolean.parseBoolean(googlePlace.get("open_now"))) == true) {
+                        disponibilidad = "Abierto";
+                    } else if ((Boolean.parseBoolean(googlePlace.get("open_now"))) == false) {
+                        disponibilidad = "Cerrado";
+                    }
+                    i.putExtra("id", id_lugar);
+                    i.putExtra("name", nombre_estbl);
+                    i.putExtra("dir", direccion);
+                    i.putExtra("precio", nivel_precio);
+                    i.putExtra("calif", calificacion);
+                    i.putExtra("disp", disponibilidad);
+                    i.putExtra("lat", lat);
+                    i.putExtra("lng", lng);
+                    i.putExtra("tipo", tipoServ);
+                    System.out.println("ID:" + id_lugar + " NAME:" + nombre_estbl);
+                    startActivity(i);
+                }
+            }
+        }else if(tipoServ.equals("PARQUEADERO")){
+            System.out.println("TAMAÑO:"+ parqueaderos.size());
+            for (int j = 0; j < parqueaderos.size(); ++j) {
+                HashMap<String,String> googlePlace =  parqueaderos.get(j);
+                String id_lugar = googlePlace.get("place_id");
+                System.out.println(id_lugar+"--|--"+marker.getSnippet());
+                if(id_lugar.equals(marker.getSnippet())){
+                    String nombre_estbl = googlePlace.get("place_name");
+                    String direccion = googlePlace.get("vicinity");
+                    String nivel_precio = "No Disponible";
+                    int valoracionPrecio;
+                    if(!googlePlace.get("price_level").isEmpty()) {
+                        valoracionPrecio = Integer.parseInt(googlePlace.get("price_level"));
+                        switch (valoracionPrecio){
+                            case 0:
+                                nivel_precio = "Gratis";
+                                break;
+                            case 1:
+                                nivel_precio = "Barato";
+                                break;
+                            case 2:
+                                nivel_precio = "Moderado";
+                                break;
+                            case 3:
+                                nivel_precio = "Costoso";
+                                break;
+                            case 4:
+                                nivel_precio = "Muy Costoso";
+                                break;
+                        }
+                    }
+                    String calificacion = googlePlace.get("rating");
+                    String disponibilidad = "No Disponible";
+                    double lat = Double.parseDouble(googlePlace.get("lat"));
+                    double lng = Double.parseDouble(googlePlace.get("lng"));
+                    if((Boolean.parseBoolean(googlePlace.get("open_now")))==true){
+                        disponibilidad = "Abierto";
+                    }else if((Boolean.parseBoolean(googlePlace.get("open_now")))== false){
+                        disponibilidad = "Cerrado";
+                    }
+                    i.putExtra("id",id_lugar);
+                    i.putExtra("name",nombre_estbl);
+                    i.putExtra("dir",direccion);
+                    i.putExtra("precio",nivel_precio);
+                    i.putExtra("calif",calificacion);
+                    i.putExtra("disp",disponibilidad);
+                    i.putExtra("lat",lat);
+                    i.putExtra("lng",lng);
+                    i.putExtra("tipo",tipoServ);
+                    System.out.println("ID:"+id_lugar+" NAME:"+nombre_estbl);
+                    startActivity(i);
+                }
+            }
+        }else if(tipoServ.equals("ESTACION DE SERVICIO")){
+            System.out.println("TAMAÑO:"+ estservicio.size());
+            for (int j = 0; j < estservicio.size(); ++j) {
+                HashMap<String,String> googlePlace =  estservicio.get(j);
+                String id_lugar = googlePlace.get("place_id");
+                System.out.println(id_lugar+"--|--"+marker.getSnippet());
+                if(id_lugar.equals(marker.getSnippet())){
+                    String nombre_estbl = googlePlace.get("place_name");
+                    String direccion = googlePlace.get("vicinity");
+                    String nivel_precio = "No Disponible";
+                    int valoracionPrecio;
+                    if(!googlePlace.get("price_level").isEmpty()) {
+                        valoracionPrecio = Integer.parseInt(googlePlace.get("price_level"));
+                        switch (valoracionPrecio){
+                            case 0:
+                                nivel_precio = "Gratis";
+                                break;
+                            case 1:
+                                nivel_precio = "Barato";
+                                break;
+                            case 2:
+                                nivel_precio = "Moderado";
+                                break;
+                            case 3:
+                                nivel_precio = "Costoso";
+                                break;
+                            case 4:
+                                nivel_precio = "Muy Costoso";
+                                break;
+                        }
+                    }
+                    String calificacion = googlePlace.get("rating");
+                    String disponibilidad = "No Disponible";
+                    double lat = Double.parseDouble(googlePlace.get("lat"));
+                    double lng = Double.parseDouble(googlePlace.get("lng"));
+                    if((Boolean.parseBoolean(googlePlace.get("open_now")))==true){
+                        disponibilidad = "Abierto";
+                    }else if((Boolean.parseBoolean(googlePlace.get("open_now")))== false){
+                        disponibilidad = "Cerrado";
+                    }
+                    i.putExtra("id",id_lugar);
+                    i.putExtra("name",nombre_estbl);
+                    i.putExtra("dir",direccion);
+                    i.putExtra("precio",nivel_precio);
+                    i.putExtra("calif",calificacion);
+                    i.putExtra("disp",disponibilidad);
+                    i.putExtra("lat",lat);
+                    i.putExtra("lng",lng);
+                    i.putExtra("tipo",tipoServ);
+                    System.out.println("ID:"+id_lugar+" NAME:"+nombre_estbl);
+                    startActivity(i);
+                }
             }
         }
-        //startActivity(i);
-
         return false;
     }
 

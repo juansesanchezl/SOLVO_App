@@ -7,34 +7,119 @@
     tools:context="com.example.solvo.solvo.MasInformacion">
 
     <TextView
-        android:id="@+id/textView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="84dp"
+        android:id="@+id/tipoInfo"
+        android:layout_width="205dp"
+        android:layout_height="31dp"
+        android:layout_marginBottom="25dp"
+        android:layout_marginTop="16dp"
         android:text="MÁS INFORMACIÓN"
         android:textAlignment="center"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
+        android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/ID_Marcador"
-        tools:layout_editor_absoluteX="128dp" />
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="90dp" />
 
-    <TextView
-        android:id="@+id/ID_Marcador"
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="66dp"
+        android:layout_height="71dp"
+        android:layout_marginBottom="84dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="72dp"
+        app:layout_constraintBottom_toTopOf="@+id/ratingBar"
+        app:layout_constraintEnd_toStartOf="@+id/linearLayout2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/common_google_signin_btn_icon_dark" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="204dp"
+        android:layout_height="142dp"
+        android:layout_marginBottom="13dp"
+        android:layout_marginEnd="21dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="21dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="25dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/ratingBar"
+        app:layout_constraintEnd_toStartOf="@+id/button"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/tipoInfo">
+
+        <TextView
+            android:id="@+id/nom_mrk"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:text="NOMBRE MRK"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            tools:layout_editor_absoluteX="116dp"
+            tools:layout_editor_absoluteY="72dp" />
+
+        <TextView
+            android:id="@+id/id_mrk"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="INFO MARCADOR"
+            tools:layout_editor_absoluteX="156dp"
+            tools:layout_editor_absoluteY="224dp" />
+
+        <TextView
+            android:id="@+id/dir_mrk"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:text="DIRECCION"
+            tools:layout_editor_absoluteX="116dp"
+            tools:layout_editor_absoluteY="98dp" />
+
+        <TextView
+            android:id="@+id/precio_mrk"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="PRECIO" />
+
+        <TextView
+            android:id="@+id/calf_mrk"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CALIFICACION" />
+
+        <TextView
+            android:id="@+id/disp_mrk"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="DISPONIBILIDAD" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="71dp"
+        android:layout_height="56dp"
+        android:layout_marginBottom="99dp"
+        android:layout_marginEnd="6dp"
+        android:layout_marginLeft="13dp"
+        android:layout_marginRight="6dp"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="72dp"
+        app:layout_constraintBottom_toTopOf="@+id/ratingBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/linearLayout2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RatingBar
+        android:id="@+id/ratingBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="23dp"
-        android:layout_marginTop="83dp"
-        android:text="INFO MARCADOR"
-        app:layout_constraintBottom_toTopOf="@+id/NomMrk"
-        app:layout_constraintTop_toBottomOf="@+id/textView8"
-        tools:layout_editor_absoluteX="138dp" />
-
-    <TextView
-        android:id="@+id/NomMrk"
-        android:layout_width="104dp"
-        android:layout_height="25dp"
-        android:layout_marginTop="32dp"
-        android:text="NOMBRE MRK"
-        app:layout_constraintTop_toBottomOf="@+id/ID_Marcador"
-        tools:layout_editor_absoluteX="140dp" />
+        android:layout_marginBottom="227dp"
+        android:layout_marginLeft="72dp"
+        android:layout_marginStart="72dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </android.support.constraint.ConstraintLayout>
