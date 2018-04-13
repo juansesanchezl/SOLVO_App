@@ -16,8 +16,8 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="273dp"
+            android:layout_height="417dp"
             android:layout_margin="25dp">
 
             <TableRow
@@ -183,17 +183,21 @@
 
             </TableRow>
 
+            <TextView
+                android:id="@+id/condicionesTV"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:text="Al registrarse acepta los terminos y condiciones"
+                android:textAlignment="center"
+                android:textColor="@android:color/holo_blue_dark"
+                android:textSize="11sp" />
 
             <Button
                 android:id="@+id/registerButton"
                 android:layout_width="match_parent"
                 android:layout_height="36dp"
-                android:text="Register"
+                android:text="Registrar"
                 android:textSize="12sp" />
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
 
             <TableRow>
 
@@ -201,16 +205,15 @@
                     android:id="@+id/confirmButton"
                     android:layout_width="wrap_content"
                     android:layout_height="32dp"
-                    android:text="confirm"
+                    android:text="confirmar"
                     android:textSize="12sp" />
 
                 <EditText
                     android:id="@+id/confirmationCode"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:hint="@string/confNum"
                     android:textSize="12sp" />
-
             </TableRow>
 
             <Button
@@ -219,7 +222,6 @@
                 android:layout_height="35dp"
                 android:text="Iniciar Sesión"
                 android:textSize="11sp" />
-
 
         </TableLayout>
         <!--

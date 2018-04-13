@@ -27,6 +27,7 @@ public class Registro extends AppCompatActivity implements View.OnClickListener,
         findViewById(R.id.confirmButton).setOnClickListener(this);
         findViewById(R.id.phoneU).setOnClickListener(this);
         findViewById(R.id.continuarButton).setOnClickListener(this);
+        findViewById(R.id.condicionesTV).setOnClickListener(this);
 
     }
 
@@ -83,6 +84,9 @@ public class Registro extends AppCompatActivity implements View.OnClickListener,
             case R.id.continuarButton:
                 continuarAction();
                 break;
+            case R.id.condicionesTV:
+                mostrarCondiciones();
+                break;
         }
     }
 
@@ -119,6 +123,9 @@ public class Registro extends AppCompatActivity implements View.OnClickListener,
     }
     private void continuarAction() {
         startActivity(new Intent(Registro.this, Login.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+
+    }
+    private void mostrarCondiciones(){
 
     }
 

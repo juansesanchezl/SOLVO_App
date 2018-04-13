@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -94,18 +95,22 @@ public class GetNearByPlacesData extends AsyncTask<Object,String,String> {
             }
             double lat = Double.parseDouble(googlePlace.get("lat"));
             double lng = Double.parseDouble(googlePlace.get("lng"));
+            String icon = googlePlace.get("icon");
             System.out.println("-Nombre:"+nombre_estbl+"-Cercania:"+direccion+"-Latitud:"+lat+"-Longitud:"+lng);
             System.out.println("-ID:"+id_lugar+"-NivelPrecio:"+nivel_precio+"-Calificacion:"+calificacion+"-Disponibilidad"+disponibilidad);
+            System.out.println("-Icon:"+icon);
             LatLng latLng = new LatLng(lat,lng);
             markerOptions.position(latLng);
             //markerOptions.title("-"+nombre_estbl+"-"+direccion);
             //markerOptions.snippet("-"+nivel_precio+"-"+calificacion+"-"+disponibilidad);
+
             markerOptions.snippet(id_lugar);
             markerOptions.title(nombre_estbl);
+            //markerOptions.icon(BitmapDescriptorFactory.fromResource(icon));
             markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
             mMap.addMarker(markerOptions).showInfoWindow();
             mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-            mMap.animateCamera(CameraUpdateFactory.zoomTo(12));
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(9));
         }
         yaTermino = true;
     }

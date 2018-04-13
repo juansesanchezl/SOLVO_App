@@ -59,7 +59,7 @@ public class Restaurante extends FragmentActivity implements
     public static Context contexta;
     public static final int REQUEST_LOCATION_CODE = 99;
     int PROXIMITY_RADIUS = 1000000;
-    double latitude, longitude;
+    double latitudeUser, longitudeUser;
     public List<HashMap<String,String>> restaurantes = null;
     public List<HashMap<String,String>> parqueaderos = null;
     public List<HashMap<String,String>> estservicio = null;
@@ -201,7 +201,7 @@ public class Restaurante extends FragmentActivity implements
             mMap.clear();
             //String restaurante = "restaurant";
             String restaurante = "bakery";
-            url = getUrl(latitude, longitude, restaurante);
+            url = getUrl(latitudeUser, longitudeUser, restaurante);
             dataTransfer[0] = mMap;
             dataTransfer[1] = url;
             getNearByPlacesData = new GetNearByPlacesData();
@@ -228,7 +228,7 @@ public class Restaurante extends FragmentActivity implements
             System.out.println("PARQUEADEROS");
             mMap.clear();
             String parking = "parking";
-            url = getUrl(latitude, longitude, parking);
+            url = getUrl(latitudeUser, longitudeUser, parking);
 
             dataTransfer[0] = mMap;
             dataTransfer[1] = url;
@@ -258,7 +258,7 @@ public class Restaurante extends FragmentActivity implements
             System.out.println("ESTACIONES-DE-SERVICIO");
             mMap.clear();
             String EstServicio = "gas_station";
-            url = getUrl(latitude, longitude, EstServicio);
+            url = getUrl(latitudeUser, longitudeUser, EstServicio);
             dataTransfer[0] = mMap;
             dataTransfer[1] = url;
             getNearByPlacesData = new GetNearByPlacesData();
@@ -302,21 +302,22 @@ public class Restaurante extends FragmentActivity implements
     @Override
     public void onLocationChanged(Location location) {
         lastLocation = location;
-        if(currentLocationMarker != null){
+        /*if(currentLocationMarker != null){
             currentLocationMarker.remove();
         }
-        LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
+
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
         markerOptions.title("USTED ESTA AQUÍ");
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
 
-        currentLocationMarker = mMap.addMarker(markerOptions);
+        currentLocationMarker = mMap.addMarker(markerOptions);*/
+        LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
         //Mover la camara al haber un cambio de localización y hacerle un zoom x10
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         mMap.animateCamera(CameraUpdateFactory.zoomBy(12));
-        latitude = location.getLatitude();
-        longitude = location.getLongitude();
+        latitudeUser = location.getLatitude();
+        longitudeUser = location.getLongitude();
 
         if(googleApiClient != null){
             LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient,this);
@@ -401,6 +402,7 @@ public class Restaurante extends FragmentActivity implements
                     String disponibilidad = "No Disponible";
                     double lat = Double.parseDouble(googlePlace.get("lat"));
                     double lng = Double.parseDouble(googlePlace.get("lng"));
+                    String icon = googlePlace.get("icon");
                     if ((Boolean.parseBoolean(googlePlace.get("open_now"))) == true) {
                         disponibilidad = "Abierto";
                     } else if ((Boolean.parseBoolean(googlePlace.get("open_now"))) == false) {
@@ -412,9 +414,12 @@ public class Restaurante extends FragmentActivity implements
                     i.putExtra("precio", nivel_precio);
                     i.putExtra("calif", calificacion);
                     i.putExtra("disp", disponibilidad);
-                    i.putExtra("lat", lat);
-                    i.putExtra("lng", lng);
+                    i.putExtra("lati",latitudeUser);
+                    i.putExtra("lngi",longitudeUser);
+                    i.putExtra("latf", lat);
+                    i.putExtra("lngf", lng);
                     i.putExtra("tipo", tipoServ);
+                    i.putExtra("icono",icon);
                     System.out.println("ID:" + id_lugar + " NAME:" + nombre_estbl);
                     startActivity(i);
                 }
@@ -454,20 +459,24 @@ public class Restaurante extends FragmentActivity implements
                     String disponibilidad = "No Disponible";
                     double lat = Double.parseDouble(googlePlace.get("lat"));
                     double lng = Double.parseDouble(googlePlace.get("lng"));
+                    String icon = googlePlace.get("icon");
                     if((Boolean.parseBoolean(googlePlace.get("open_now")))==true){
                         disponibilidad = "Abierto";
                     }else if((Boolean.parseBoolean(googlePlace.get("open_now")))== false){
                         disponibilidad = "Cerrado";
                     }
-                    i.putExtra("id",id_lugar);
-                    i.putExtra("name",nombre_estbl);
-                    i.putExtra("dir",direccion);
-                    i.putExtra("precio",nivel_precio);
-                    i.putExtra("calif",calificacion);
-                    i.putExtra("disp",disponibilidad);
-                    i.putExtra("lat",lat);
-                    i.putExtra("lng",lng);
-                    i.putExtra("tipo",tipoServ);
+                    i.putExtra("id", id_lugar);
+                    i.putExtra("name", nombre_estbl);
+                    i.putExtra("dir", direccion);
+                    i.putExtra("precio", nivel_precio);
+                    i.putExtra("calif", calificacion);
+                    i.putExtra("disp", disponibilidad);
+                    i.putExtra("lati",latitudeUser);
+                    i.putExtra("lngi",longitudeUser);
+                    i.putExtra("latf", lat);
+                    i.putExtra("lngf", lng);
+                    i.putExtra("tipo", tipoServ);
+                    i.putExtra("icono",icon);
                     System.out.println("ID:"+id_lugar+" NAME:"+nombre_estbl);
                     startActivity(i);
                 }
@@ -507,20 +516,24 @@ public class Restaurante extends FragmentActivity implements
                     String disponibilidad = "No Disponible";
                     double lat = Double.parseDouble(googlePlace.get("lat"));
                     double lng = Double.parseDouble(googlePlace.get("lng"));
+                    String icon = googlePlace.get("icon");
                     if((Boolean.parseBoolean(googlePlace.get("open_now")))==true){
                         disponibilidad = "Abierto";
                     }else if((Boolean.parseBoolean(googlePlace.get("open_now")))== false){
                         disponibilidad = "Cerrado";
                     }
-                    i.putExtra("id",id_lugar);
-                    i.putExtra("name",nombre_estbl);
-                    i.putExtra("dir",direccion);
-                    i.putExtra("precio",nivel_precio);
-                    i.putExtra("calif",calificacion);
-                    i.putExtra("disp",disponibilidad);
-                    i.putExtra("lat",lat);
-                    i.putExtra("lng",lng);
-                    i.putExtra("tipo",tipoServ);
+                    i.putExtra("id", id_lugar);
+                    i.putExtra("name", nombre_estbl);
+                    i.putExtra("dir", direccion);
+                    i.putExtra("precio", nivel_precio);
+                    i.putExtra("calif", calificacion);
+                    i.putExtra("disp", disponibilidad);
+                    i.putExtra("lati",latitudeUser);
+                    i.putExtra("lngi",longitudeUser);
+                    i.putExtra("latf", lat);
+                    i.putExtra("lngf", lng);
+                    i.putExtra("tipo", tipoServ);
+                    i.putExtra("icono",icon);
                     System.out.println("ID:"+id_lugar+" NAME:"+nombre_estbl);
                     startActivity(i);
                 }

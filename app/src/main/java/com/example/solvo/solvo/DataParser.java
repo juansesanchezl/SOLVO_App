@@ -26,6 +26,7 @@ public class DataParser {
         String price_level = "";
         String rating = "";
         String open_now = "";
+        String icon = "";
 
         try {
             if(!googlePlaceJSON.isNull("name")) {
@@ -43,6 +44,9 @@ public class DataParser {
             if(!googlePlaceJSON.isNull("rating")){
                 rating = googlePlaceJSON.getString("rating");
             }
+            if(!googlePlaceJSON.isNull("icon")){
+                icon = googlePlaceJSON.getString("icon");
+            }
             latitude = googlePlaceJSON.getJSONObject("geometry").getJSONObject("location").getString("lat");
             longitude = googlePlaceJSON.getJSONObject("geometry").getJSONObject("location").getString("lng");
             id = googlePlaceJSON.getString("id");
@@ -57,6 +61,7 @@ public class DataParser {
             googlePlacesMap.put("open_now",open_now);
             googlePlacesMap.put("price_level",price_level);
             googlePlacesMap.put("rating",rating);
+            googlePlacesMap.put("icon",icon);
 
         } catch (JSONException e) {
             e.printStackTrace();

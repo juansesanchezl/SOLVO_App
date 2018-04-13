@@ -10,28 +10,26 @@
         android:id="@+id/tipoInfo"
         android:layout_width="205dp"
         android:layout_height="31dp"
-        android:layout_marginBottom="25dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginEnd="57dp"
+        android:layout_marginStart="58dp"
         android:layout_marginTop="16dp"
         android:text="MÁS INFORMACIÓN"
         android:textAlignment="center"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="90dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="66dp"
-        android:layout_height="71dp"
-        android:layout_marginBottom="84dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="72dp"
-        app:layout_constraintBottom_toTopOf="@+id/ratingBar"
+        android:id="@+id/image_mrk"
+        android:layout_width="57dp"
+        android:layout_height="62dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginTop="104dp"
         app:layout_constraintEnd_toStartOf="@+id/linearLayout2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -39,25 +37,22 @@
 
     <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="204dp"
-        android:layout_height="142dp"
-        android:layout_marginBottom="13dp"
-        android:layout_marginEnd="21dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="21dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="25dp"
+        android:layout_width="242dp"
+        android:layout_height="182dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="60dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/ratingBar"
-        app:layout_constraintEnd_toStartOf="@+id/button"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/tipoInfo">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/image_mrk"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/nom_mrk"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_height="46dp"
             android:text="NOMBRE MRK"
+            android:textAlignment="center"
             android:textColor="@android:color/black"
             android:textSize="18sp"
             tools:layout_editor_absoluteX="116dp"
@@ -74,7 +69,7 @@
         <TextView
             android:id="@+id/dir_mrk"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="40dp"
             android:text="DIRECCION"
             tools:layout_editor_absoluteX="116dp"
             tools:layout_editor_absoluteY="98dp" />
@@ -86,40 +81,42 @@
             android:text="PRECIO" />
 
         <TextView
+            android:id="@+id/disp_mrk"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="DISPONIBILIDAD" />
+
+        <TextView
             android:id="@+id/calf_mrk"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="CALIFICACION" />
 
-        <TextView
-            android:id="@+id/disp_mrk"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="DISPONIBILIDAD" />
     </LinearLayout>
 
     <Button
-        android:id="@+id/button"
-        android:layout_width="71dp"
-        android:layout_height="56dp"
-        android:layout_marginBottom="99dp"
-        android:layout_marginEnd="6dp"
-        android:layout_marginLeft="13dp"
-        android:layout_marginRight="6dp"
-        android:layout_marginStart="13dp"
-        android:layout_marginTop="72dp"
-        app:layout_constraintBottom_toTopOf="@+id/ratingBar"
+        android:id="@+id/btnRuta"
+        android:layout_width="69dp"
+        android:layout_height="54dp"
+        android:layout_marginBottom="147dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/linearLayout2"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/ratingBar"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
     <RatingBar
         android:id="@+id/ratingBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="227dp"
-        android:layout_marginLeft="72dp"
-        android:layout_marginStart="72dp"
+        android:layout_width="233dp"
+        android:layout_height="51dp"
+        android:layout_marginBottom="150dp"
+        android:layout_marginEnd="7dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/btnRuta"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 </android.support.constraint.ConstraintLayout>

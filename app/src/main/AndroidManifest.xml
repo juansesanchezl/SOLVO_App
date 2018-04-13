@@ -54,7 +54,14 @@
                 android:value="com.example.solvo.solvo.MenuPrincipal" />
         </activity>
         <activity android:name=".VentanaInfoMarcador" />
-        <activity android:name=".MasInformacion"></activity>
+        <activity android:name=".MasInformacion" />
+        <activity
+            android:name=".rutausuarioestb"
+            android:label="@string/title_activity_rutausuarioestb">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.solvo.solvo.MasInformacion" />
+        </activity>
     </application>
 
 </manifest>

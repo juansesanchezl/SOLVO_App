@@ -1,8 +1,27 @@
 package com.example.solvo.solvo;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.Rating;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+
+import static com.amazonaws.util.IOUtils.copy;
 
 public class MasInformacion extends AppCompatActivity {
 
@@ -16,9 +35,11 @@ public class MasInformacion extends AppCompatActivity {
         String precio;
         String calif;
         String disp;
-        double lat;
-        double lng;
+        final double lati, latf;
+        final double lngi, lngf;
         String tipo;
+        String icono;
+
         if(savedInstanceState == null){
             Bundle extras = getIntent().getExtras();
             if(extras == null){
@@ -28,9 +49,12 @@ public class MasInformacion extends AppCompatActivity {
                 precio = null;
                 calif = null;
                 disp = null;
-                lat = 0;
-                lng = 0;
+                lati = 0;
+                latf = 0;
+                lngi = 0;
+                lngf = 0;
                 tipo = null;
+                icono = null;
             }else {
                 tipo = extras.getString("tipo");
                 id = extras.getString("id");
@@ -39,8 +63,11 @@ public class MasInformacion extends AppCompatActivity {
                 precio = extras.getString("precio");
                 calif = extras.getString("calif");
                 disp  = extras.getString("disp");
-                lat  = extras.getDouble("lat");
-                lng  = extras.getDouble("lng");
+                lati = extras.getDouble("lati");
+                lngi = extras.getDouble("lngi");
+                latf  = extras.getDouble("latf");
+                lngf  = extras.getDouble("lngf");
+                icono = extras.getString("icono");
 
                 TextView tvTipo = (TextView) findViewById(R.id.tipoInfo);
                 TextView tvId = (TextView) findViewById(R.id.id_mrk);
@@ -49,18 +76,84 @@ public class MasInformacion extends AppCompatActivity {
                 TextView tvPrecio = (TextView) findViewById(R.id.precio_mrk);
                 TextView tvCalif = (TextView) findViewById(R.id.calf_mrk);
                 TextView tvDisp = (TextView) findViewById(R.id.disp_mrk);
+                ImageView tvIcono = (ImageView) findViewById(R.id.image_mrk);
+                RatingBar tvRating = (RatingBar) findViewById(R.id.ratingBar);
+                Button tvRuta = (Button) findViewById(R.id.btnRuta);
+                tvRuta.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        trazarRuta(lati,lngi,latf,lngf);
+                    }
+                });
+                System.out.println("Icono-->"+icono);
+                System.out.println("Lati:"+lati+" lngi:"+lngi);
+                System.out.println("Latf:"+latf+" lngf:"+lngf);
 
                 tvTipo.setText(tipo);
                 tvId.setText(id);
-                tvName.setText(name);
-                tvDir.setText(dir);
-                tvPrecio.setText(precio);
-                tvCalif.setText(calif);
-                tvDisp.setText(disp);
+                tvName.setText("Nombre: "+name);
+                tvDir.setText("Dirección: "+dir);
+                tvPrecio.setText("Nivel de Precio: "+precio);
+                tvDisp.setText("Disponibilidad: "+disp);
+                if(!calif.isEmpty()) {
+                    tvCalif.setText("Calificación: "+calif);
+                    tvRating.setRating(Float.parseFloat(calif));
+                }else{
+                    tvCalif.setText("Calificación: No Disponible");
+                }
+                if(!icono.isEmpty()){
+                    AsyncTask<String, Void, Bitmap> downLoadImageTask = new DownLoadImageTask(tvIcono).execute(icono);
+                }
 
             }
         }
 
 
+    }
+
+    private void trazarRuta(Double lati, Double lngi, Double latf, Double lngf){
+        Intent i = new Intent(MasInformacion.this, rutausuarioestb.class);
+        i.putExtra("lati",lati);
+        i.putExtra("lngi",lngi);
+        i.putExtra("latf", latf);
+        i.putExtra("lngf", lngf);
+        startActivity(i);
+
+    }
+
+    private class DownLoadImageTask extends AsyncTask<String,Void,Bitmap> {
+        ImageView imageView;
+
+        public DownLoadImageTask(ImageView imageView){
+            this.imageView = imageView;
+        }
+
+        /*
+            doInBackground(Params... params)
+                Override this method to perform a computation on a background thread.
+         */
+        protected Bitmap doInBackground(String...urls){
+            String urlOfImage = urls[0];
+            Bitmap logo = null;
+            try{
+                InputStream is = new URL(urlOfImage).openStream();
+                /*
+                    decodeStream(InputStream is)
+                        Decode an input stream into a bitmap.
+                 */
+                logo = BitmapFactory.decodeStream(is);
+            }catch(Exception e){ // Catch the download exception
+                e.printStackTrace();
+            }
+            return logo;
+        }
+
+        /*
+            onPostExecute(Result result)
+                Runs on the UI thread after doInBackground(Params...).
+         */
+        protected void onPostExecute(Bitmap result){
+            imageView.setImageBitmap(result);
+        }
     }
 }
