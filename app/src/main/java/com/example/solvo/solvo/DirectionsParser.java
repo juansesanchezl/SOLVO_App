@@ -25,24 +25,28 @@ public class DirectionsParser {
         try {
 
             jRoutes = jObject.getJSONArray("routes");
-            System.out.println("DIRPARSER--1");
+
             // Loop for all routes
             for (int i = 0; i < jRoutes.length(); i++) {
+
                 jLegs = ((JSONObject) jRoutes.get(i)).getJSONArray("legs");
                 List path = new ArrayList<HashMap<String, String>>();
 
                 //Loop for all legs
                 for (int j = 0; j < jLegs.length(); j++) {
+
                     jSteps = ((JSONObject) jLegs.get(j)).getJSONArray("steps");
 
                     //Loop for all steps
                     for (int k = 0; k < jSteps.length(); k++) {
+
                         String polyline = "";
                         polyline = (String) ((JSONObject) ((JSONObject) jSteps.get(k)).get("polyline")).get("points");
                         List list = decodePolyline(polyline);
 
                         //Loop for all points
                         for (int l = 0; l < list.size(); l++) {
+
                             HashMap<String, String> hm = new HashMap<String, String>();
                             hm.put("lat", Double.toString(((LatLng) list.get(l)).latitude));
                             hm.put("lon", Double.toString(((LatLng) list.get(l)).longitude));

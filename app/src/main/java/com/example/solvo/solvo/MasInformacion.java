@@ -25,6 +25,9 @@ import static com.amazonaws.util.IOUtils.copy;
 
 public class MasInformacion extends AppCompatActivity {
 
+    String nombreEstbl = null;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +71,7 @@ public class MasInformacion extends AppCompatActivity {
                 latf  = extras.getDouble("latf");
                 lngf  = extras.getDouble("lngf");
                 icono = extras.getString("icono");
+                nombreEstbl = name;
 
                 TextView tvTipo = (TextView) findViewById(R.id.tipoInfo);
                 TextView tvId = (TextView) findViewById(R.id.id_mrk);
@@ -111,12 +115,15 @@ public class MasInformacion extends AppCompatActivity {
 
     }
 
+
+
     private void trazarRuta(Double lati, Double lngi, Double latf, Double lngf){
         Intent i = new Intent(MasInformacion.this, rutausuarioestb.class);
         i.putExtra("lati",lati);
         i.putExtra("lngi",lngi);
         i.putExtra("latf", latf);
         i.putExtra("lngf", lngf);
+        i.putExtra("establ",nombreEstbl);
         startActivity(i);
 
     }

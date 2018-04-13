@@ -4,7 +4,9 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.location.Location;
 import android.os.AsyncTask;
+import android.provider.SyncStateContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,10 +16,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
@@ -40,6 +44,8 @@ public class rutausuarioestb extends FragmentActivity implements OnMapReadyCallb
     private GoogleMap mMap;
     private static final int LOCATION_REQUEST = 500;
     ArrayList<LatLng> listPoints;
+    Double latti, lnggi, lattf, lnggf;
+    String nombreEstablecimiento = null;
 
 
     @Override
@@ -74,6 +80,11 @@ public class rutausuarioestb extends FragmentActivity implements OnMapReadyCallb
                 lngi = extras.getDouble("lngi");
                 latf  = extras.getDouble("latf");
                 lngf  = extras.getDouble("lngf");
+                nombreEstablecimiento = extras.getString("establ");
+                latti = lati;
+                lnggi = lngi;
+                lattf = latf;
+                lnggf = lngf;
 
                 LatLng latLngi = new LatLng(lati,lngi);
                 LatLng latLngf = new LatLng(latf,lngf);
@@ -109,6 +120,17 @@ public class rutausuarioestb extends FragmentActivity implements OnMapReadyCallb
         String url = getRequestUrl(listPoints.get(0), listPoints.get(1));
         TaskRequestDirections taskRequestDirections = new TaskRequestDirections();
         taskRequestDirections.execute(url);
+        mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
+            @Override
+            public void onMyLocationChange(Location location) {
+
+                CameraUpdate center=CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude()));
+                CameraUpdate zoom=CameraUpdateFactory.zoomTo(10.5f);
+                mMap.moveCamera(center);
+                mMap.animateCamera(zoom);
+
+            }
+        });
     }
 
     private String getRequestUrl(LatLng origin, LatLng dest) {
@@ -133,14 +155,14 @@ public class rutausuarioestb extends FragmentActivity implements OnMapReadyCallb
 
     private String requestDirection(String reqUrl) throws IOException {
         String responseString = "";
-        System.out.println("REQUESTDIRECTION--1");
+
         InputStream inputStream = null;
         HttpURLConnection httpURLConnection = null;
         try{
             URL url = new URL(reqUrl);
             httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.connect();
-            System.out.println("REQUESTDIRECTION--2");
+
             //Get the response result
             inputStream = httpURLConnection.getInputStream();
             InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
@@ -151,7 +173,7 @@ public class rutausuarioestb extends FragmentActivity implements OnMapReadyCallb
             while ((line = bufferedReader.readLine()) != null) {
                 stringBuffer.append(line);
             }
-            System.out.println("REQUESTDIRECTION--3");
+
             responseString = stringBuffer.toString();
             bufferedReader.close();
             inputStreamReader.close();
@@ -195,7 +217,7 @@ public class rutausuarioestb extends FragmentActivity implements OnMapReadyCallb
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            System.out.println("TASKREQUESTDIR--1-"+s);
+
             //Parse json here
             TaskParser taskParser = new TaskParser();
             taskParser.execute(s);
@@ -226,31 +248,53 @@ public class rutausuarioestb extends FragmentActivity implements OnMapReadyCallb
 
             PolylineOptions polylineOptions = null;
 
+
             for (List<HashMap<String, String>> path : lists) {
+
                 points = new ArrayList();
                 polylineOptions = new PolylineOptions();
 
+
                 for (HashMap<String, String> point : path) {
+
                     double lat = Double.parseDouble(point.get("lat"));
                     double lon = Double.parseDouble(point.get("lon"));
 
                     points.add(new LatLng(lat,lon));
                 }
 
+                System.out.println("Point:"+points.toString());
                 polylineOptions.addAll(points);
                 polylineOptions.width(10);
                 polylineOptions.color(Color.rgb(255,165,0));
+                //polylineOptions.color(Color.RED);
                 polylineOptions.geodesic(true);
             }
 
             if (polylineOptions!=null) {
                 mMap.addPolyline(polylineOptions);
+                LatLng latLngi = new LatLng(latti,lnggi);
+                LatLng latLngf = new LatLng(lattf,lnggf);
+                MarkerOptions markerOptions = new MarkerOptions();
+                markerOptions.position(latLngf);
+                System.out.println("EST:"+nombreEstablecimiento);
+                if(nombreEstablecimiento == null) {
+                    markerOptions.title("DESTINO");
+                }else{
+                    markerOptions.title(nombreEstablecimiento);
+                }
+                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+                mMap.addMarker(markerOptions);
+                float zoomLevel = 16.0f; //This goes up to 21
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLngi, zoomLevel));
+                mMap.animateCamera(CameraUpdateFactory.zoomBy(16));
             } else {
                 Toast.makeText(getApplicationContext(), "Direction not found!", Toast.LENGTH_SHORT).show();
             }
 
         }
     }
+
 
 
 
