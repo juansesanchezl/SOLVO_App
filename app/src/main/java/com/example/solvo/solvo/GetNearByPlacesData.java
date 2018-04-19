@@ -110,7 +110,7 @@ public class GetNearByPlacesData extends AsyncTask<Object,String,String> {
             markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
             mMap.addMarker(markerOptions).showInfoWindow();
             mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-            mMap.animateCamera(CameraUpdateFactory.zoomTo(9));
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(12.5f));
         }
         yaTermino = true;
     }

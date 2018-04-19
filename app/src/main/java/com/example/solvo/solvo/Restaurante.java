@@ -65,7 +65,7 @@ public class Restaurante extends FragmentActivity implements
     public List<HashMap<String,String>> parqueaderos = null;
     public List<HashMap<String,String>> estservicio = null;
     String tipoServ = "Ninguno";
-
+    int iterador = 0;
     String API_PLACES_KEY = "AIzaSyCdzg_lWvwmqIAFkB2mNL-yqyIsJ99o8GI";
 
 
@@ -126,17 +126,20 @@ public class Restaurante extends FragmentActivity implements
             buildGoogleApiClient();
             mMap.setMyLocationEnabled(true);
         }
+
         mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
             @Override
             public void onMyLocationChange(Location location) {
-
-                CameraUpdate center=CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude()));
-                CameraUpdate zoom=CameraUpdateFactory.zoomTo(10);
+                if(iterador == 0) {
+                CameraUpdate center = CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude()));
+                CameraUpdate zoom = CameraUpdateFactory.zoomTo(14);
                 mMap.moveCamera(center);
                 mMap.animateCamera(zoom);
-
+                    iterador++;
+                }
             }
         });
+
         // Add a marker in Sydney and move the camera
         /*LatLng bogota = new LatLng(4.624335, -74.063644);
         addMarkerMap(4.630474, -74.066813, "SUBWAY");

@@ -46,6 +46,7 @@ public class rutausuarioestb extends FragmentActivity implements OnMapReadyCallb
     ArrayList<LatLng> listPoints;
     Double latti, lnggi, lattf, lnggf;
     String nombreEstablecimiento = null;
+    int iterador = 0;
 
 
     @Override
@@ -123,12 +124,13 @@ public class rutausuarioestb extends FragmentActivity implements OnMapReadyCallb
         mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
             @Override
             public void onMyLocationChange(Location location) {
-
-                CameraUpdate center=CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude()));
-                CameraUpdate zoom=CameraUpdateFactory.zoomTo(10.5f);
+            if(iterador == 0) {
+                CameraUpdate center = CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude()));
+                CameraUpdate zoom = CameraUpdateFactory.zoomTo(12.5f);
                 mMap.moveCamera(center);
                 mMap.animateCamera(zoom);
-
+                iterador++;
+            }
             }
         });
     }
@@ -287,7 +289,7 @@ public class rutausuarioestb extends FragmentActivity implements OnMapReadyCallb
                 mMap.addMarker(markerOptions);
                 float zoomLevel = 16.0f; //This goes up to 21
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLngi, zoomLevel));
-                mMap.animateCamera(CameraUpdateFactory.zoomBy(16));
+                mMap.animateCamera(CameraUpdateFactory.zoomBy(12.5f));
             } else {
                 Toast.makeText(getApplicationContext(), "Direction not found!", Toast.LENGTH_SHORT).show();
             }

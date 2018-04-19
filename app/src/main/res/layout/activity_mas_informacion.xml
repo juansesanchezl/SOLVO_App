@@ -38,7 +38,7 @@
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="242dp"
-        android:layout_height="182dp"
+        android:layout_height="163dp"
         android:layout_marginEnd="15dp"
         android:layout_marginStart="5dp"
         android:layout_marginTop="60dp"
@@ -94,30 +94,55 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btnRuta"
-        android:layout_width="69dp"
-        android:layout_height="54dp"
-        android:layout_marginBottom="147dp"
-        android:layout_marginEnd="3dp"
-        android:layout_marginStart="7dp"
-        android:layout_marginTop="10dp"
-        android:text="RUTA"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ratingBar"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
-
     <RatingBar
         android:id="@+id/ratingBar"
         android:layout_width="233dp"
         android:layout_height="51dp"
         android:layout_marginBottom="150dp"
-        android:layout_marginEnd="7dp"
-        android:layout_marginStart="7dp"
+        android:layout_marginEnd="29dp"
+        android:layout_marginStart="58dp"
         android:layout_marginTop="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnRuta"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        app:layout_constraintVertical_bias="0.263" />
+
+    <LinearLayout
+        android:layout_width="164dp"
+        android:layout_height="150dp"
+        android:layout_marginBottom="7dp"
+        android:layout_marginEnd="65dp"
+        android:layout_marginStart="91dp"
+        android:layout_marginTop="7dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ratingBar">
+
+        <Button
+            android:id="@+id/btnRuta"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:text="MOSTRAR RUTA"
+            tools:layout_editor_absoluteX="126dp"
+            tools:layout_editor_absoluteY="306dp" />
+
+        <Button
+            android:id="@+id/btnNavegar"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:text="NAVEGAR"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="306dp" />
+
+        <Button
+            android:id="@+id/btnComentar"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:text="COMENTAR"
+            tools:layout_editor_absoluteX="202dp"
+            tools:layout_editor_absoluteY="306dp" />
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>
