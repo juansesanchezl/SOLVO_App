@@ -1,10 +1,12 @@
 package com.example.solvo.solvo;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.amazonaws.mobile.auth.core.IdentityManager;
@@ -16,6 +18,8 @@ import com.amazonaws.mobile.client.AWSStartupResult;
 import com.solvo.awsandroid.AWSLoginModel;
 import com.solvo.awsandroid.AWSRegistryHandler;
 
+
+
 public class Login extends AppCompatActivity implements View.OnClickListener, AWSRegistryHandler {
 
     AWSLoginModel awsLoginModel;
@@ -24,12 +28,29 @@ public class Login extends AppCompatActivity implements View.OnClickListener, AW
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        ProgressBar progressBar = findViewById(R.id.progressBar2);
+        progressBar.setVisibility(View.GONE);
+        if(savedInstanceState == null){
+            Bundle extras = getIntent().getExtras();
+            if(extras == null){
+
+            }else{
+                if((extras.getString("PB")).equals("N")){
+                    progressBar.setVisibility(View.GONE);
+                }else if((extras.getString("PB")).equals("Y")){
+                    progressBar.setVisibility(View.VISIBLE);
+                }
+            }
+        }
+
+
 
         // instantiating AWSLoginModel(context, callback)
         awsLoginModel = new AWSLoginModel(Login.this, Login.this);
         findViewById(R.id.loginButton).setOnClickListener(this);
         findViewById(R.id.registroButton).setOnClickListener(this);
         findViewById(R.id.OlvidoContra).setOnClickListener(this);
+
     }
 
     @Override
@@ -44,11 +65,16 @@ public class Login extends AppCompatActivity implements View.OnClickListener, AW
 
     @Override
     public void onSignInSuccess() {
-            Login.this.startActivity(new Intent(Login.this, MenuPrincipal.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+        ProgressBar progressBar = findViewById(R.id.progressBar2);
+        progressBar.setVisibility(View.VISIBLE);
+
+        Login.this.startActivity(new Intent(Login.this, MenuPrincipal.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
     }
 
     @Override
     public void onFailure(int process, Exception exception) {
+
+
         exception.printStackTrace();
         String whatProcess = "";
         switch (process) {
@@ -59,6 +85,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener, AW
         if(whatProcess.equals("Sign In:")){
             Toast.makeText(getApplicationContext(),
                     "El correo o la contraseña no son correctos. Intenta nuevamente!!", Toast.LENGTH_LONG).show();
+
         }else {
             Toast.makeText(Login.this, whatProcess + " Error->" + exception.getMessage(), Toast.LENGTH_LONG).show();
         }
@@ -81,14 +108,16 @@ public class Login extends AppCompatActivity implements View.OnClickListener, AW
 
     private void loginAction() {
 
+        ProgressBar progressBar = findViewById(R.id.progressBar2);
         EditText userOrEmail = findViewById(R.id.loginUserOrEmail);
         EditText password = findViewById(R.id.loginPassword);
-
+        progressBar.setVisibility(View.VISIBLE);
 
         if(userOrEmail.getText().toString().equals("") && password.getText().toString().equals("")) {
             // do sign in and handles on interface
             Toast.makeText(getApplicationContext(),
                     "Los valores están vacíos, intenta nuevamente!!", Toast.LENGTH_LONG).show();
+            progressBar.setVisibility(View.GONE);
         }else{
             awsLoginModel.signInUser(userOrEmail.getText().toString(), password.getText().toString());
             AWSMobileClient.getInstance().initialize(Login.this, new AWSStartupHandler() {
@@ -99,12 +128,22 @@ public class Login extends AppCompatActivity implements View.OnClickListener, AW
                         @Override
                         public void onComplete(StartupAuthResult authResults) {
                             if (authResults.isUserSignedIn()) {
+
+
                                 startActivity(new Intent(Login.this, MenuPrincipal.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                             } else {
-                                startActivity(new Intent(Login.this, Login.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                                Intent i = new Intent(Login.this, Login.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                i.putExtra("PB","N");
+                                startActivity(i);
+                                //startActivity(new Intent(Login.this, Login.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                             }
                         }
-                    }, 3000);
+                    }, 5000);
+                    try {
+                        Thread.sleep(5000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             }).execute();
         }

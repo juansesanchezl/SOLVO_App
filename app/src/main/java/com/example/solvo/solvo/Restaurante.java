@@ -132,7 +132,7 @@ public class Restaurante extends FragmentActivity implements
             public void onMyLocationChange(Location location) {
                 if(iterador == 0) {
                 CameraUpdate center = CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude()));
-                CameraUpdate zoom = CameraUpdateFactory.zoomTo(14);
+                CameraUpdate zoom = CameraUpdateFactory.zoomTo(12);
                 mMap.moveCamera(center);
                 mMap.animateCamera(zoom);
                     iterador++;
@@ -161,7 +161,7 @@ public class Restaurante extends FragmentActivity implements
         LatLng latLng = new LatLng(Lat,Log);
         mMap.addMarker(new MarkerOptions().position(latLng).title(Titulo));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12));
     }
 
     public void permisosLocalizacion() {
@@ -316,16 +316,6 @@ public class Restaurante extends FragmentActivity implements
     @Override
     public void onLocationChanged(Location location) {
         lastLocation = location;
-        /*if(currentLocationMarker != null){
-            currentLocationMarker.remove();
-        }
-
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(latLng);
-        markerOptions.title("USTED ESTA AQUÍ");
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
-
-        currentLocationMarker = mMap.addMarker(markerOptions);*/
         LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
         //Mover la camara al haber un cambio de localización y hacerle un zoom x10
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));

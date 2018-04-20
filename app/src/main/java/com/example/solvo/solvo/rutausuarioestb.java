@@ -126,7 +126,7 @@ public class rutausuarioestb extends FragmentActivity implements OnMapReadyCallb
             public void onMyLocationChange(Location location) {
             if(iterador == 0) {
                 CameraUpdate center = CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude()));
-                CameraUpdate zoom = CameraUpdateFactory.zoomTo(12.5f);
+                CameraUpdate zoom = CameraUpdateFactory.zoomTo(12);
                 mMap.moveCamera(center);
                 mMap.animateCamera(zoom);
                 iterador++;
@@ -287,9 +287,8 @@ public class rutausuarioestb extends FragmentActivity implements OnMapReadyCallb
                 }
                 markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
                 mMap.addMarker(markerOptions);
-                float zoomLevel = 16.0f; //This goes up to 21
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLngi, zoomLevel));
-                mMap.animateCamera(CameraUpdateFactory.zoomBy(12.5f));
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(latLngi));
+                mMap.animateCamera(CameraUpdateFactory.zoomBy(1.0f));
             } else {
                 Toast.makeText(getApplicationContext(), "Direction not found!", Toast.LENGTH_SHORT).show();
             }

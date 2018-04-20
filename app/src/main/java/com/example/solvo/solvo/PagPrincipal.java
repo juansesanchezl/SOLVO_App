@@ -36,7 +36,11 @@ public class PagPrincipal extends AppCompatActivity {
                             if (authResults.isUserSignedIn()) {
                                 startActivity(new Intent(PagPrincipal.this, MenuPrincipal.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                             } else {
-                                startActivity(new Intent(PagPrincipal.this, Login.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                                Intent i = new Intent(PagPrincipal.this, Login.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                i.putExtra("PB","N");
+                                startActivity(i);
+                                //startActivity(new Intent(PagPrincipal.this, Login.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+
                             }
                         }
                     }, 3000);

@@ -1,9 +1,12 @@
 package com.example.solvo.solvo;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -13,6 +16,8 @@ import com.solvo.awsandroid.AWSLoginModel;
 public class Registro extends AppCompatActivity implements View.OnClickListener, AWSRegistryHandler {
 
     AWSLoginModel awsLoginModel;
+    //LINK Declaración de Derechos y  Responsabilidades SOLVO:
+    // http://pegasus.javeriana.edu.co/~CIS1730CP08/docs/SOLVO-DTyR.pdf
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,6 +131,11 @@ public class Registro extends AppCompatActivity implements View.OnClickListener,
 
     }
     private void mostrarCondiciones(){
+        //Uri uri = Uri.parse("http://pegasus.javeriana.edu.co/~CIS1730CP08/docs/SOLVO-DTyR.pdf#glossary");
+        //Uri uri = Uri.parse("https://www.pdfescape.com/shared/?773762BA4F4D5FDB3720CC3525EF8D50D5831809B7ABA99C");
+        Uri uri = Uri.parse("https://drive.google.com/file/d/15d01u_Et_SpI1ATtcNTiTPRlJZ0rWs57/view?usp=sharing");
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(intent);
 
     }
 
