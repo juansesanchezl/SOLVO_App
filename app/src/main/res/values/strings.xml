@@ -13,4 +13,10 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_restaurante">Map</string>
     <string name="title_activity_rutausuarioestb">Map</string>
+    <string name="title_activity_parqueadero">Map</string>
+    <string name="title_activity_alojamiento">Map</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_est_servicio">Map</string>
+    <string name="title_activity_peaje">Map</string>
+    <string name="title_activity_taller">Map</string>
 </resources>

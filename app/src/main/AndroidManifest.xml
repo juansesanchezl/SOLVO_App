@@ -62,6 +62,41 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.solvo.solvo.MasInformacion" />
         </activity>
+        <activity
+            android:name=".Parqueadero"
+            android:label="@string/title_activity_parqueadero">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.solvo.solvo.MenuPrincipal" />
+        </activity>
+        <activity
+            android:name=".Alojamiento"
+            android:label="@string/title_activity_alojamiento">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.solvo.solvo.MenuPrincipal" />
+        </activity>
+        <activity
+            android:name=".EstServicio"
+            android:label="@string/title_activity_est_servicio">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.solvo.solvo.MenuPrincipal" />
+        </activity>
+        <activity
+            android:name=".Peaje"
+            android:label="@string/title_activity_peaje">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.solvo.solvo.MenuPrincipal" />
+        </activity>
+        <activity
+            android:name=".Taller"
+            android:label="@string/title_activity_taller">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.solvo.solvo.MenuPrincipal" />
+        </activity>
     </application>
 
 </manifest>
