@@ -1,7 +1,7 @@
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:map="http://schemas.android.com/apk/res-auto"
@@ -10,80 +10,24 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="360dp"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         tools:context="com.example.solvo.solvo.Restaurante" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginEnd="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="360dp"
-        >
-
-        <TableRow
-            android:id="@+id/TRBuscar"
-            android:layout_width="match_parent"
-            android:layout_height="46dp">
-
-            <EditText
-                android:id="@+id/TextBusqu"
-                android:layout_width="172dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginLeft="11dp"
-                android:layout_marginStart="11dp"
-                android:ems="10"
-                android:inputType="textPersonName" />
-
-            <Button
-                android:id="@+id/btnBusq"
-                android:layout_width="144dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginEnd="15dp"
-                android:layout_marginRight="15dp"
-                android:onClick="onClick"
-                android:text="Buscar" />
-
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/TRBotones"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <Button
-                android:id="@+id/btnRest"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="onClick"
-                android:text="Restaurante" />
-
-            <Button
-                android:id="@+id/btnPark"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="onClick"
-                android:text="Parking" />
-
-            <Button
-                android:id="@+id/btnEstSer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="onClick"
-                android:text="Estación de Servicio" />
-
-        </TableRow>
-
-    </LinearLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="19dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginStart="24dp"
+        app:srcCompat="@android:drawable/ic_dialog_map" />
 
 
 </RelativeLayout>

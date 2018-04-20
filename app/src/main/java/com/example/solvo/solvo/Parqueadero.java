@@ -295,7 +295,8 @@ public class Parqueadero extends FragmentActivity implements
                     String disponibilidad = "No Disponible";
                     double lat = Double.parseDouble(googlePlace.get("lat"));
                     double lng = Double.parseDouble(googlePlace.get("lng"));
-                    String icon = googlePlace.get("icon");
+                    //String icon = googlePlace.get("icon");
+                    String icon = "https://upload.wikimedia.org/wikipedia/commons/d/d1/6.4_%28Road_sign%29.png";
                     if((Boolean.parseBoolean(googlePlace.get("open_now")))==true){
                         disponibilidad = "Abierto";
                     }else if((Boolean.parseBoolean(googlePlace.get("open_now")))== false){

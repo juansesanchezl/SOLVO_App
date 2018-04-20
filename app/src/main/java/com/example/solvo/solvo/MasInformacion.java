@@ -3,8 +3,15 @@ package com.example.solvo.solvo;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.ColorFilter;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.Icon;
 import android.media.Rating;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -99,6 +106,7 @@ public class MasInformacion extends AppCompatActivity {
                 tvDir.setText("Dirección: "+dir);
                 tvPrecio.setText("Nivel de Precio: "+precio);
                 tvDisp.setText("Disponibilidad: "+disp);
+
                 if(!calif.isEmpty()) {
                     tvCalif.setText("Calificación: "+calif);
                     tvRating.setRating(Float.parseFloat(calif));
