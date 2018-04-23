@@ -65,8 +65,6 @@ public class Restaurante extends FragmentActivity implements
     int PROXIMITY_RADIUS = 1000000;
     double latitudeUser, longitudeUser;
     public List<HashMap<String,String>> restaurantes = null;
-    public List<HashMap<String,String>> parqueaderos = null;
-    public List<HashMap<String,String>> estservicio = null;
     String tipoServ = "Ninguno";
     int iterador = 0;
     String API_PLACES_KEY = "AIzaSyCdzg_lWvwmqIAFkB2mNL-yqyIsJ99o8GI";
@@ -91,7 +89,7 @@ public class Restaurante extends FragmentActivity implements
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, Html.fromHtml("<font color=\"#FFBF00\">CARGANDO PARQUEADEROS...</font>"), Snackbar.LENGTH_LONG)
+                Snackbar.make(view, Html.fromHtml("<font color=\"#FFBF00\">CARGANDO RESTAURANTES...</font>"), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
                 visualizarRestaurantes();
             }
@@ -164,28 +162,6 @@ public class Restaurante extends FragmentActivity implements
                 .build();
         googleApiClient.connect();
     }
-/*
-    public void addMarkerMap (double Lat, double Log, String Titulo){
-        LatLng latLng = new LatLng(Lat,Log);
-        mMap.addMarker(new MarkerOptions().position(latLng).title(Titulo));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12));
-    }
-
-    public void permisosLocalizacion() {
-        if (ContextCompat.checkSelfPermission(Restaurante.this,
-                Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(Restaurante.this,
-                    Manifest.permission.ACCESS_FINE_LOCATION)) {
-                mMap.setMyLocationEnabled(true);
-            } else {
-                ActivityCompat.requestPermissions(Restaurante.this,
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-            }
-        }
-    }
-*/
 
     private void visualizarRestaurantes(){
 
@@ -221,124 +197,6 @@ public class Restaurante extends FragmentActivity implements
         Toast.makeText(Restaurante.this, "Mostrando Restaurantes Cercanos", Toast.LENGTH_LONG).show();
     }
 
-    /*public void onClick(View view){
-
-        Object dataTransfer[] = new Object[3];
-        String url = "";
-        GetNearByPlacesData getNearByPlacesData;
-        String googlePDRestaurante;
-
-        if(view.getId() == R.id.btnBusq) {
-            EditText locDestino = this.findViewById(R.id.TextBusqu);
-            String location = locDestino.getText().toString();
-            List<Address> addressList = null;
-            MarkerOptions mo = new MarkerOptions();
-            if (!location.equals("")) {
-                Geocoder geocoder = new Geocoder(this);
-                try {
-                    addressList = geocoder.getFromLocationName(location, 5);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                for (int i = 0; i < addressList.size(); ++i) {
-                    Address miDireccion = addressList.get(i);
-                    LatLng latLng = new LatLng(miDireccion.getLatitude(), miDireccion.getLongitude());
-                    mo.position(latLng);
-                    mo.title("Tu búsqueda");
-                    mMap.addMarker(mo);
-                    mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-                }
-
-            }
-        }else if(view.getId() == R.id.btnRest) {
-
-
-            System.out.println("RESTAURANTES");
-            mMap.clear();
-            //String restaurante = "restaurant";
-            String restaurante = "bakery";
-            url = getUrl(latitudeUser, longitudeUser, restaurante);
-            dataTransfer[0] = mMap;
-            dataTransfer[1] = url;
-            getNearByPlacesData = new GetNearByPlacesData();
-            try {
-                googlePDRestaurante = getNearByPlacesData.execute(dataTransfer).get();
-                DataParser parser = new DataParser();
-                restaurantes = parser.parse(googlePDRestaurante);
-                guardarLugares(restaurantes);
-                tipoServ = "RESTAURANTE";
-
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            }
-            if(restaurantes == null){
-                System.out.println("Esta Vacio restaurantes");
-                restaurantes = getNearByPlacesData.nearbyPlaceList;
-            }
-            Toast.makeText(Restaurante.this, "Mostrando Restaurantes Cercanos", Toast.LENGTH_LONG).show();
-
-        }else if(view.getId() == R.id.btnPark) {
-
-            System.out.println("PARQUEADEROS");
-            mMap.clear();
-            String parking = "parking";
-            url = getUrl(latitudeUser, longitudeUser, parking);
-
-            dataTransfer[0] = mMap;
-            dataTransfer[1] = url;
-            getNearByPlacesData = new GetNearByPlacesData();
-            try {
-                googlePDRestaurante = getNearByPlacesData.execute(dataTransfer).get();
-                DataParser parser = new DataParser();
-                parqueaderos = parser.parse(googlePDRestaurante);
-                guardarLugares(parqueaderos);
-                tipoServ = "PARQUEADERO";
-
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            }
-            if(parqueaderos == null){
-                System.out.println("Esta Vacio parqueaderos");
-                parqueaderos = getNearByPlacesData.nearbyPlaceList;
-            }
-            Toast.makeText(Restaurante.this, "Mostrando Parqueaderos Cercanos", Toast.LENGTH_LONG).show();
-
-
-
-        }else if(view.getId() == R.id.btnEstSer) {
-
-            System.out.println("ESTACIONES-DE-SERVICIO");
-            mMap.clear();
-            String EstServicio = "gas_station";
-            url = getUrl(latitudeUser, longitudeUser, EstServicio);
-            dataTransfer[0] = mMap;
-            dataTransfer[1] = url;
-            getNearByPlacesData = new GetNearByPlacesData();
-            try {
-                googlePDRestaurante = getNearByPlacesData.execute(dataTransfer).get();
-                DataParser parser = new DataParser();
-                estservicio = parser.parse(googlePDRestaurante);
-                guardarLugares(estservicio);
-                tipoServ = "ESTACION DE SERVICIO";
-
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            }
-            if(estservicio == null){
-                System.out.println("Esta Vacio estacion de servicio");
-                estservicio = getNearByPlacesData.nearbyPlaceList;
-            }
-            Toast.makeText(Restaurante.this, "Mostrando Estaciones de Servicio Cercanos", Toast.LENGTH_LONG).show();
-
-        }
-    }*/
 
     private String getUrl(double latitude, double longitude, String nearbyPlace){
 
@@ -450,8 +308,8 @@ public class Restaurante extends FragmentActivity implements
                     double lat = Double.parseDouble(googlePlace.get("lat"));
                     double lng = Double.parseDouble(googlePlace.get("lng"));
                     //String icon = googlePlace.get("icon");
-                    String icon = "https://image.flaticon.com/icons/png/128/52/52172.png";
-
+                    //String icon = "https://image.flaticon.com/icons/png/128/52/52172.png";
+                    String icon = "http://pegasus.javeriana.edu.co/~CIS1730CP08/img/ICONOS/Restaurante.png";
                     if ((Boolean.parseBoolean(googlePlace.get("open_now"))) == true) {
                         disponibilidad = "Abierto";
                     } else if ((Boolean.parseBoolean(googlePlace.get("open_now"))) == false) {

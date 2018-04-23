@@ -160,6 +160,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener, AW
 
     private void olvidarContraAction(){
         //Enviar al correo contraseña
+        Toast.makeText(Login.this, "ESTA FUNCIÓN SE ENCUENTRA EN CONSTRUCCIÓN", Toast.LENGTH_LONG).show();
     }
 
 

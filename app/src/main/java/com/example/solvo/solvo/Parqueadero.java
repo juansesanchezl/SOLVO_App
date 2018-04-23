@@ -53,9 +53,7 @@ public class Parqueadero extends FragmentActivity implements
     public static final int REQUEST_LOCATION_CODE = 99;
     int PROXIMITY_RADIUS = 1000000;
     double latitudeUser, longitudeUser;
-    public List<HashMap<String,String>> restaurantes = null;
     public List<HashMap<String,String>> parqueaderos = null;
-    public List<HashMap<String,String>> estservicio = null;
     String tipoServ = "Ninguno";
     int iterador = 0;
     String API_PLACES_KEY = "AIzaSyCdzg_lWvwmqIAFkB2mNL-yqyIsJ99o8GI";
@@ -68,17 +66,10 @@ public class Parqueadero extends FragmentActivity implements
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             checkLocationPermission();
         }
-
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        /*try {
-            Thread.sleep(20000);
-
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }*/
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -182,7 +173,7 @@ public class Parqueadero extends FragmentActivity implements
             e.printStackTrace();
         }
         if(parqueaderos == null){
-            System.out.println("Esta Vacio parqueaderos");
+            System.out.println("Esta Vacio alojamientos");
             parqueaderos = getNearByPlacesData.nearbyPlaceList;
         }
         Toast.makeText(Parqueadero.this, "Mostrando Parqueaderos Cercanos", Toast.LENGTH_LONG).show();
@@ -296,64 +287,8 @@ public class Parqueadero extends FragmentActivity implements
                     double lat = Double.parseDouble(googlePlace.get("lat"));
                     double lng = Double.parseDouble(googlePlace.get("lng"));
                     //String icon = googlePlace.get("icon");
-                    String icon = "https://upload.wikimedia.org/wikipedia/commons/d/d1/6.4_%28Road_sign%29.png";
-                    if((Boolean.parseBoolean(googlePlace.get("open_now")))==true){
-                        disponibilidad = "Abierto";
-                    }else if((Boolean.parseBoolean(googlePlace.get("open_now")))== false){
-                        disponibilidad = "Cerrado";
-                    }
-                    i.putExtra("id", id_lugar);
-                    i.putExtra("name", nombre_estbl);
-                    i.putExtra("dir", direccion);
-                    i.putExtra("precio", nivel_precio);
-                    i.putExtra("calif", calificacion);
-                    i.putExtra("disp", disponibilidad);
-                    i.putExtra("lati",latitudeUser);
-                    i.putExtra("lngi",longitudeUser);
-                    i.putExtra("latf", lat);
-                    i.putExtra("lngf", lng);
-                    i.putExtra("tipo", tipoServ);
-                    i.putExtra("icono",icon);
-                    System.out.println("ID:"+id_lugar+" NAME:"+nombre_estbl);
-                    startActivity(i);
-                }
-            }
-        }else if(tipoServ.equals("ESTACION DE SERVICIO")){
-            System.out.println("TAMAÑO:"+ estservicio.size());
-            for (int j = 0; j < estservicio.size(); ++j) {
-                HashMap<String,String> googlePlace =  estservicio.get(j);
-                String id_lugar = googlePlace.get("place_id");
-                System.out.println(id_lugar+"--|--"+marker.getSnippet());
-                if(id_lugar.equals(marker.getSnippet())){
-                    String nombre_estbl = googlePlace.get("place_name");
-                    String direccion = googlePlace.get("vicinity");
-                    String nivel_precio = "No Disponible";
-                    int valoracionPrecio;
-                    if(!googlePlace.get("price_level").isEmpty()) {
-                        valoracionPrecio = Integer.parseInt(googlePlace.get("price_level"));
-                        switch (valoracionPrecio){
-                            case 0:
-                                nivel_precio = "Gratis";
-                                break;
-                            case 1:
-                                nivel_precio = "Barato";
-                                break;
-                            case 2:
-                                nivel_precio = "Moderado";
-                                break;
-                            case 3:
-                                nivel_precio = "Costoso";
-                                break;
-                            case 4:
-                                nivel_precio = "Muy Costoso";
-                                break;
-                        }
-                    }
-                    String calificacion = googlePlace.get("rating");
-                    String disponibilidad = "No Disponible";
-                    double lat = Double.parseDouble(googlePlace.get("lat"));
-                    double lng = Double.parseDouble(googlePlace.get("lng"));
-                    String icon = googlePlace.get("icon");
+                    //String icon = "https://upload.wikimedia.org/wikipedia/commons/d/d1/6.4_%28Road_sign%29.png";
+                    String icon = "http://pegasus.javeriana.edu.co/~CIS1730CP08/img/ICONOS/Parqueadero.png";
                     if((Boolean.parseBoolean(googlePlace.get("open_now")))==true){
                         disponibilidad = "Abierto";
                     }else if((Boolean.parseBoolean(googlePlace.get("open_now")))== false){

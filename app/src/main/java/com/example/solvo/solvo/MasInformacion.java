@@ -9,6 +9,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.Icon;
 import android.media.Rating;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -20,6 +21,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -99,7 +101,21 @@ public class MasInformacion extends AppCompatActivity {
                 System.out.println("Icono-->"+icono);
                 System.out.println("Lati:"+lati+" lngi:"+lngi);
                 System.out.println("Latf:"+latf+" lngf:"+lngf);
+                Button tvNavegar = (Button) findViewById(R.id.btnNavegar);
+                tvNavegar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        navegarRuta(latf,lngf);
+                    }
+                });
 
+                Button tvComentar = (Button) findViewById(R.id.btnComentar);
+                tvComentar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(MasInformacion.this, "ESTA FUNCIÓN SE ENCUENTRA EN CONSTRUCCIÓN", Toast.LENGTH_LONG).show();
+                    }
+                });
                 tvTipo.setText(tipo);
                 tvId.setText(id);
                 tvName.setText("Nombre: "+name);
@@ -133,6 +149,15 @@ public class MasInformacion extends AppCompatActivity {
         i.putExtra("lngf", lngf);
         i.putExtra("establ",nombreEstbl);
         startActivity(i);
+
+    }
+
+    private void navegarRuta (Double latf, Double lngf){
+        String latlng = latf+","+lngf;
+        Uri gmmIntentUri = Uri.parse("google.navigation:q="+latlng);
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        mapIntent.setPackage("com.google.android.apps.maps");
+        startActivity(mapIntent);
 
     }
 
