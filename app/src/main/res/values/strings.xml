@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">SOLVO</string>
-    <string name="usernam">pepe123</string>
-    <string name="correoe">pepe123@gmail.com</string>
+    <string name="usernam">chucho123</string>
+    <string name="correoe">chucho123@gmail.com</string>
     <string name="pass">*******</string>
-    <string name="numTel">+573103186693</string>
+    <string name="numTel">3103186693</string>
     <string name="confNum">000000</string>
     <string name="title_activity_menu_prin">MenuPrin</string>
 

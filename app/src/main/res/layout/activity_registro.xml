@@ -6,278 +6,334 @@
     android:layout_height="match_parent"
     tools:context="com.example.solvo.solvo.Login">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent">
 
-        <TableLayout
-            android:layout_width="273dp"
-            android:layout_height="417dp"
-            android:layout_margin="25dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <TableRow
-                android:id="@+id/TRNombre"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+            <TableLayout
+                android:layout_width="330dp"
+                android:layout_height="483dp"
+                android:layout_margin="25dp">
+
+                <TableRow
+                    android:id="@+id/TRNombre"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textView4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Nombre:"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:id="@+id/NombreU"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:hint="Chucho Cadena"
+                        android:inputType="textPersonName"
+                        android:textSize="15sp" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/TRNumero"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Número:"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:id="@+id/phoneU"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:hint="@string/numTel"
+                        android:inputType="textPersonName"
+                        android:textSize="15sp" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/TRUsuario"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Usuario:"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:id="@+id/registerUsername"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:hint="@string/usernam"
+                        android:inputType="text"
+                        android:lines="1"
+                        android:textSize="15sp" />
+
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/TRFechaNac"
+                    android:layout_width="356dp"
+                    android:layout_height="61dp">
+
+                    <TextView
+                        android:id="@+id/textView5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Fecha Nacimiento:"
+                        android:textSize="15sp" />
+
+                    <Button
+                        android:id="@+id/btnFechaNac"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:text="Escoger" />
+
+                    <!--<EditText
+                        android:id="@+id/FechaNacU"
+                        android:layout_width="115dp"
+                        android:layout_height="match_parent"
+                        android:ems="10"
+                        android:hint="YYYY-MM-DD"
+                        android:inputType="textPersonName"
+                        android:textSize="15sp" />-->
+
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/TRGen"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp">
+
+                    <TextView
+                        android:id="@+id/textView6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Género:"
+                        android:textSize="15sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:orientation="vertical">
+
+                        <RadioGroup
+                            android:id="@+id/radiogrp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                            <RadioButton
+                                android:id="@+id/rbtnM"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Masculino" />
+
+                            <RadioButton
+                                android:id="@+id/rbtnF"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Femenino" />
+                        </RadioGroup>
+
+                    </LinearLayout>
+
+                    <!--<EditText
+                        android:id="@+id/GenU"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:hint="M/F"
+                        android:inputType="textPersonName"
+                        android:textSize="15sp" />-->
+
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/TRCiudad"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textView7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ciudad:"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:id="@+id/CiudadU"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:hint="Bogotá"
+                        android:inputType="textPersonName"
+                        android:textSize="15sp" />
+                </TableRow>
+
+                <TableRow android:id="@+id/TREmail">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Correo E:"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:id="@+id/registerEmail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/correoe"
+                        android:inputType="textWebEmailAddress"
+                        android:lines="1"
+                        android:textSize="15sp" />
+
+                </TableRow>
+
+                <TableRow android:id="@+id/TRPass">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Contraseña:"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:id="@+id/registerPassword"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/pass"
+                        android:inputType="textPassword"
+                        android:lines="1"
+                        android:textSize="15sp" />
+
+                </TableRow>
 
                 <TextView
-                    android:id="@+id/textView4"
+                    android:id="@+id/condicionesTV"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Nombre:" />
-
-                <EditText
-                    android:id="@+id/NombreU"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="Pepe Cadena"
-                    android:inputType="textPersonName"
-                    android:textSize="12sp" />
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/TRNumero"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Número:" />
-
-                <EditText
-                    android:id="@+id/phoneU"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="@string/numTel"
-                    android:inputType="textPersonName"
-                    android:textSize="12sp" />
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/TRUsuario"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Usuario:" />
-
-                <EditText
-                    android:id="@+id/registerUsername"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="@string/usernam"
-                    android:inputType="text"
-                    android:lines="1"
+                    android:layout_height="20dp"
+                    android:text="Al registrarse acepta los terminos y condiciones"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/holo_blue_dark"
                     android:textSize="12sp" />
 
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/TRFechaNac"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/textView5"
-                    android:layout_width="wrap_content"
+                <Button
+                    android:id="@+id/registerButton"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Fecha Nacimiento:" />
-
-                <EditText
-                    android:id="@+id/FechaNacU"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="YYYY-MM-DD"
-                    android:inputType="textPersonName"
-                    android:textSize="12sp" />
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/TRGen"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/textView6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Género:" />
-
-                <EditText
-                    android:id="@+id/GenU"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="M/F"
-                    android:inputType="textPersonName"
-                    android:textSize="12sp" />
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/TRCiudad"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/textView7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Ciudad:" />
-
-                <EditText
-                    android:id="@+id/CiudadU"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="Bogotá"
-                    android:inputType="textPersonName"
-                    android:textSize="12sp" />
-            </TableRow>
-
-            <TableRow android:id="@+id/TREmail">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Correo E:" />
-
-                <EditText
-                    android:id="@+id/registerEmail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/correoe"
-                    android:inputType="textWebEmailAddress"
-                    android:lines="1"
-                    android:textSize="12sp" />
-
-            </TableRow>
-
-            <TableRow android:id="@+id/TRPass">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Contraseña:" />
-
-                <EditText
-                    android:id="@+id/registerPassword"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/pass"
-                    android:inputType="textPassword"
-                    android:lines="1"
-                    android:textSize="12sp" />
-
-            </TableRow>
-
-            <TextView
-                android:id="@+id/condicionesTV"
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:text="Al registrarse acepta los terminos y condiciones"
-                android:textAlignment="center"
-                android:textColor="@android:color/holo_blue_dark"
-                android:textSize="11sp" />
-
-            <Button
-                android:id="@+id/registerButton"
-                android:layout_width="match_parent"
-                android:layout_height="36dp"
-                android:text="Registrar"
-                android:textSize="12sp" />
-
-            <TableRow>
+                    android:text="Registrar"
+                    android:textSize="14sp" />
 
                 <Button
                     android:id="@+id/confirmButton"
                     android:layout_width="wrap_content"
-                    android:layout_height="32dp"
+                    android:layout_height="wrap_content"
                     android:text="confirmar"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
-                <EditText
-                    android:id="@+id/confirmationCode"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:hint="@string/confNum"
-                    android:textSize="12sp" />
-            </TableRow>
+                <!--<TableRow>
 
-            <Button
-                android:id="@+id/continuarButton"
+                    <Button
+                        android:id="@+id/confirmButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="33dp"
+                        android:text="confirmar"
+                        android:textSize="12sp" />
+
+                    <EditText
+                        android:id="@+id/confirmationCode"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="@string/confNum"
+                        android:textSize="12sp" />
+                </TableRow>
+
+                <Button
+                    android:id="@+id/continuarButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:text="Iniciar Sesión"
+                    android:textSize="11sp" />-->
+
+            </TableLayout>
+            <!--
+            <TableLayout
                 android:layout_width="wrap_content"
-                android:layout_height="35dp"
-                android:text="Iniciar Sesión"
-                android:textSize="11sp" />
-
-        </TableLayout>
-        <!--
-        <TableLayout
-            android:layout_width="wrap_content"
-            android:layout_height="138dp"
-            android:layout_margin="25dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_span="3"
-                android:text="Login Section" />
-
-
-            <TableRow>
+                android:layout_height="138dp"
+                android:layout_margin="25dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Username/E-mail:" />
+                    android:layout_span="3"
+                    android:text="Login Section" />
 
-                <EditText
-                    android:id="@+id/loginUserOrEmail"
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Username/E-mail:" />
+
+                    <EditText
+                        android:id="@+id/loginUserOrEmail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="text"
+                        android:lines="1" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Password:" />
+
+                    <EditText
+                        android:id="@+id/loginPassword"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPassword"
+                        android:lines="1" />
+
+                </TableRow>
+
+                <Button
+                    android:id="@+id/loginButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="text"
-                    android:lines="1" />
+                    android:text="Login" />
 
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Password:" />
-
-                <EditText
-                    android:id="@+id/loginPassword"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:inputType="textPassword"
-                    android:lines="1" />
-
-            </TableRow>
-
-            <Button
-                android:id="@+id/loginButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Login" />
-
-        </TableLayout>
-        -->
-    </LinearLayout>
+            </TableLayout>
+            -->
+        </LinearLayout>
+    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>
