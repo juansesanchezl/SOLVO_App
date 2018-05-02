@@ -247,7 +247,7 @@
                     android:text="Registrar"
                     android:textSize="14sp" />
 
-                <Button
+                    <Button
                     android:id="@+id/confirmButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

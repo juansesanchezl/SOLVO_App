@@ -77,6 +77,7 @@ public class Registro extends AppCompatActivity implements View.OnClickListener,
     public void onRegisterSuccess(boolean mustConfirmToComplete) {
         if (mustConfirmToComplete) {
             Toast.makeText(Registro.this, "Almost done! Confirm code to complete registration", Toast.LENGTH_LONG).show();
+            //REGISTRAR USUARIO EN BD
         } else {
             Toast.makeText(Registro.this, "Registered! Login Now!", Toast.LENGTH_LONG).show();
         }

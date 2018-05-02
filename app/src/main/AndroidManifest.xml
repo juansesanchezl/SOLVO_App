@@ -100,7 +100,8 @@
                 android:value="com.example.solvo.solvo.MenuPrincipal" />
         </activity>
         <activity android:name=".Derechos" />
-        <activity android:name=".confirmationCode"></activity>
+        <activity android:name=".confirmationCode" />
+        <activity android:name=".RestablecerContra"></activity>
     </application>
 
 </manifest>
