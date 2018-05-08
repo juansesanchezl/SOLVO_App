@@ -1,5 +1,6 @@
 package com.example.solvo.solvo;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -9,12 +10,14 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.amazonaws.auth.CognitoCachingCredentialsProvider;
 import com.amazonaws.mobile.auth.core.IdentityManager;
 import com.amazonaws.mobile.auth.core.StartupAuthResult;
 import com.amazonaws.mobile.auth.core.StartupAuthResultHandler;
 import com.amazonaws.mobile.client.AWSMobileClient;
 import com.amazonaws.mobile.client.AWSStartupHandler;
 import com.amazonaws.mobile.client.AWSStartupResult;
+import com.amazonaws.regions.Regions;
 import com.solvo.awsandroid.AWSLoginModel;
 import com.solvo.awsandroid.AWSRegistryHandler;
 
@@ -23,11 +26,13 @@ import com.solvo.awsandroid.AWSRegistryHandler;
 public class Login extends AppCompatActivity implements View.OnClickListener, AWSRegistryHandler {
 
     AWSLoginModel awsLoginModel;
+    public static Context contexta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        contexta = getApplicationContext();
         ProgressBar progressBar = findViewById(R.id.progressBar2);
         progressBar.setVisibility(View.GONE);
         if(savedInstanceState == null){
@@ -51,6 +56,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener, AW
         findViewById(R.id.registroButton).setOnClickListener(this);
         findViewById(R.id.OlvidoContra).setOnClickListener(this);
 
+    }
+
+    public static Context getContext(){
+        return contexta;
     }
 
     @Override
@@ -164,6 +173,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener, AW
         startActivity(new Intent(Login.this, RestablecerContra.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
 
     }
+
+
 
 
 }

@@ -1,6 +1,9 @@
 package com.example.solvo.solvo;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -19,13 +22,28 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.SQLib.DBClave;
+import com.SQLib.MySingleton;
 import com.amazonaws.mobile.auth.core.IdentityManager;
 import com.amazonaws.mobile.auth.core.StartupAuthResult;
 import com.amazonaws.mobile.auth.core.StartupAuthResultHandler;
 import com.amazonaws.mobile.client.AWSMobileClient;
 import com.amazonaws.mobile.client.AWSStartupHandler;
 import com.amazonaws.mobile.client.AWSStartupResult;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.dynamodb.ActualizarTabla;
 import com.solvo.awsandroid.AWSLoginModel;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MenuPrincipal extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -47,6 +65,19 @@ public class MenuPrincipal extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        insertarInfoEnDB();
+
+        /*System.out.println("ENTRO***2");
+        //loadDataFromDbToTextView("chucho123");
+
+        ActualizarTabla actualizarTabla = new ActualizarTabla();
+        Object dataTransfer[] = new Object[3];
+        dataTransfer[0] = MenuPrincipal.this;
+        actualizarTabla.execute(dataTransfer);
+
+        System.out.println("ENTRO***3");
+        //saveDataToDatabase("maria1233@gmail.com","maria123","Maria");*/
 
         /*BOTONES*/
         Button btnRestaurante = (Button) findViewById(R.id.btnRestaurante);
@@ -194,4 +225,68 @@ public class MenuPrincipal extends AppCompatActivity
         MenuPrincipal.this.startActivity(new Intent(MenuPrincipal.this, PagPrincipal.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
 
     }
+
+    public boolean checkNetworkConnection(){
+        ConnectivityManager connectivityManager = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        return(networkInfo!=null && networkInfo.isConnected());
+    }
+
+    private void insertarInfoEnDB(){
+
+        System.out.println("ENTRO*****1");
+        if(checkNetworkConnection()){
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, DBClave.SERVER_URL,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                System.out.println("ENTRO*****2");
+                                JSONObject jsonObject = new JSONObject(response);
+                                System.out.println("ENTRO*****2-1");
+                                String Response = jsonObject.getString("response");
+                                System.out.println("ENTRO*****2-3");
+                                if(Response != null){
+                                    System.out.println(Response);
+                                }
+                                if(Response.equals("INSERTADO")){
+                                    System.out.println("ENTRO*****2-4");
+                                    notifyUser("CONDUCTOR INSERTADO");
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                }
+            }){
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    System.out.println("ENTRO*****3");
+                    Map<String,String> params = new HashMap<>();
+                    params.put("conUsername","sofia123");
+                    params.put("conEmail","sofia123@gmail.com");
+                    params.put("conNombre","Sofia");
+                    //return super.getParams();
+                    return params;
+                }
+            };
+            System.out.println("ENTRO*****4");
+            MySingleton.getmInstance(MenuPrincipal.this).addToRequestQue(stringRequest);
+            System.out.println("ENTRO*****5");
+        }else{
+            notifyUser("NO HAY CONEXIÓN DE INTERNET");
+        }
+    }
+
+    private void notifyUser(String message){
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
 }

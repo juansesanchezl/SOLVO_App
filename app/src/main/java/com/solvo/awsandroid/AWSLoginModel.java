@@ -43,7 +43,7 @@ public class AWSLoginModel {
     public static final int PROCESS_SIGN_IN = 1;
     public static final int PROCESS_REGISTER = 2;
     public static final int PROCESS_CONFIRM_REGISTRATION = 3;
-
+    static String COGNITO_POOL_IDD ="";
     // interface handler
     private AWSRegistryHandler mCallback;
 
@@ -52,6 +52,7 @@ public class AWSLoginModel {
     private Context mContext;
     private CognitoUserPool mCognitoUserPool;
     private static CognitoUser mCognitoUser;
+
 
     private final AuthenticationHandler authenticationHandler = new AuthenticationHandler() {
         @Override
@@ -123,7 +124,9 @@ public class AWSLoginModel {
             final String COGNITO_CLIENT_ID = myJSON.getString("AppClientId");
             final String COGNITO_CLIENT_SECRET = myJSON.getString("AppClientSecret");
             final String REGION = myJSON.getString("Region");
+
             mCognitoUserPool = new CognitoUserPool(context, COGNITO_POOL_ID, COGNITO_CLIENT_ID, COGNITO_CLIENT_SECRET, Regions.fromName(REGION));
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -235,6 +238,18 @@ public class AWSLoginModel {
 
     public static CognitoUser getCognitoU(){
         return mCognitoUser;
+    }
+
+    public CognitoUserPool getCognitoPool(){
+        return mCognitoUserPool;
+    }
+
+    public static String Cognito_pool_id(){
+
+        return COGNITO_POOL_IDD;
+    }
+    public static Regions Cognito_Region(){
+        return Regions.US_EAST_1;
     }
 
 }
