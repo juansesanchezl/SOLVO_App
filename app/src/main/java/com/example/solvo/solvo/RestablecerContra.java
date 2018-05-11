@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,11 +22,16 @@ import com.dynamodb.Conductor;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.dynamodb.ManagerClass;
 
+import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 public class RestablecerContra extends AppCompatActivity {
 
     final static String LOG_TAG = RestablecerContra.class.getName();
-
+    public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
+            Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
     final static String IDENTITY_POOL_ID = "us-east-1:a22f778a-533b-4a40-8d52-78ac17263a31";
     private CognitoCachingCredentialsProvider credentialsProvider;
     private static final String TAG = RestablecerContra.class.getSimpleName();
@@ -56,11 +62,17 @@ public class RestablecerContra extends AppCompatActivity {
 
         final EditText etCorreo = (EditText) findViewById(R.id.etCorreo);
         Button btnRestaContra = (Button) findViewById(R.id.btnRestContra);
+
         btnRestaContra.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if(!etCorreo.getText().toString().isEmpty()){
-                    sendEmail();
+                    if (!validarEmail(etCorreo.getText().toString())){
+                        etCorreo.setError("Email no válido");
+                    }else {
+                        sendEmail(etCorreo.getText().toString().trim());
+                    }
 
                 }else{
                     Toast.makeText(RestablecerContra.this, "EL CAMPO ESTA VACIO", Toast.LENGTH_LONG).show();
@@ -77,98 +89,39 @@ public class RestablecerContra extends AppCompatActivity {
         });
     }
 
-
-
-    protected void sendEmail() {
-        new EnviarRestContra().execute("");
+    private boolean validarEmail(String email) {
+        Pattern pattern = Patterns.EMAIL_ADDRESS;
+        return pattern.matcher(email).matches();
     }
 
-   /* private class ActualizarTabla extends AsyncTask<Void,Integer,Integer>{
+    public static boolean validateCorreo(String emailStr) {
+        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(emailStr);
+        return matcher.find();
+    }
 
-
-        @Override
-        protected Integer doInBackground(Void... params) {
-
-            ManagerClass managerClass = new ManagerClass();
-            CognitoCachingCredentialsProvider credentialsProvider = managerClass.getCredentialsProvider(RestablecerContra.this);
-            Conductor conductor = new Conductor();
-            conductor.setNombre("Maria");
-            conductor.setCorreoE("maria123@gmail.com");
-            conductor.setUsername("maria123");
-            if (credentialsProvider != null && conductor != null) {
-                DynamoDBMapper dynamoDBMapper = managerClass.initDynamoClient(credentialsProvider);
-                dynamoDBMapper.save(conductor);
-            } else {
-                return 2;
-            }
-            return 1;
-        }
-
-        @Override
-        protected void onPostExecute(Integer integer) {
-            super.onPostExecute(integer);
-            if(integer == 1){
-                notifyUser("Todo Bien Todo Bien");
-            }else if(integer  ==  2){
-                notifyUser("Algo Salio Mal");
-            }
-        }
+    protected void sendEmail(String correoUs) {
+        Object dataTransfer[] = new Object[3];
+        //dataTransfer[0] = "juans.sanchezlopez@gmail.com";
+        dataTransfer[0] = correoUs;
+        dataTransfer[1] = "jasldkjasldkjasldkaldkja";
+        EnviarRestContra enviarRestContra =  new EnviarRestContra();
+        enviarRestContra.execute(dataTransfer);
     }
 
 
+   private class EnviarRestContra extends AsyncTask<Object, Integer, Void> {
 
-    private void loadDataFromDbToTextView(final String username){
-        new AsyncTask<Void, Void, Conductor>() {
-            @Override
-            protected Conductor doInBackground(final Void... params) {
-
-                Conductor conductor;
-
-                conductor = mapper.load(Conductor.class, username);
-
-                return conductor;
-            }
-
-            @Override
-            protected void onPostExecute(Conductor conductor){
-                //resultLoad.setText(userARN.getEndpointArn());
-                System.out.println(conductor.getCorreoE()+"-"+conductor.getUsername()+"-"+conductor.getNombre());
-            }
-        }.execute();
-    }
-
-    private void saveDataToDatabase(final String CorreoE, final String Username, final String Nombre){
-        new AsyncTask<Void, Void, String>() {
-            @Override
-            protected String doInBackground(final Void... params) {
-
-                Conductor conductor = new Conductor();
-                conductor.setCorreoE(CorreoE);
-                conductor.setUsername(Username);
-                conductor.setNombre(Nombre);
-                mapper.save(conductor);
-
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(String error){
-                notifyUser("Awesome!");
-                return;
-            }
-        }.execute();
-    }
-*/
-   private class EnviarRestContra extends AsyncTask<String, Integer, Void> {
-
+        String correoUsuario;
+        String passEncontrada;
        protected void onProgressUpdate() {
            //called when the background task makes any progress
        }
 
        @Override
-       protected Void doInBackground(String... strings) {
-           //notifyUser(enviarCorreo.enviarMail());
-           enviarCorreo.enviarCorreoE();
+       protected Void doInBackground(Object... objects) {
+           correoUsuario = (String) objects[0].toString();
+           passEncontrada = (String) objects[1].toString();
+           enviarCorreo.enviarCorreoE(correoUsuario,passEncontrada);
            return null;
        }
 
@@ -178,6 +131,8 @@ public class RestablecerContra extends AppCompatActivity {
        protected void onPostExecute() {
            //called after doInBackground() has finished
        }
+
+
    }
 
     private void notifyUser(String message){

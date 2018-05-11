@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="Correo Electrónico"
-                android:inputType="textPersonName" />
+                android:inputType="textEmailAddress" />
 
             <Button
                 android:id="@+id/btnRestContra"

@@ -20,9 +20,9 @@ import javax.mail.internet.MimeMultipart;
 
 public class enviarCorreo {
 
+    //https://www.oodlestechnologies.com/blogs/Send-Mail-in-Android-without-Using-Intent
 
-
-public static void enviarCorreoE (){
+public static void enviarCorreoE(final String correoUsuario, final String passEncontrada){
 
     new Thread(new Runnable() {
 
@@ -30,14 +30,12 @@ public static void enviarCorreoE (){
 
             try {
 
-                GMailSender sender = new GMailSender(
-                        "solvotg@gmail.com",
-                        "seminario1234");
-
+                GMailSender sender = new GMailSender("solvotg@gmail.com","seminario1234");
+                //GMailSender sender = new GMailSender(correoUsuario,"seminario1234");
                 //sender.addAttachment(Environment.getExternalStorageDirectory().getPath()+"/image.jpg");
-                sender.sendMail("Test mail", "This mail has been sent from android app along with attachment",
+                sender.sendMail("SOLVO - INFORMACIÓN", "Hola, tu contraseña es -->"+passEncontrada,
                         "solvotg@gmail.com",
-                        "solvotg@gmail.com");
+                        correoUsuario);
 
             } catch (Exception e) {
 
@@ -50,7 +48,7 @@ public static void enviarCorreoE (){
     }).start();
 }
 
-    public static String enviarMail(){
+/*    public static String enviarMail(){
         final String username = "solvotg@gmail.com";
         final String password = "seminario1234";
         String respuesta = "No se Envio";
@@ -101,5 +99,5 @@ public static void enviarCorreoE (){
         }
 
         return respuesta;
-    }
+    }*/
 }
