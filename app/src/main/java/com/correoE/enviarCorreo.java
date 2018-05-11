@@ -22,6 +22,33 @@ public class enviarCorreo {
 
 
 
+public static void enviarCorreoE (){
+
+    new Thread(new Runnable() {
+
+        public void run() {
+
+            try {
+
+                GMailSender sender = new GMailSender(
+                        "solvotg@gmail.com",
+                        "seminario1234");
+
+                //sender.addAttachment(Environment.getExternalStorageDirectory().getPath()+"/image.jpg");
+                sender.sendMail("Test mail", "This mail has been sent from android app along with attachment",
+                        "solvotg@gmail.com",
+                        "solvotg@gmail.com");
+
+            } catch (Exception e) {
+
+                System.out.println("Error-->"+e);
+                //Toast.makeText(getApplicationContext(),"Error",Toast.LENGTH_LONG).show();
+            }
+
+        }
+
+    }).start();
+}
 
     public static String enviarMail(){
         final String username = "solvotg@gmail.com";

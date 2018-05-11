@@ -167,7 +167,8 @@ public class RestablecerContra extends AppCompatActivity {
 
        @Override
        protected Void doInBackground(String... strings) {
-           notifyUser(enviarCorreo.enviarMail());
+           //notifyUser(enviarCorreo.enviarMail());
+           enviarCorreo.enviarCorreoE();
            return null;
        }
 
