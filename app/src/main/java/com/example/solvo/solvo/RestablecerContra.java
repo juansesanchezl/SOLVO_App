@@ -1,6 +1,7 @@
 package com.example.solvo.solvo;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.amazonaws.auth.CognitoCachingCredentialsProvider;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBMapper;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
+import com.correoE.enviarCorreo;
 import com.dynamodb.ActualizarTabla;
 import com.dynamodb.Conductor;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
@@ -40,16 +42,16 @@ public class RestablecerContra extends AppCompatActivity {
         setContentView(R.layout.activity_restablecer_contra);
         // init AWS
         System.out.println("ENTRO***1");
-        ManagerClass managerClass = new ManagerClass();
+        /*ManagerClass managerClass = new ManagerClass();
         credentialsProvider = managerClass.getCredentialsProvider(RestablecerContra.this);
-        /*credentialsProvider = new CognitoCachingCredentialsProvider(
+        credentialsProvider = new CognitoCachingCredentialsProvider(
                 getApplicationContext(), // Context
                 IDENTITY_POOL_ID, // Identity Pool ID
                 Regions.US_EAST_1 // Region
-        );*/
+        );
         ddbClient = new AmazonDynamoDBClient(credentialsProvider);
         mapper = new DynamoDBMapper(ddbClient);
-
+        */
 
 
         final EditText etCorreo = (EditText) findViewById(R.id.etCorreo);
@@ -58,7 +60,7 @@ public class RestablecerContra extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(!etCorreo.getText().toString().isEmpty()){
-
+                    sendEmail();
 
                 }else{
                     Toast.makeText(RestablecerContra.this, "EL CAMPO ESTA VACIO", Toast.LENGTH_LONG).show();
@@ -73,6 +75,12 @@ public class RestablecerContra extends AppCompatActivity {
 
             }
         });
+    }
+
+
+
+    protected void sendEmail() {
+        new EnviarRestContra().execute("");
     }
 
    /* private class ActualizarTabla extends AsyncTask<Void,Integer,Integer>{
@@ -151,6 +159,26 @@ public class RestablecerContra extends AppCompatActivity {
         }.execute();
     }
 */
+   private class EnviarRestContra extends AsyncTask<String, Integer, Void> {
+
+       protected void onProgressUpdate() {
+           //called when the background task makes any progress
+       }
+
+       @Override
+       protected Void doInBackground(String... strings) {
+           notifyUser(enviarCorreo.enviarMail());
+           return null;
+       }
+
+       protected void onPreExecute() {
+           //called before doInBackground() is started
+       }
+       protected void onPostExecute() {
+           //called after doInBackground() has finished
+       }
+   }
+
     private void notifyUser(String message){
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }

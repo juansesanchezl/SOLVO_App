@@ -1,6 +1,5 @@
 package com.SQLib;
 
-import android.app.VoiceInteractor;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -11,13 +10,14 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.example.solvo.solvo.MenuPrincipal;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+
+
 
 public class ConsultasDB {
 
@@ -81,6 +81,13 @@ public class ConsultasDB {
 
 
         }
+
+    }
+
+
+
+
+    public void enviarCorreo(){
 
     }
 

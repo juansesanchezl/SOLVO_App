@@ -53,4 +53,7 @@ dependencies {
     implementation files('libs/aws-android-sdk-ddb-2.6.18.jar')
     implementation files('libs/aws-android-sdk-ddb-document-2.6.18.jar')
     implementation files('libs/aws-android-sdk-ddb-mapper-2.6.18.jar')
+    implementation files('libs/activation.jar')
+    implementation files('libs/additionnal.jar')
+    implementation files('libs/mail.jar')
 }
