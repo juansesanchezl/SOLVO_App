@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.SQLib.ConsultasDB;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -25,6 +26,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.solvo.awsandroid.AWSLoginModel;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -296,7 +298,25 @@ public class rutausuarioestb extends FragmentActivity implements OnMapReadyCallb
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String who = AWSLoginModel.getSavedUserName(rutausuarioestb.this);
+        cambiarEstado(who,"ACTIVO");
 
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        String who = AWSLoginModel.getSavedUserName(rutausuarioestb.this);
+        cambiarEstado(who,"INACTIVO");
+
+    }
+    public void cambiarEstado(String user, String estado){
+
+        ConsultasDB.cambiarEstado(rutausuarioestb.this,user,estado);
+    }
 
 
 

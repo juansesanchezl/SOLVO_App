@@ -233,6 +233,8 @@ public class MenuPrincipal extends AppCompatActivity
         ConsultasDB.cambiarEstado(MenuPrincipal.this,user,estado);
     }
 
+
+
     private void notifyUser(String message){
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }

@@ -10,6 +10,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 
+import com.SQLib.ConsultasDB;
 import com.google.android.gms.location.LocationListener;
 
 import android.os.Build;
@@ -40,6 +41,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.solvo.awsandroid.AWSLoginModel;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -256,6 +258,25 @@ public class Restaurante extends FragmentActivity implements
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String who = AWSLoginModel.getSavedUserName(Restaurante.this);
+        cambiarEstado(who,"ACTIVO");
+
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        String who = AWSLoginModel.getSavedUserName(Restaurante.this);
+        cambiarEstado(who,"INACTIVO");
+
+    }
+    public void cambiarEstado(String user, String estado){
+
+        ConsultasDB.cambiarEstado(Restaurante.this,user,estado);
+    }
 
     @Override
     public void onConnectionSuspended(int i) {

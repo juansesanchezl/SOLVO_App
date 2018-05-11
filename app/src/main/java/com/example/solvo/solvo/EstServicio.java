@@ -18,6 +18,7 @@ import android.text.Html;
 import android.view.View;
 import android.widget.Toast;
 
+import com.SQLib.ConsultasDB;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -31,6 +32,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.solvo.awsandroid.AWSLoginModel;
 
 import java.util.HashMap;
 import java.util.List;
@@ -318,7 +320,25 @@ public class EstServicio extends FragmentActivity implements
         System.out.println("Cantidad--LOCAL->"+nearbyPlaceList.size());
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String who = AWSLoginModel.getSavedUserName(EstServicio.this);
+        cambiarEstado(who,"ACTIVO");
 
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        String who = AWSLoginModel.getSavedUserName(EstServicio.this);
+        cambiarEstado(who,"INACTIVO");
+
+    }
+    public void cambiarEstado(String user, String estado){
+
+        ConsultasDB.cambiarEstado(EstServicio.this,user,estado);
+    }
 
 
 }

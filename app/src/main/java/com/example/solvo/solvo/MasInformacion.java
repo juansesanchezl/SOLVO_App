@@ -23,6 +23,10 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.SQLib.ConsultasDB;
+import com.dynamodb.ManagerClass;
+import com.solvo.awsandroid.AWSLoginModel;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
@@ -154,6 +158,8 @@ public class MasInformacion extends AppCompatActivity {
 
     private void navegarRuta (Double latf, Double lngf){
         String latlng = latf+","+lngf;
+        String who = AWSLoginModel.getSavedUserName(MasInformacion.this);
+        cambiarEstado(who,"INACTIVO");
         Uri gmmIntentUri = Uri.parse("google.navigation:q="+latlng);
         Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
         mapIntent.setPackage("com.google.android.apps.maps");
@@ -195,5 +201,24 @@ public class MasInformacion extends AppCompatActivity {
         protected void onPostExecute(Bitmap result){
             imageView.setImageBitmap(result);
         }
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String who = AWSLoginModel.getSavedUserName(MasInformacion.this);
+        cambiarEstado(who,"ACTIVO");
+
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        String who = AWSLoginModel.getSavedUserName(MasInformacion.this);
+        cambiarEstado(who,"INACTIVO");
+
+    }
+    public void cambiarEstado(String user, String estado){
+
+        ConsultasDB.cambiarEstado(MasInformacion.this,user,estado);
     }
 }

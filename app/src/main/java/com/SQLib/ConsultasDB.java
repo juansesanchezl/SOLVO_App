@@ -48,7 +48,8 @@ public class ConsultasDB {
                         }
                         if(Response.equals("Estado Cambiado")){
                             System.out.println("ENTRO*****2-4");
-                            notifyUser("ESTADO DE CONDUCTOR CAMBIADO EN BD");
+                            System.out.println("ESTADO DE CONDUCTOR CAMBIADO EN BD");
+                            //notifyUser("ESTADO DE CONDUCTOR CAMBIADO EN BD");
                         }
 
                     } catch (JSONException e) {
