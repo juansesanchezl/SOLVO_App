@@ -192,6 +192,16 @@ public class MenuPrincipal extends AppCompatActivity
         navMail.setText(mail);
 
         hello.setText("Bienvenido " + who + "!");
+        cambiarEstado(who,"ACTIVO");
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        String who = AWSLoginModel.getSavedUserName(MenuPrincipal.this);
+        cambiarEstado(who,"INACTIVO");
 
     }
 
@@ -211,12 +221,17 @@ public class MenuPrincipal extends AppCompatActivity
                 }
             }
         }).execute();
+        String who = AWSLoginModel.getSavedUserName(MenuPrincipal.this);
+        cambiarEstado(who,"INACTIVO");
 
         MenuPrincipal.this.startActivity(new Intent(MenuPrincipal.this, PagPrincipal.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
 
     }
 
+    public void cambiarEstado(String user, String estado){
 
+        ConsultasDB.cambiarEstado(MenuPrincipal.this,user,estado);
+    }
 
     private void notifyUser(String message){
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();

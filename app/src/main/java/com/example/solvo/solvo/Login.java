@@ -77,6 +77,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener, AW
         ProgressBar progressBar = findViewById(R.id.progressBar2);
         progressBar.setVisibility(View.VISIBLE);
 
+
         Login.this.startActivity(new Intent(Login.this, MenuPrincipal.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
     }
 

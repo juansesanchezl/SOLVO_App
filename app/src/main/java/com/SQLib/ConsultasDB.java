@@ -1,5 +1,6 @@
 package com.SQLib;
 
+import android.app.VoiceInteractor;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -21,6 +22,7 @@ import java.util.Map;
 public class ConsultasDB {
 
     public static final String REGISTRAR_URL = "http://54.145.165.9/php-solvo/registrar.php";
+    public static final String CAMBIARESTADO_URL = "http://54.145.165.9/php-solvo/cambiarestado.php";
     static Context elContexto;
 
 
@@ -30,10 +32,61 @@ public class ConsultasDB {
         return(networkInfo!=null && networkInfo.isConnected());
     }
 
+    public static void cambiarEstado(Context context, final String userU, final String estado){
+        elContexto = context;
+
+        if(checkNetworkConnection(context)){
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, CAMBIARESTADO_URL, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    try {
+
+                        JSONObject jsonObject = new JSONObject(response);
+                        String Response = jsonObject.getString("response");
+                        if(Response != null){
+                            System.out.println(Response);
+                        }
+                        if(Response.equals("Estado Cambiado")){
+                            System.out.println("ENTRO*****2-4");
+                            notifyUser("ESTADO DE CONDUCTOR CAMBIADO EN BD");
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                }
+            }){
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    System.out.println("ENTRO*****3");
+                    Map<String,String> params = new HashMap<>();
+                    params.put("USUARIO",userU);
+                    params.put("ESTADO",estado);
+
+                    //return super.getParams();
+                    return params;
+                }
+            };
+            System.out.println("ENTRO*****4");
+            MySingleton.getmInstance(context).addToRequestQue(stringRequest);
+            System.out.println("ENTRO*****5");
+
+
+        }
+
+    }
+
     public static void insertarConductorBD(Context context, final String userU, final String emailU, final String passwordU, final String phoneU, final String nameU, final String fechaNacU, final String ciudadUs, final String genero){
 
         elContexto = context;
-        System.out.println("ENTRO*****1");
+        System.out.println("ENTRO**INSERTAR");
         if(checkNetworkConnection(context)){
             StringRequest stringRequest = new StringRequest(Request.Method.POST, REGISTRAR_URL,
                     new Response.Listener<String>() {
