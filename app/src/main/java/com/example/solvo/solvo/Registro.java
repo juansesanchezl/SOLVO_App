@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.SQLib.ConsultasDB;
 import com.solvo.awsandroid.AWSRegistryHandler;
 import com.solvo.awsandroid.AWSLoginModel;
 
@@ -30,6 +31,16 @@ public class Registro extends AppCompatActivity implements View.OnClickListener,
     String generoU = "No Disponible";
     String FechaNacUs = "No Disponible";
     public static Context contexta;
+    //Variables Usuario
+    String userU ;
+    String emailU ;
+    String passwordU ;
+    String phoneU ;
+    String nameU;
+    String fechaNacU ;
+    String ciudadUs;
+    String genero ;
+
 
     //LINK Declaración de Derechos y  Responsabilidades SOLVO:
     // http://pegasus.javeriana.edu.co/~CIS1730CP08/docs/SOLVO-DTyR.pdf
@@ -78,6 +89,8 @@ public class Registro extends AppCompatActivity implements View.OnClickListener,
         if (mustConfirmToComplete) {
             Toast.makeText(Registro.this, "Almost done! Confirm code to complete registration", Toast.LENGTH_LONG).show();
             //REGISTRAR USUARIO EN BD
+
+            ConsultasDB.insertarConductorBD(Registro.this,userU, emailU, passwordU , phoneU, nameU, fechaNacU, ciudadUs, genero);
         } else {
             Toast.makeText(Registro.this, "Registered! Login Now!", Toast.LENGTH_LONG).show();
         }
@@ -187,14 +200,14 @@ public class Registro extends AppCompatActivity implements View.OnClickListener,
         EditText email = findViewById(R.id.registerEmail);
         EditText password = findViewById(R.id.registerPassword);
 
-        String userU = userName.getText().toString().trim();
-        String emailU = email.getText().toString().trim();
-        String passwordU = password.getText().toString().trim();
-        String phoneU = "+57"+phone.getText().toString().trim();
-        String nameU = nombreU.getText().toString().trim();
-        String fechaNacU = FechaNacUs.trim();
-        String ciudadUs = ciudadU.getText().toString().trim();
-        String genero = generoU.trim();
+        userU = userName.getText().toString().trim();
+        emailU = email.getText().toString().trim();
+        passwordU = password.getText().toString().trim();
+        phoneU = "+57"+phone.getText().toString().trim();
+        nameU = nombreU.getText().toString().trim();
+        fechaNacU = FechaNacUs.trim();
+        ciudadUs = ciudadU.getText().toString().trim();
+        genero = generoU.trim();
 
         // do register and handles on interface
         System.out.println("Fecha:"+FechaNacUs+"Genero"+generoU);
