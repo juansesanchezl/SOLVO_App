@@ -117,9 +117,20 @@ public class MasInformacion extends AppCompatActivity {
                 tvComentar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Toast.makeText(MasInformacion.this, "ESTA FUNCIÓN SE ENCUENTRA EN CONSTRUCCIÓN", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(MasInformacion.this, "ESTA FUNCIÓN SE ENCUENTRA EN CONSTRUCCIÓN", Toast.LENGTH_LONG).show();
+                        MasInformacion.this.startActivity(new Intent(MasInformacion.this, FunComentar.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                     }
                 });
+
+                Button tvCalificar = (Button) findViewById(R.id.btnCalificar);
+                tvCalificar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        MasInformacion.this.startActivity(new Intent(MasInformacion.this, FunCalificar.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+
+                    }
+                });
+
                 tvTipo.setText(tipo);
                 tvId.setText(id);
                 tvName.setText("Nombre: "+name);
