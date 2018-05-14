@@ -3,6 +3,7 @@ package com.SQLib;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -10,7 +11,11 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.correoE.EnviarRestContra;
+import com.correoE.enviarCorreo;
+import com.example.solvo.solvo.RestablecerContra;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -23,13 +28,75 @@ public class ConsultasDB {
 
     public static final String REGISTRAR_URL = "http://54.145.165.9/php-solvo/registrar.php";
     public static final String CAMBIARESTADO_URL = "http://54.145.165.9/php-solvo/cambiarestado.php";
+    public static final String OBTENERCONTRA_URL = "http://54.145.165.9/php-solvo/obtenercontra.php";
     static Context elContexto;
+    public static String obtenercon = "";
+    public static boolean obtener = false;
 
 
     public static boolean checkNetworkConnection(Context context){
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         return(networkInfo!=null && networkInfo.isConnected());
+    }
+
+
+
+    public static void obtenerContra(Context context, final String usuarioCond){
+        elContexto = context;
+
+        if(checkNetworkConnection(context)){
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, OBTENERCONTRA_URL, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    try {
+                        JSONArray jsonarray = new JSONArray(response);
+                        for(int i=0; i < jsonarray.length(); i++) {
+                            JSONObject jsonobject = jsonarray.getJSONObject(i);
+                            String contrasenia = jsonobject.getString("CONTRASENIA");
+                            if(!contrasenia.equals("")){
+                                if(contrasenia.equals("No Disponible")){
+                                    obtenercon = "No Disponible";
+                                    notifyUser("ESTE USUARIO NO EXISTE -- REGISTRATE!");
+
+                                }else{
+                                    obtenercon = contrasenia;
+                                    Object dataTransfer[] = new Object[3];
+                                    dataTransfer[0] = usuarioCond;
+                                    dataTransfer[1] = contrasenia;
+                                    EnviarRestContra enviarRestContra = new EnviarRestContra();
+                                    enviarRestContra.execute(dataTransfer);
+                                    notifyUser("Revisa tu correo!!!!!");
+                                }
+                            }
+
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                }
+            }){
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    System.out.println("ENTRO*****3");
+                    Map<String,String> params = new HashMap<>();
+                    params.put("USUARIO",usuarioCond);
+                    //return super.getParams();
+                    return params;
+                }
+            };
+            System.out.println("ENTRO*****4");
+            MySingleton.getmInstance(context).addToRequestQue(stringRequest);
+            System.out.println("ENTRO*****5");
+
+        }
+
     }
 
     public static void cambiarEstado(Context context, final String userU, final String estado){

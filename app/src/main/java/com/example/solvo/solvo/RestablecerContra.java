@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import android.os.AsyncTask;
 
+import com.SQLib.ConsultasDB;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.auth.CognitoCachingCredentialsProvider;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBMapper;
@@ -103,9 +104,22 @@ public class RestablecerContra extends AppCompatActivity {
         Object dataTransfer[] = new Object[3];
         //dataTransfer[0] = "juans.sanchezlopez@gmail.com";
         dataTransfer[0] = correoUs;
-        dataTransfer[1] = "jasldkjasldkjasldkaldkja";
-        EnviarRestContra enviarRestContra =  new EnviarRestContra();
-        enviarRestContra.execute(dataTransfer);
+        ConsultasDB.obtenerContra(RestablecerContra.this,correoUs);
+        //ConsultasDB.obtenerContra(RestablecerContra.this,correoUs);
+        /*
+        if(!contraObtenida.equals("")) {
+            System.out.println(contraObtenida);
+            if (contraObtenida.equals("No Disponible")) {
+                notifyUser("ESTE USUARIO NO EXISTE -- REGISTRATE!");
+            } else {
+                //dataTransfer[1] = "jasldkjasldkjasldkaldkja";
+                System.out.println("LLEGO CONTRA -->"+contraObtenida);
+                dataTransfer[1] = contraObtenida.toString();
+                EnviarRestContra enviarRestContra = new EnviarRestContra();
+                enviarRestContra.execute(dataTransfer);
+                notifyUser("Revisa tu correo!!!!!");
+            }
+        }*/
     }
 
 
@@ -136,7 +150,7 @@ public class RestablecerContra extends AppCompatActivity {
    }
 
     private void notifyUser(String message){
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(RestablecerContra.this, message, Toast.LENGTH_SHORT).show();
     }
 
 
