@@ -102,28 +102,12 @@ public class RestablecerContra extends AppCompatActivity {
 
     protected void sendEmail(String correoUs) {
         Object dataTransfer[] = new Object[3];
-        //dataTransfer[0] = "juans.sanchezlopez@gmail.com";
         dataTransfer[0] = correoUs;
         ConsultasDB.obtenerContra(RestablecerContra.this,correoUs);
-        //ConsultasDB.obtenerContra(RestablecerContra.this,correoUs);
-        /*
-        if(!contraObtenida.equals("")) {
-            System.out.println(contraObtenida);
-            if (contraObtenida.equals("No Disponible")) {
-                notifyUser("ESTE USUARIO NO EXISTE -- REGISTRATE!");
-            } else {
-                //dataTransfer[1] = "jasldkjasldkjasldkaldkja";
-                System.out.println("LLEGO CONTRA -->"+contraObtenida);
-                dataTransfer[1] = contraObtenida.toString();
-                EnviarRestContra enviarRestContra = new EnviarRestContra();
-                enviarRestContra.execute(dataTransfer);
-                notifyUser("Revisa tu correo!!!!!");
-            }
-        }*/
     }
 
 
-   private class EnviarRestContra extends AsyncTask<Object, Integer, Void> {
+   /*private class EnviarRestContra extends AsyncTask<Object, Integer, Void> {
 
         String correoUsuario;
         String passEncontrada;
@@ -147,7 +131,7 @@ public class RestablecerContra extends AppCompatActivity {
        }
 
 
-   }
+   }*/
 
     private void notifyUser(String message){
         Toast.makeText(RestablecerContra.this, message, Toast.LENGTH_SHORT).show();

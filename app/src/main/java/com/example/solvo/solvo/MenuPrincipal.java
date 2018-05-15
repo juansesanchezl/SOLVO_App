@@ -24,6 +24,8 @@ import android.widget.Toast;
 
 import com.SQLib.ConsultasDB;
 import com.SQLib.DBClave;
+import com.SQLib.DatabaseHelper;
+import com.SQLib.Establecimiento;
 import com.SQLib.MySingleton;
 import com.amazonaws.mobile.auth.core.IdentityManager;
 import com.amazonaws.mobile.auth.core.StartupAuthResult;
@@ -43,7 +45,9 @@ import com.solvo.awsandroid.AWSLoginModel;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MenuPrincipal extends AppCompatActivity
@@ -51,6 +55,8 @@ public class MenuPrincipal extends AppCompatActivity
 
     AWSLoginModel awsLoginModel;
     Context contextMenu;
+    public DatabaseHelper db;
+    public List<Establecimiento> estableList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +65,9 @@ public class MenuPrincipal extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         contextMenu = getApplicationContext();
+        db = new DatabaseHelper(this);
+        estableList.addAll(db.getEstablecimientos());
+        ConsultasDB.obtenerEstabl(MenuPrincipal.this);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
