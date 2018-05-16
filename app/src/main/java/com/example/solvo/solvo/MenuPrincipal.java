@@ -43,6 +43,7 @@ public class MenuPrincipal extends AppCompatActivity
     public static List<Establecimiento> Peajes = new ArrayList<>();
     public static List<Establecimiento> Talleres = new ArrayList<>();
     public static boolean listaEstaLlena = false;
+    public static double Kilometros_Radio = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -36,6 +36,8 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.solvo.awsandroid.AWSLoginModel;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -153,33 +155,75 @@ public class Alojamiento extends FragmentActivity implements
 
     private void exponerAlojamientos(View view){
 
+        List<Float> distancias = new ArrayList<>();
+        List<Establecimiento> establ = new ArrayList<>();
+
         if(MenuPrincipal.Alojamientos.size()>0) {
 
-            for (Establecimiento e : MenuPrincipal.Alojamientos) {
-                MarkerOptions markerOptions = new MarkerOptions();
-                LatLng latLng = new LatLng(e.getLAT_EST(), e.getLONG_EST());
-                markerOptions.position(latLng);
-                markerOptions.snippet(e.getIDEST());
-                markerOptions.title(e.getNOMBRE_EST());
-                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
-                mMap.addMarker(markerOptions).showInfoWindow();
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-                mMap.animateCamera(CameraUpdateFactory.zoomTo(10.8f));
-                Location locationuser = new Location("Conductor");
-                locationuser.setLatitude(latitudeUser);
-                locationuser.setLongitude(longitudeUser);
-                Location locationest = new Location(e.getNOMBRE_EST());
-                locationest.setLatitude(e.getLAT_EST());
-                locationest.setLatitude(e.getLONG_EST());
-                float distancia =  locationuser.distanceTo(locationest);
-                int dis = (int) Math.ceil(distancia);
-                System.out.println("Distancia de usuario a "+e.getNOMBRE_EST()+ "--> "+dis);
+            for(Establecimiento e: MenuPrincipal.Alojamientos){
+                if(calcularRadio(latitudeUser,longitudeUser,e.getLAT_EST(),e.getLONG_EST())) {
+                    distancias.add(distanciaRadio(latitudeUser,longitudeUser,e.getLAT_EST(),e.getLONG_EST()));
+                    establ.add(e);
+                }
             }
-            Snackbar.make(view, Html.fromHtml("<font color=\"#FFBF00\">ALOJAMIENTOS CARGADOS...</font>"), Snackbar.LENGTH_LONG)
+
+            System.out.println("____________________________________________________");
+            while(!distancias.isEmpty()) {
+                float maximum = Collections.max(distancias);
+                for (Establecimiento e : establ) {
+                    float distan = distanciaRadio(latitudeUser, longitudeUser, e.getLAT_EST(), e.getLONG_EST());
+                    if (distan == maximum) {
+                        System.out.println("Distancia: " + distan + " Est:" + e.getIDEST());
+                        distancias.remove(distan);
+                        MarkerOptions markerOptions = new MarkerOptions();
+                        LatLng latLng = new LatLng(e.getLAT_EST(), e.getLONG_EST());
+                        markerOptions.position(latLng);
+                        markerOptions.snippet(e.getIDEST());
+                        markerOptions.title(e.getNOMBRE_EST());
+                        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+                        mMap.addMarker(markerOptions).showInfoWindow();
+                        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                        mMap.animateCamera(CameraUpdateFactory.zoomTo(10.8f));
+                        if(!distancias.isEmpty()){
+                            maximum = Collections.max(distancias);
+                        }
+                    }
+                }
+
+            }
+            System.out.println("____________________________________________________");
+
+            Snackbar.make(view, Html.fromHtml("<font color=\"#FFBF00\">"+establ.size()+" ALOJAMIENTOS CERCANOS...</font>"), Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
         }else{
             notifyUser("No hay Alojamientos Disponibles");
         }
+
+    }
+
+    private boolean calcularRadio(double lati,double lngi, double latf, double lngf){
+        float[] Check_distance = new float[2];//variable to take distance from our location to center of crcle
+
+        double circ_rad = MenuPrincipal.Kilometros_Radio*1000;
+
+        Location.distanceBetween(lati, lngi, latf, lngf, Check_distance);
+
+        if( Check_distance[0] > (double)circ_rad){//circ_rad is the radius of the circle
+            System.out.println("FUERA--Distancia "+Check_distance[0]+" fuera de radio-->"+circ_rad);
+            System.out.println("********");
+            return  false;
+        } else {
+            System.out.println("DENTRO--Distancia "+Check_distance[0]+" dentro de radio-->"+circ_rad);
+            System.out.println("********");
+            return true;
+        }
+    }
+
+    private float distanciaRadio(double lati,double lngi, double latf, double lngf){
+        float[] Check_distance = new float[2];//variable to take distance from our location to center of crcle
+        double circ_rad = MenuPrincipal.Kilometros_Radio*1000;
+        Location.distanceBetween(lati, lngi, latf, lngf, Check_distance);
+        return  Check_distance[0];
 
     }
 
