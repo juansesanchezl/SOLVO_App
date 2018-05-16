@@ -165,6 +165,15 @@ public class Alojamiento extends FragmentActivity implements
                 mMap.addMarker(markerOptions).showInfoWindow();
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
                 mMap.animateCamera(CameraUpdateFactory.zoomTo(10.8f));
+                Location locationuser = new Location("Conductor");
+                locationuser.setLatitude(latitudeUser);
+                locationuser.setLongitude(longitudeUser);
+                Location locationest = new Location(e.getNOMBRE_EST());
+                locationest.setLatitude(e.getLAT_EST());
+                locationest.setLatitude(e.getLONG_EST());
+                float distancia =  locationuser.distanceTo(locationest);
+                int dis = (int) Math.ceil(distancia);
+                System.out.println("Distancia de usuario a "+e.getNOMBRE_EST()+ "--> "+dis);
             }
             Snackbar.make(view, Html.fromHtml("<font color=\"#FFBF00\">ALOJAMIENTOS CARGADOS...</font>"), Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
@@ -285,7 +294,11 @@ public class Alojamiento extends FragmentActivity implements
                 String icon = "http://pegasus.javeriana.edu.co/~CIS1730CP08/img/ICONOS/Alojamiento.png";
                 i.putExtra("id",e.getIDEST());
                 i.putExtra("name",e.getNOMBRE_EST());
+                i.putExtra("tipo",e.getID_SERV());
                 i.putExtra("dir",e.getDIR_EST());
+                i.putExtra("tel",e.getTELEFONO_EST());
+                i.putExtra("email",e.getEMAIL_EST());
+
                 i.putExtra("precio",e.getNIV_PRECIO());
                 i.putExtra("calif",e.getCALIFICACION());
                 //i.putExtra("disp", disponibilidad);
@@ -293,7 +306,6 @@ public class Alojamiento extends FragmentActivity implements
                 i.putExtra("lngi",longitudeUser);
                 i.putExtra("latf",e.getLAT_EST());
                 i.putExtra("lngf",e.getLONG_EST());
-                i.putExtra("tipo", tipoServ);
                 i.putExtra("icono",icon);
                 System.out.println("ID:"+e.getIDEST()+" NAME:"+e.getNOMBRE_EST());
                 startActivity(i);

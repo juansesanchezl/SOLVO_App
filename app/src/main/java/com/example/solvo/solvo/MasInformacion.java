@@ -55,6 +55,8 @@ public class MasInformacion extends AppCompatActivity {
         final double lngi, lngf;
         String tipo;
         String icono;
+        String tel;
+        String email;
 
         if(savedInstanceState == null){
             Bundle extras = getIntent().getExtras();
@@ -71,8 +73,12 @@ public class MasInformacion extends AppCompatActivity {
                 lngf = 0;
                 tipo = null;
                 icono = null;
+                tel = null;
+                email = null;
             }else {
+                //tipo = extras.getString("tipo");
                 tipo = extras.getString("tipo");
+                System.out.println("TIPO-->"+tipo);
                 id = extras.getString("id");
                 name = extras.getString("name");
                 dir = extras.getString("dir");
@@ -84,15 +90,19 @@ public class MasInformacion extends AppCompatActivity {
                 latf  = extras.getDouble("latf");
                 lngf  = extras.getDouble("lngf");
                 icono = extras.getString("icono");
+                tel = extras.getString("tel");
+                email = extras.getString("email");
                 nombreEstbl = name;
 
-                TextView tvTipo = (TextView) findViewById(R.id.tipoInfo);
+                TextView tvTipo = (TextView) findViewById(R.id.tipoInf);
                 TextView tvId = (TextView) findViewById(R.id.id_mrk);
                 TextView tvName = (TextView) findViewById(R.id.nom_mrk);
                 TextView tvDir = (TextView) findViewById(R.id.dir_mrk);
+                TextView tvTel = (TextView) findViewById(R.id.tel_mrk);
+                TextView tvEmail = (TextView) findViewById(R.id.email_mrk);
                 TextView tvPrecio = (TextView) findViewById(R.id.precio_mrk);
                 TextView tvCalif = (TextView) findViewById(R.id.calf_mrk);
-                TextView tvDisp = (TextView) findViewById(R.id.disp_mrk);
+                //TextView tvDisp = (TextView) findViewById(R.id.disp_mrk);
                 ImageView tvIcono = (ImageView) findViewById(R.id.image_mrk);
                 RatingBar tvRating = (RatingBar) findViewById(R.id.ratingBar);
                 Button tvRuta = (Button) findViewById(R.id.btnRuta);
@@ -137,6 +147,8 @@ public class MasInformacion extends AppCompatActivity {
                 tvDir.setText("Dirección: "+dir);
                 tvPrecio.setText("Nivel de Precio: "+precio);
                 //tvDisp.setText("Disponibilidad: "+disp);
+                tvTel.setText("Teléfono: "+tel);
+                tvEmail.setText("Contacto: "+email);
 
                 if(!(calif==0)) {
                     tvCalif.setText("Calificación: "+calif);

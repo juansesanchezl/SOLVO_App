@@ -7,7 +7,7 @@
     tools:context="com.example.solvo.solvo.MasInformacion">
 
     <TextView
-        android:id="@+id/tipoInfo"
+        android:id="@+id/tipoInf"
         android:layout_width="205dp"
         android:layout_height="31dp"
         android:layout_marginBottom="15dp"
@@ -38,7 +38,7 @@
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="242dp"
-        android:layout_height="163dp"
+        android:layout_height="189dp"
         android:layout_marginEnd="15dp"
         android:layout_marginStart="5dp"
         android:layout_marginTop="60dp"
@@ -75,16 +75,22 @@
             tools:layout_editor_absoluteY="98dp" />
 
         <TextView
+            android:id="@+id/tel_mrk"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TELEFONO" />
+
+        <TextView
+            android:id="@+id/email_mrk"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="EMAIL" />
+
+        <TextView
             android:id="@+id/precio_mrk"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="PRECIO" />
-
-        <TextView
-            android:id="@+id/disp_mrk"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="DISPONIBILIDAD" />
 
         <TextView
             android:id="@+id/calf_mrk"
@@ -98,15 +104,15 @@
         android:id="@+id/ratingBar"
         android:layout_width="233dp"
         android:layout_height="51dp"
-        android:layout_marginBottom="150dp"
+        android:layout_marginBottom="208dp"
         android:layout_marginEnd="29dp"
         android:layout_marginStart="58dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-        app:layout_constraintVertical_bias="0.263" />
+        app:layout_constraintVertical_bias="0.6" />
 
     <LinearLayout
         android:layout_width="164dp"

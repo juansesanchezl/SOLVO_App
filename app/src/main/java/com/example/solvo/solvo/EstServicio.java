@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.SQLib.ConsultasDB;
+import com.SQLib.Establecimiento;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -29,6 +30,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -78,9 +80,10 @@ public class EstServicio extends FragmentActivity implements
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, Html.fromHtml("<font color=\"#FFBF00\">CARGANDO ESTACIONES DE SERVICIO...</font>"), Snackbar.LENGTH_LONG)
+                /*Snackbar.make(view, Html.fromHtml("<font color=\"#FFBF00\">CARGANDO ESTACIONES DE SERVICIO...</font>"), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-                visualizarEstServicio();
+                visualizarEstServicio();*/
+                exponerEstServicio(view);
             }
         });
     }
@@ -149,6 +152,42 @@ public class EstServicio extends FragmentActivity implements
                 .build();
         googleApiClient.connect();
     }
+
+    private void exponerEstServicio(View view){
+        if(MenuPrincipal.EstServicio.size()>0) {
+
+            for (Establecimiento e : MenuPrincipal.EstServicio) {
+                MarkerOptions markerOptions = new MarkerOptions();
+                LatLng latLng = new LatLng(e.getLAT_EST(), e.getLONG_EST());
+                markerOptions.position(latLng);
+                markerOptions.snippet(e.getIDEST());
+                markerOptions.title(e.getNOMBRE_EST());
+                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+                mMap.addMarker(markerOptions).showInfoWindow();
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                mMap.animateCamera(CameraUpdateFactory.zoomTo(10.8f));
+                Location locationuser = new Location("Conductor");
+                locationuser.setLatitude(latitudeUser);
+                locationuser.setLongitude(longitudeUser);
+                Location locationest = new Location(e.getNOMBRE_EST());
+                locationest.setLatitude(e.getLAT_EST());
+                locationest.setLatitude(e.getLONG_EST());
+                float distancia =  locationuser.distanceTo(locationest);
+                int dis = (int) Math.ceil(distancia);
+                System.out.println("Distancia de usuario a "+e.getNOMBRE_EST()+ "--> "+dis);
+            }
+            Snackbar.make(view, Html.fromHtml("<font color=\"#FFBF00\">ESTACIONES DE SERVICIO CARGADAS...</font>"), Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+        }else{
+            notifyUser("No hay Estaciones de Servicio Disponibles");
+        }
+    }
+
+    private void notifyUser(String message){
+
+        Toast.makeText(this.getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
 
     private void visualizarEstServicio(){
         Object dataTransfer[] = new Object[3];
@@ -252,6 +291,34 @@ public class EstServicio extends FragmentActivity implements
 
     @Override
     public boolean onMarkerClick(Marker marker) {
+
+        for (Establecimiento e : MenuPrincipal.EstServicio) {
+            if(e.getIDEST().equals(marker.getSnippet())){
+                notifyUser("Escogio El Establecimiento "+e.getNOMBRE_EST());
+                System.out.println("ENTRO AL MARCADOR CON ID:"+marker.getId());
+                Intent i = new Intent(EstServicio.this,MasInformacion.class);
+                String icon = "http://pegasus.javeriana.edu.co/~CIS1730CP08/img/ICONOS/EstacionServicio.png";
+                i.putExtra("id",e.getIDEST());
+                i.putExtra("name",e.getNOMBRE_EST());
+                i.putExtra("tipo",e.getID_SERV());
+                i.putExtra("dir",e.getDIR_EST());
+                i.putExtra("tel",e.getTELEFONO_EST());
+                i.putExtra("email",e.getEMAIL_EST());
+
+                i.putExtra("precio",e.getNIV_PRECIO());
+                i.putExtra("calif",e.getCALIFICACION());
+                //i.putExtra("disp", disponibilidad);
+                i.putExtra("lati",latitudeUser);
+                i.putExtra("lngi",longitudeUser);
+                i.putExtra("latf",e.getLAT_EST());
+                i.putExtra("lngf",e.getLONG_EST());
+                i.putExtra("icono",icon);
+                System.out.println("ID:"+e.getIDEST()+" NAME:"+e.getNOMBRE_EST());
+                startActivity(i);
+            }
+        }
+
+        /*
         System.out.println("ENTRO AL MARCADOR CON ID:"+marker.getId());
         Intent i = new Intent(EstServicio.this,MasInformacion.class);
         if(tipoServ.equals("ESTACION DE SERVICIO")){
@@ -313,6 +380,7 @@ public class EstServicio extends FragmentActivity implements
                 }
             }
         }
+        */
         return false;
     }
 
