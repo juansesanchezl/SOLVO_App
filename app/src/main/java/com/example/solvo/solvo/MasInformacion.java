@@ -49,7 +49,7 @@ public class MasInformacion extends AppCompatActivity {
         String name;
         String dir;
         String precio;
-        String calif;
+        float calif;
         String disp;
         final double lati, latf;
         final double lngi, lngf;
@@ -63,7 +63,7 @@ public class MasInformacion extends AppCompatActivity {
                 name = null;
                 dir = null;
                 precio = null;
-                calif = null;
+                calif = 0;
                 disp = null;
                 lati = 0;
                 latf = 0;
@@ -77,8 +77,8 @@ public class MasInformacion extends AppCompatActivity {
                 name = extras.getString("name");
                 dir = extras.getString("dir");
                 precio = extras.getString("precio");
-                calif = extras.getString("calif");
-                disp  = extras.getString("disp");
+                calif = extras.getFloat("calif");
+                //disp  = extras.getString("disp");
                 lati = extras.getDouble("lati");
                 lngi = extras.getDouble("lngi");
                 latf  = extras.getDouble("latf");
@@ -136,11 +136,12 @@ public class MasInformacion extends AppCompatActivity {
                 tvName.setText("Nombre: "+name);
                 tvDir.setText("Dirección: "+dir);
                 tvPrecio.setText("Nivel de Precio: "+precio);
-                tvDisp.setText("Disponibilidad: "+disp);
+                //tvDisp.setText("Disponibilidad: "+disp);
 
-                if(!calif.isEmpty()) {
+                if(!(calif==0)) {
                     tvCalif.setText("Calificación: "+calif);
-                    tvRating.setRating(Float.parseFloat(calif));
+                    //tvRating.setRating(Float.parseFloat(calif));
+                    tvRating.setRating(calif);
                 }else{
                     tvCalif.setText("Calificación: No Disponible");
                 }

@@ -21,7 +21,7 @@ public class Establecimiento {
     private String DIR_EST;
     private String TELEFONO_EST;
     private String EMAIL_EST;
-    private float NIV_PRECIO;
+    private String NIV_PRECIO;
     private float CALIFICACION;
     private double LAT_EST;
     private double LONG_EST;
@@ -31,20 +31,20 @@ public class Establecimiento {
             "CREATE TABLE " + TABLE_NAME + "("
                     + COLUMN_IDEST + " TEXT PRIMARY KEY,"
                     + COLUMN_NOMBRE_EST + " TEXT,"
-                    + COLUMN_ID_SERV + "TEXT,"
-                    + COLUMN_DIR_EST + "TEXT,"
-                    + COLUMN_TELEFONO_EST + "TEXT,"
-                    + COLUMN_EMAIL_EST + "TEXT,"
-                    + COLUMN_LAT_EST + "TEXT,"
-                    + COLUMN_LONG_EST + "TEXT,"
-                    + COLUMN_NIV_PRECIO + "TEXT,"
-                    + COLUMN_CALIFICACION + "TEXT"
+                    + COLUMN_ID_SERV + " TEXT,"
+                    + COLUMN_DIR_EST + " TEXT,"
+                    + COLUMN_TELEFONO_EST + " TEXT,"
+                    + COLUMN_EMAIL_EST + " TEXT,"
+                    + COLUMN_LAT_EST + " TEXT,"
+                    + COLUMN_LONG_EST + " TEXT,"
+                    + COLUMN_NIV_PRECIO + " TEXT,"
+                    + COLUMN_CALIFICACION + " TEXT"
                     + ")";
     public Establecimiento(){
 
     }
     public Establecimiento(String IDEST, String NOMBRE_EST, String ID_SERV, String DIR_EST, String  TELEFONO_EST, String EMAIL_EST,
-                            double LAT_EST, double LONG_EST, float NIV_PRECIO,  float CALIFICACION){
+                            double LAT_EST, double LONG_EST, String NIV_PRECIO,  float CALIFICACION){
         this.IDEST = IDEST;
         this.NOMBRE_EST = NOMBRE_EST;
         this.ID_SERV = ID_SERV;
@@ -106,11 +106,11 @@ public class Establecimiento {
         this.EMAIL_EST = EMAIL_EST;
     }
 
-    public float getNIV_PRECIO() {
+    public String getNIV_PRECIO() {
         return NIV_PRECIO;
     }
 
-    public void setNIV_PRECIO(float NIV_PRECIO) {
+    public void setNIV_PRECIO(String NIV_PRECIO) {
         this.NIV_PRECIO = NIV_PRECIO;
     }
 

@@ -13,6 +13,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.correoE.EnviarRestContra;
 import com.correoE.enviarCorreo;
+import com.example.solvo.solvo.MenuPrincipal;
 import com.example.solvo.solvo.RestablecerContra;
 
 import org.json.JSONArray;
@@ -21,7 +22,9 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.text.Normalizer;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -39,12 +42,36 @@ public class ConsultasDB {
 
 
     public static boolean checkNetworkConnection(Context context){
-        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        elContexto = context;
+        /*ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        if(networkInfo.isConnected()){
+            System.out.println("SE CONTECTO");
+        }else{
+            notifyUser("NO HAY CONEXION, POR FAVOR VERIFICA");
+        }
         return(networkInfo!=null && networkInfo.isConnected());
+        */
+        try {
+            ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+            if (networkInfo!=null && networkInfo.isConnected()) {
+                //notifyUser("NO HAY CONEXION, POR FAVOR VERIFICA");
+                return true;
+            }else{
+                notifyUser("NO HAY CONEXION, POR FAVOR VERIFICA");
+                return false;
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return false;
+
     }
 
-    public static void obtenerEstabl (Context context) {
+    public static void obtenerEstabl(Context context, final DatabaseHelper db) {
         elContexto = context;
         if (checkNetworkConnection(context)) {
             StringRequest stringRequest = new StringRequest(Request.Method.POST, OBTENERESTBL_URL, new Response.Listener<String>() {
@@ -53,25 +80,38 @@ public class ConsultasDB {
                     try {
                         JSONArray jsonarray = new JSONArray(response);
                         System.out.println("TAMAÑO--->"+jsonarray.length());
+                        //List<Establecimiento> estableList = new ArrayList<>();
                         for(int i=0; i < jsonarray.length(); i++) {
                             JSONObject jsonobject = jsonarray.getJSONObject(i);
-                            String idest = java.net.URLDecoder.decode( jsonobject.getString("IDEST"),"UTF-8");
-                            String nombre_est = java.net.URLDecoder.decode(jsonobject.getString("NOMBRE_EST"),"UTF-8");
-                            String id_serv = java.net.URLDecoder.decode(jsonobject.getString("ID_SERV"),"UTF-8");
-                            String dir_est = java.net.URLDecoder.decode(jsonobject.getString("DIR_EST"),"UTF-8");
-                            String telefono_est = jsonobject.getString("TELEFONO_EST");
-                            String email_est = jsonobject.getString("EMAIL_EST");
-                            String lat_est = jsonobject.getString("LAT_EST");
-                            String long_est = jsonobject.getString("LONG_EST");
-                            String niv_precio = jsonobject.getString("NIV_PRECIO");
-                            String calificacion = jsonobject.getString("CALIFICACION");
+                            String idest = java.net.URLDecoder.decode( quitarPorcentajes(jsonobject.getString("IDEST")),"UTF-8").trim();
+                            String nombre_est = java.net.URLDecoder.decode(quitarPorcentajes(jsonobject.getString("NOMBRE_EST")),"UTF-8").trim();
+                            String id_serv = java.net.URLDecoder.decode(quitarPorcentajes(jsonobject.getString("ID_SERV")),"UTF-8").trim();
+                            String dir_est = java.net.URLDecoder.decode(quitarPorcentajes(jsonobject.getString("DIR_EST")),"UTF-8").trim();
+                            String telefono_est = java.net.URLDecoder.decode( quitarPorcentajes(jsonobject.getString("TELEFONO_EST")),"UTF-8").trim();
+                            String email_est = java.net.URLDecoder.decode( quitarPorcentajes(jsonobject.getString("EMAIL_EST")),"UTF-8").trim();
+                            double lat_est = Double.parseDouble(jsonobject.getString("LAT_EST").trim());
+                            double long_est =  Double.parseDouble(jsonobject.getString("LONG_EST").trim());
+                            String niv_precio = java.net.URLDecoder.decode( quitarPorcentajes(jsonobject.getString("NIV_PRECIO")),"UTF-8").trim();
+                            float calificacion = Float.parseFloat(jsonobject.getString("CALIFICACION").trim());
 
-                            System.out.println("["+i+"]"+idest+"--"+nombre_est+"--"+id_serv+"--"+dir_est
-                                    +"--"+telefono_est+"--"+email_est+"--"+lat_est+"--"+long_est+"--"+niv_precio+"--"+calificacion);
+                           // Establecimiento e = new Establecimiento(idest,nombre_est,id_serv,dir_est,telefono_est,email_est,lat_est,long_est,niv_precio,calificacion);
+                            //estableList.add(e);
+
+
+
+                            System.out.println("["+(i+1)+"]------- "+idest+","+nombre_est+","+id_serv+","+dir_est
+                                    +","+telefono_est+","+email_est+","+lat_est+","+long_est+","+niv_precio+","+calificacion);
                             System.out.println("<----------------------------->");
+                            db.insertEstablecimiento(idest,nombre_est,id_serv,dir_est,telefono_est,email_est,lat_est,long_est,niv_precio,calificacion);
+
 
                         }
-                        notifyUser("LLEGO--ESTBL");
+                        MenuPrincipal.estableList.addAll(db.getEstablecimientos());
+                        //List<Establecimiento> establecimientos = db.getEstablecimientos();
+                        notifyUser("LLEGARON-"+ MenuPrincipal.estableList.size()+"-ESTBL");
+                        MenuPrincipal.listaEstaLlena = true;
+                        MenuPrincipal.imprimirLista(MenuPrincipal.estableList);
+
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -294,6 +334,25 @@ public class ConsultasDB {
             output = output.replace(original.charAt(i), ascii.charAt(i));
         }//for i
         return output;
+    }
+
+    public static String quitarPorcentajes(String cadena){
+        cadena = cadena.replaceAll("%20", " ");
+        cadena = cadena.replaceAll("%28","(");
+        cadena = cadena.replaceAll("%29",")");
+        cadena = cadena.replaceAll("%3B",";");
+        cadena = cadena.replaceAll("%40","@");
+        cadena = cadena.replaceAll("%23","#");
+        cadena = cadena.replaceAll("%2F","/");
+        cadena = cadena.replaceAll("%3F","?");
+        cadena = cadena.replaceAll("%3A",":");
+        cadena = cadena.replaceAll("%25","%");
+
+        cadena = cadena.replaceAll("%96","-");
+        cadena = cadena.replaceAll("%ED","í");
+        cadena = cadena.replaceAll("%F1","ñ");
+        cadena = cadena.replaceAll("%92","’");
+        return cadena;
     }
 
     private static void notifyUser(String message){

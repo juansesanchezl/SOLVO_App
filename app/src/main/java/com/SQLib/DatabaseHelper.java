@@ -38,7 +38,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     }
 
     public long insertEstablecimiento(String IDEST, String NOMBRE_EST, String ID_SERV, String DIR_EST, String  TELEFONO_EST, String EMAIL_EST,
-                                      double LAT_EST, double LONG_EST, float NIV_PRECIO,  float CALIFICACION) {
+                                      double LAT_EST, double LONG_EST, String NIV_PRECIO,  float CALIFICACION) {
         // get writable database as we want to write data
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -51,7 +51,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         values.put(Establecimiento.COLUMN_DIR_EST,DIR_EST);
         values.put(Establecimiento.COLUMN_TELEFONO_EST,TELEFONO_EST);
         values.put(Establecimiento.COLUMN_EMAIL_EST,EMAIL_EST);
-        values.put(Establecimiento.COLUMN_LAT_EST,LAT_EST);
+        values.put("LAT_EST",LAT_EST);
         values.put(Establecimiento.COLUMN_LONG_EST,LONG_EST);
         values.put(Establecimiento.COLUMN_NIV_PRECIO,NIV_PRECIO);
         values.put(Establecimiento.COLUMN_CALIFICACION,CALIFICACION);
@@ -92,7 +92,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
                 cursor.getString(cursor.getColumnIndex(Establecimiento.COLUMN_EMAIL_EST)),
                 Double.parseDouble(cursor.getString(cursor.getColumnIndex(Establecimiento.COLUMN_LAT_EST))),
                 Double.parseDouble(cursor.getString(cursor.getColumnIndex(Establecimiento.COLUMN_LONG_EST))),
-                Float.parseFloat(cursor.getString(cursor.getColumnIndex(Establecimiento.COLUMN_NIV_PRECIO))),
+                cursor.getString(cursor.getColumnIndex(Establecimiento.COLUMN_NIV_PRECIO)),
                 Float.parseFloat(cursor.getString(cursor.getColumnIndex(Establecimiento.COLUMN_CALIFICACION)))
         );
 
@@ -123,7 +123,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
                 establecimiento.setEMAIL_EST(cursor.getString(cursor.getColumnIndex(Establecimiento.COLUMN_EMAIL_EST)));
                 establecimiento.setLAT_EST(Double.parseDouble(cursor.getString(cursor.getColumnIndex(Establecimiento.COLUMN_LAT_EST))));
                 establecimiento.setLONG_EST(Double.parseDouble(cursor.getString(cursor.getColumnIndex(Establecimiento.COLUMN_LONG_EST))));
-                establecimiento.setNIV_PRECIO(Float.parseFloat(cursor.getString(cursor.getColumnIndex(Establecimiento.COLUMN_NIV_PRECIO))));
+                establecimiento.setNIV_PRECIO(cursor.getString(cursor.getColumnIndex(Establecimiento.COLUMN_NIV_PRECIO)));
                 establecimiento.setCALIFICACION(Float.parseFloat(cursor.getString(cursor.getColumnIndex(Establecimiento.COLUMN_CALIFICACION))));
 
                 establecimientos.add(establecimiento);

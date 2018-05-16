@@ -2,11 +2,7 @@ package com.example.solvo.solvo;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,37 +14,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.SQLib.ConsultasDB;
-import com.SQLib.DBClave;
 import com.SQLib.DatabaseHelper;
 import com.SQLib.Establecimiento;
-import com.SQLib.MySingleton;
 import com.amazonaws.mobile.auth.core.IdentityManager;
-import com.amazonaws.mobile.auth.core.StartupAuthResult;
-import com.amazonaws.mobile.auth.core.StartupAuthResultHandler;
 import com.amazonaws.mobile.client.AWSMobileClient;
 import com.amazonaws.mobile.client.AWSStartupHandler;
 import com.amazonaws.mobile.client.AWSStartupResult;
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.dynamodb.ActualizarTabla;
 import com.solvo.awsandroid.AWSLoginModel;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class MenuPrincipal extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -56,7 +35,14 @@ public class MenuPrincipal extends AppCompatActivity
     AWSLoginModel awsLoginModel;
     Context contextMenu;
     public DatabaseHelper db;
-    public List<Establecimiento> estableList = new ArrayList<>();
+    public static List<Establecimiento> estableList = new ArrayList<>();
+    public static List<Establecimiento> Alojamientos = new ArrayList<>();
+    public static List<Establecimiento> Restaurantes = new ArrayList<>();
+    public static List<Establecimiento> Parqueaderos = new ArrayList<>();
+    public static List<Establecimiento> EstServicio = new ArrayList<>();
+    public static List<Establecimiento> Peajes = new ArrayList<>();
+    public static List<Establecimiento> Talleres = new ArrayList<>();
+    public static boolean listaEstaLlena = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +53,16 @@ public class MenuPrincipal extends AppCompatActivity
         contextMenu = getApplicationContext();
         db = new DatabaseHelper(this);
         estableList.addAll(db.getEstablecimientos());
-        ConsultasDB.obtenerEstabl(MenuPrincipal.this);
+        if(estableList.size() == 0){
+            System.out.println("ENTROOOO A DATABASE HELPER");
+            ConsultasDB.obtenerEstabl(MenuPrincipal.this, db);
+            //estableList.addAll(db.getEstablecimientos());
+        }else{
+            notifyUser(estableList.size()+"--ESTABLECIMIENTOS CARGADOS");
+            listaEstaLlena = true;
+        }
+
+        imprimirLista(estableList);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -242,10 +237,52 @@ public class MenuPrincipal extends AppCompatActivity
         ConsultasDB.cambiarEstado(MenuPrincipal.this,user,estado);
     }
 
+    public static void imprimirLista(List<Establecimiento> establecimientos){
 
+        if(listaEstaLlena){
+            //notifyUser("SE IMPRIMIO LA LISTA");
+            System.out.println("SE IMPRIMIO LA LISTA");
+            for (Establecimiento e: establecimientos) {
+                System.out.println("IDEST:"+e.getIDEST()+" NOMBRE_EST:"+e.getNOMBRE_EST()+" ID_SERV:"+e.getID_SERV()+"\n");
+                if(e.getID_SERV().trim().equals("Alojamiento")){
+                    Alojamientos.add(e);
+                }
+                if(e.getID_SERV().trim().equals("Restaurante")){
+                    Restaurantes.add(e);
+                }
+                if(e.getID_SERV().trim().equals("Peaje")){
+                    Peajes.add(e);
+                }
+                if(e.getID_SERV().trim().equals("EstServicio")){
+                    EstServicio.add(e);
+                }
+                if(e.getID_SERV().trim().equals("Parqueadero")){
+                    Parqueaderos.add(e);
+                }
+                if(e.getID_SERV().trim().equals("Taller")){
+                    Talleres.add(e);
+                }
+            }
+            if(Alojamientos.size()>0 && Restaurantes.size()>0 && Peajes.size()>0
+                && EstServicio.size()>0 && Parqueaderos.size()>0 && Talleres.size()>0) {
+                System.out.println("HAY VALORES EN LA LISTAS BASE - \n " +
+                        "-Alojamientos\n " +
+                        "-Restaurantes\n " +
+                        "-Peajes\n " +
+                        "-EstServicio\n " +
+                        "-Parqueaderos\n " +
+                        "-Talleres\n ");
+            }
+        }else{
+            //notifyUser("NO HAY ESTABLECIMIENTOS DISPONIBLES");
+            System.out.println("NO HAY ESTABLECIMIENTOS DISPONIBLES");
+        }
+
+    }
 
     private void notifyUser(String message){
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+
+        Toast.makeText(this.getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 
 }
