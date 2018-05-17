@@ -7,7 +7,7 @@
     tools:context=".FunComentar">
 
     <TextView
-        android:id="@+id/Nom-Establecimiento"
+        android:id="@+id/Nom_Establecimiento"
         android:layout_width="384dp"
         android:layout_height="65dp"
         android:layout_marginBottom="35dp"
@@ -27,19 +27,20 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvListComent"
-        android:layout_width="392dp"
+        android:layout_width="352dp"
         android:layout_height="257dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="35dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Nom-Establecimiento" />
+        app:layout_constraintTop_toBottomOf="@+id/Nom_Establecimiento"
+        tools:listitem="@layout/lista_comentarios" />
 
     <Button
-        android:id="@+id/btnComentar"
+        android:id="@+id/btnComentarEst"
         android:layout_width="113dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="58dp"
@@ -66,7 +67,7 @@
         android:gravity="center"
         android:inputType="textLongMessage"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnComentar"
+        app:layout_constraintEnd_toStartOf="@+id/btnComentarEst"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rvListComent" />
 </android.support.constraint.ConstraintLayout>

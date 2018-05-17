@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.SQLib.Comentario;
 import com.SQLib.ConsultasDB;
 import com.SQLib.DatabaseHelper;
 import com.SQLib.Establecimiento;
@@ -44,6 +45,7 @@ public class MenuPrincipal extends AppCompatActivity
     public static List<Establecimiento> Talleres = new ArrayList<>();
     public static boolean listaEstaLlena = false;
     public static double Kilometros_Radio = 100;
+    public static List<Comentario> listaComentarios = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,8 @@ public class MenuPrincipal extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         contextMenu = getApplicationContext();
+
+
         db = new DatabaseHelper(this);
         estableList.addAll(db.getEstablecimientos());
         if(estableList.size() == 0){
@@ -62,8 +66,11 @@ public class MenuPrincipal extends AppCompatActivity
             notifyUser(estableList.size()+"--ESTABLECIMIENTOS CARGADOS");
             listaEstaLlena = true;
         }
-
+        ConsultasDB.obtenerComent(contextMenu);
         imprimirLista(estableList);
+        int idcomen = listaComentarios.size() + 1 ;
+        String IDCOM = ""+ idcomen;
+        //ConsultasDB.obtenCantidadComent(contextMenu,"ESTE ES UN COMENTARIO COOLS","juansesanchezl","E04");
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

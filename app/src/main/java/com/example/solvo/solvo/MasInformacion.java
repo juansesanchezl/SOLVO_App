@@ -3,38 +3,21 @@ package com.example.solvo.solvo;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.ColorFilter;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.Icon;
-import android.media.Rating;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.SQLib.ConsultasDB;
-import com.dynamodb.ManagerClass;
 import com.solvo.awsandroid.AWSLoginModel;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-
-import static com.amazonaws.util.IOUtils.copy;
 
 public class MasInformacion extends AppCompatActivity {
 
@@ -122,13 +105,22 @@ public class MasInformacion extends AppCompatActivity {
                         navegarRuta(latf,lngf);
                     }
                 });
+                final String idesta = id;
+                final String tipoesta = tipo;
+                final String nameesta = name;
 
-                Button tvComentar = (Button) findViewById(R.id.btnComentar);
+                        Button tvComentar = (Button) findViewById(R.id.btnComentarEst);
                 tvComentar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         //Toast.makeText(MasInformacion.this, "ESTA FUNCIÓN SE ENCUENTRA EN CONSTRUCCIÓN", Toast.LENGTH_LONG).show();
-                        MasInformacion.this.startActivity(new Intent(MasInformacion.this, FunComentar.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                        //MasInformacion.this.startActivity(new Intent(MasInformacion.this, FunComentar.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                        Intent funcom = new Intent(MasInformacion.this,FunComentar.class);
+                        funcom.putExtra("id",idesta);
+                        funcom.putExtra("tipo",tipoesta);
+                        funcom.putExtra("name",nameesta);
+                        startActivity(funcom);
+
                     }
                 });
 
@@ -136,8 +128,12 @@ public class MasInformacion extends AppCompatActivity {
                 tvCalificar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        MasInformacion.this.startActivity(new Intent(MasInformacion.this, FunCalificar.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-
+                        //MasInformacion.this.startActivity(new Intent(MasInformacion.this, FunCalificar.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                        Intent funcalf = new Intent(MasInformacion.this,FunCalificar.class);
+                        funcalf.putExtra("id",idesta);
+                        funcalf.putExtra("tipo",tipoesta);
+                        funcalf.putExtra("name",nameesta);
+                        startActivity(funcalf);
                     }
                 });
 

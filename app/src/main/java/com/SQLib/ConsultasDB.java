@@ -35,10 +35,13 @@ public class ConsultasDB {
     public static final String CAMBIARESTADO_URL = "http://54.145.165.9/php-solvo/cambiarestado.php";
     public static final String OBTENERCONTRA_URL = "http://54.145.165.9/php-solvo/obtenercontra.php";
     public static final String OBTENERESTBL_URL = "http://54.145.165.9/php-solvo/obtenerEstabl.php";
+    public static final String OBTENERCOMENT_URL = "http://54.145.165.9/php-solvo/obtenerComentarios.php";
+    public static final String INSERTARCOMENT_URL = "http://54.145.165.9/php-solvo/insertarComentario.php";
 
     static Context elContexto;
     public static String obtenercon = "";
     public static boolean obtener = false;
+    public static int cantidadCom = 0;
 
 
     public static boolean checkNetworkConnection(Context context){
@@ -69,6 +72,166 @@ public class ConsultasDB {
         }
         return false;
 
+    }
+
+    public static void insertarComent(Context context, final String IDCOM, final String COMENTARIO, final String COND_USER, final String ID_EST){
+        elContexto = context;
+
+        if(checkNetworkConnection(context)){
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, INSERTARCOMENT_URL, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    try {
+                        System.out.println("Respuesta:-->"+response);
+                        System.out.println("ENTRO*****2");
+                        JSONObject jsonObject = new JSONObject(response);
+                        System.out.println("ENTRO*****2-1");
+                        String Response = jsonObject.getString("response");
+                        System.out.println("ENTRO*****2-3");
+                        if(Response != null){
+                            System.out.println(Response);
+                        }
+                        if(Response.equals("Comentario Insertado")){
+                            System.out.println("ENTRO*****2-4");
+                            notifyUser("COMENTARIO INSERTADO EN BD");
+                        }
+                        if(Response.equals("Comentario No Insertado")){
+                            notifyUser("COMENTARIO NO INSERTADO EN BD");
+                        }
+                        obtenerComent(elContexto);
+
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                }
+            }){
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    System.out.println("ENTRO*****3");
+                    System.out.println("$$ "+IDCOM+","+COMENTARIO+","+COND_USER+","+ID_EST);
+                    Map<String,String> params = new HashMap<>();
+                    params.put("IDCOM",normalizarString(IDCOM));
+                    params.put("COMENTARIO",normalizarString(COMENTARIO));
+                    params.put("COND_USER",normalizarString(COND_USER));
+                    params.put("ID_EST",normalizarString(ID_EST));
+                    //return super.getParams();
+                    return params;
+                }
+            };
+            System.out.println("ENTRO*****4");
+            MySingleton.getmInstance(context).addToRequestQue(stringRequest);
+            System.out.println("ENTRO*****5");
+
+        }
+
+    }
+
+    public static void  obtenCantidadComent(final Context context, final String COMENTARIO, final String COND_USER, final String ID_EST){
+        elContexto = context;
+
+        if(checkNetworkConnection(context)){
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, INSERTARCOMENT_URL, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    try {
+                        JSONArray jsonarray = new JSONArray(response);
+                        for (int i = 0; i < jsonarray.length(); i++){
+                            JSONObject jsonobject = jsonarray.getJSONObject(i);
+                            int cantidadComent = Integer.parseInt(jsonobject.getString("CANTIDAD").trim());
+                            cantidadCom = cantidadComent;
+                            System.out.println("Cantidad Comentarios-->"+cantidadCom);
+                            int idcomen = cantidadCom + 1 ;
+                            String IDCOM = "" + idcomen;
+                            insertarComent(context,IDCOM,COMENTARIO,COND_USER,ID_EST);
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                }
+            }){
+                /*@Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    System.out.println("ENTRO*****3");
+                    Map<String,String> params = new HashMap<>();
+                    params.put("USUARIO",usuarioCond);
+                    //return super.getParams();
+                    return params;
+                }*/
+            };
+            System.out.println("ENTRO*****4");
+            MySingleton.getmInstance(context).addToRequestQue(stringRequest);
+            System.out.println("ENTRO*****5");
+
+        }
+
+    }
+
+    public static void obtenerComent(final Context context){
+        elContexto = context;
+        if(checkNetworkConnection(context)){
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, OBTENERCOMENT_URL, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    try {
+                        JSONArray jsonarray = new JSONArray(response);
+                        System.out.println("TAMAÑO--->"+jsonarray.length());
+                        //List<Establecimiento> estableList = new ArrayList<>();
+                        for(int i=0; i < jsonarray.length(); i++) {
+                            JSONObject jsonobject = jsonarray.getJSONObject(i);
+                            String idcom = java.net.URLDecoder.decode( quitarPorcentajes(jsonobject.getString("IDCOM")),"UTF-8").trim();
+                            String comentario = java.net.URLDecoder.decode(quitarPorcentajes(jsonobject.getString("COMENTARIO")),"UTF-8").trim();
+                            String cond_user = java.net.URLDecoder.decode(quitarPorcentajes(jsonobject.getString("COND_USER")),"UTF-8").trim();
+                            String id_est = java.net.URLDecoder.decode(quitarPorcentajes(jsonobject.getString("ID_EST")),"UTF-8").trim();
+
+                            // Establecimiento e = new Establecimiento(idest,nombre_est,id_serv,dir_est,telefono_est,email_est,lat_est,long_est,niv_precio,calificacion);
+                            //estableList.add(e);
+                            Comentario comen = new Comentario(idcom,comentario,cond_user,id_est);
+
+
+
+                            System.out.println("["+(i+1)+"]------- "+idcom+","+comentario+","+cond_user+","+id_est);
+                            System.out.println("<----------------------------->");
+                            MenuPrincipal.listaComentarios.add(comen);
+                            //db.insertEstablecimiento(idest,nombre_est,id_serv,dir_est,telefono_est,email_est,lat_est,long_est,niv_precio,calificacion);
+
+
+                        }
+                        //MenuPrincipal.estableList.addAll(db.getEstablecimientos());
+                        //List<Establecimiento> establecimientos = db.getEstablecimientos();
+                        notifyUser("LLEGARON- "+ MenuPrincipal.listaComentarios.size()+" -COMEN");
+
+
+                        //MenuPrincipal.imprimirLista(MenuPrincipal.estableList);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                }
+            });
+            System.out.println("ENTRO*****4");
+            MySingleton.getmInstance(context).addToRequestQue(stringRequest);
+            System.out.println("ENTRO*****5");
+        }
     }
 
     public static void obtenerEstabl(Context context, final DatabaseHelper db) {

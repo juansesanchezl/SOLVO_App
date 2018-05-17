@@ -25,6 +25,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
         // create notes table
         db.execSQL(Establecimiento.CREATE_TABLE);
+
     }
 
     // Upgrading database
