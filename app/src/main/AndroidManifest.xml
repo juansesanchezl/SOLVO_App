@@ -104,7 +104,8 @@
         <activity android:name=".confirmationCode" />
         <activity android:name=".RestablecerContra" />
         <activity android:name=".FunComentar" />
-        <activity android:name=".FunCalificar"></activity>
+        <activity android:name=".FunCalificar" />
+        <activity android:name=".Configuracion"></activity>
     </application>
 
 </manifest>

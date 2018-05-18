@@ -156,6 +156,7 @@ public class MenuPrincipal extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             Toast.makeText(MenuPrincipal.this, "ESTA FUNCIÓN SE ENCUENTRA EN CONSTRUCCIÓN", Toast.LENGTH_LONG).show();
+            MenuPrincipal.this.startActivity(new Intent(MenuPrincipal.this, Configuracion.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
             return true;
         }
 
