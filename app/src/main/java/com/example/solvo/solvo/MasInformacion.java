@@ -1,5 +1,6 @@
 package com.example.solvo.solvo;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -22,12 +23,14 @@ import java.net.URL;
 public class MasInformacion extends AppCompatActivity {
 
     String nombreEstbl = null;
+    Context contextmasinfo;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mas_informacion);
+        contextmasinfo = getApplicationContext();
         String id;
         String name;
         String dir;
@@ -115,6 +118,7 @@ public class MasInformacion extends AppCompatActivity {
                     public void onClick(View view) {
                         //Toast.makeText(MasInformacion.this, "ESTA FUNCIÓN SE ENCUENTRA EN CONSTRUCCIÓN", Toast.LENGTH_LONG).show();
                         //MasInformacion.this.startActivity(new Intent(MasInformacion.this, FunComentar.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                        ConsultasDB.obtenerComent(contextmasinfo);
                         Intent funcom = new Intent(MasInformacion.this,FunComentar.class);
                         funcom.putExtra("id",idesta);
                         funcom.putExtra("tipo",tipoesta);
@@ -227,6 +231,7 @@ public class MasInformacion extends AppCompatActivity {
         super.onResume();
         String who = AWSLoginModel.getSavedUserName(MasInformacion.this);
         cambiarEstado(who,"ACTIVO");
+        ConsultasDB.obtenerComent(contextmasinfo);
 
     }
     @Override

@@ -13,6 +13,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.correoE.EnviarRestContra;
 import com.correoE.enviarCorreo;
+import com.example.solvo.solvo.FunComentar;
 import com.example.solvo.solvo.MenuPrincipal;
 import com.example.solvo.solvo.RestablecerContra;
 
@@ -44,23 +45,15 @@ public class ConsultasDB {
     public static int cantidadCom = 0;
 
 
+
     public static boolean checkNetworkConnection(Context context){
         elContexto = context;
-        /*ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        if(networkInfo.isConnected()){
-            System.out.println("SE CONTECTO");
-        }else{
-            notifyUser("NO HAY CONEXION, POR FAVOR VERIFICA");
-        }
-        return(networkInfo!=null && networkInfo.isConnected());
-        */
+
         try {
             ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
 
             if (networkInfo!=null && networkInfo.isConnected()) {
-                //notifyUser("NO HAY CONEXION, POR FAVOR VERIFICA");
                 return true;
             }else{
                 notifyUser("NO HAY CONEXION, POR FAVOR VERIFICA");
@@ -181,6 +174,7 @@ public class ConsultasDB {
 
     public static void obtenerComent(final Context context){
         elContexto = context;
+
         if(checkNetworkConnection(context)){
             StringRequest stringRequest = new StringRequest(Request.Method.POST, OBTENERCOMENT_URL, new Response.Listener<String>() {
                 @Override
@@ -188,6 +182,7 @@ public class ConsultasDB {
                     try {
                         JSONArray jsonarray = new JSONArray(response);
                         System.out.println("TAMAÑO--->"+jsonarray.length());
+                        MenuPrincipal.listaComentarios.clear();
                         //List<Establecimiento> estableList = new ArrayList<>();
                         for(int i=0; i < jsonarray.length(); i++) {
                             JSONObject jsonobject = jsonarray.getJSONObject(i);
@@ -211,9 +206,7 @@ public class ConsultasDB {
                         }
                         //MenuPrincipal.estableList.addAll(db.getEstablecimientos());
                         //List<Establecimiento> establecimientos = db.getEstablecimientos();
-                        notifyUser("LLEGARON- "+ MenuPrincipal.listaComentarios.size()+" -COMEN");
-
-
+                        //notifyUser("LLEGARON- "+ MenuPrincipal.listaComentarios.size()+" -COMEN");
                         //MenuPrincipal.imprimirLista(MenuPrincipal.estableList);
                     } catch (JSONException e) {
                         e.printStackTrace();
