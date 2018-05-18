@@ -63,7 +63,7 @@ public class FunComentar extends AppCompatActivity {
                     String Coment = tvCom.getText().toString().trim();
                     String user = AWSLoginModel.getSavedUserName(FunComentar.this);
                     ConsultasDB.obtenCantidadComent(contextFunCom,Coment,user.trim(),idCom);
-                    finish();
+                    FunComentar.this.finish();
                 }else{
                     notifyUser("LA CAJA DE COMENTARIO ESTA EN BLANCO");
                 }

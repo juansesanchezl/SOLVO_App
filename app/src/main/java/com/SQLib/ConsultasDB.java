@@ -38,11 +38,13 @@ public class ConsultasDB {
     public static final String OBTENERESTBL_URL = "http://54.145.165.9/php-solvo/obtenerEstabl.php";
     public static final String OBTENERCOMENT_URL = "http://54.145.165.9/php-solvo/obtenerComentarios.php";
     public static final String INSERTARCOMENT_URL = "http://54.145.165.9/php-solvo/insertarComentario.php";
+    public static final String INSERTARCALIF_URL = "http://54.145.165.9/php-solvo/insertarCalificacion.php";
 
     static Context elContexto;
     public static String obtenercon = "";
     public static boolean obtener = false;
     public static int cantidadCom = 0;
+    public static int cantidadCalif = 0;
 
 
 
@@ -65,6 +67,64 @@ public class ConsultasDB {
         }
         return false;
 
+    }
+
+    public static void insertarCalif(Context context, final String IDCALIF, final String CALIFICACION, final String CON_USER, final String ID_EST){
+        elContexto = context;
+
+        if(checkNetworkConnection(context)){
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, INSERTARCALIF_URL, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    try {
+                        System.out.println("Respuesta:-->"+response);
+                        System.out.println("ENTRO*****2");
+                        JSONObject jsonObject = new JSONObject(response);
+                        System.out.println("ENTRO*****2-1");
+                        String Response = jsonObject.getString("response");
+                        System.out.println("ENTRO*****2-3");
+                        if(Response != null){
+                            System.out.println(Response);
+                        }
+                        if(Response.equals("Calificacion Insertada")){
+                            System.out.println("ENTRO*****2-4");
+                            notifyUser("CALIFICACION INSERTADA EN BD");
+                        }
+                        if(Response.equals("Calificacion No Insertada")){
+                            notifyUser("CALIFICACION NO INSERTADA EN BD");
+                        }
+                        obtenerComent(elContexto);
+
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                }
+            }){
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    System.out.println("ENTRO*****3");
+                    System.out.println("$$ "+IDCALIF+","+CALIFICACION+","+CON_USER+","+ID_EST);
+                    Map<String,String> params = new HashMap<>();
+                    params.put("IDCALIF",normalizarString(IDCALIF));
+                    params.put("CALIFICACION",normalizarString(CALIFICACION));
+                    params.put("CON_USER",normalizarString(CON_USER));
+                    params.put("ID_EST",normalizarString(ID_EST));
+                    //return super.getParams();
+                    return params;
+                }
+            };
+            System.out.println("ENTRO*****4");
+            MySingleton.getmInstance(context).addToRequestQue(stringRequest);
+            System.out.println("ENTRO*****5");
+
+        }
     }
 
     public static void insertarComent(Context context, final String IDCOM, final String COMENTARIO, final String COND_USER, final String ID_EST){
@@ -126,6 +186,52 @@ public class ConsultasDB {
 
     }
 
+    public static void obtenerCantidadCalif(final Context context, final String CALIFICACION, final String CON_USER, final String ID_EST){
+        elContexto = context;
+
+        if(checkNetworkConnection(context)){
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, INSERTARCALIF_URL, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    try {
+                        JSONArray jsonarray = new JSONArray(response);
+                        for (int i = 0; i < jsonarray.length(); i++){
+                            JSONObject jsonobject = jsonarray.getJSONObject(i);
+                            int cantidadCal = Integer.parseInt(jsonobject.getString("CANTIDAD").trim());
+                            cantidadCalif = cantidadCal;
+                            System.out.println("Cantidad Calificacion-->"+cantidadCom);
+                            int idCalif = cantidadCalif + 1 ;
+                            String IDCALIF = "CAL" + idCalif;
+                            insertarCalif(context,IDCALIF,CALIFICACION,CON_USER,ID_EST);
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                }
+            }){
+                /*@Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    System.out.println("ENTRO*****3");
+                    Map<String,String> params = new HashMap<>();
+                    params.put("USUARIO",usuarioCond);
+                    //return super.getParams();
+                    return params;
+                }*/
+            };
+            System.out.println("ENTRO*****4");
+            MySingleton.getmInstance(context).addToRequestQue(stringRequest);
+            System.out.println("ENTRO*****5");
+
+        }
+
+    }
+
     public static void  obtenCantidadComent(final Context context, final String COMENTARIO, final String COND_USER, final String ID_EST){
         elContexto = context;
 
@@ -141,7 +247,7 @@ public class ConsultasDB {
                             cantidadCom = cantidadComent;
                             System.out.println("Cantidad Comentarios-->"+cantidadCom);
                             int idcomen = cantidadCom + 1 ;
-                            String IDCOM = "" + idcomen;
+                            String IDCOM = "COM" + idcomen;
                             insertarComent(context,IDCOM,COMENTARIO,COND_USER,ID_EST);
                         }
 
@@ -236,6 +342,7 @@ public class ConsultasDB {
                     try {
                         JSONArray jsonarray = new JSONArray(response);
                         System.out.println("TAMAÑO--->"+jsonarray.length());
+                        MenuPrincipal.estableList.clear();
                         //List<Establecimiento> estableList = new ArrayList<>();
                         for(int i=0; i < jsonarray.length(); i++) {
                             JSONObject jsonobject = jsonarray.getJSONObject(i);

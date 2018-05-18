@@ -35,7 +35,7 @@ public class MasInformacion extends AppCompatActivity {
         String name;
         String dir;
         String precio;
-        float calif;
+        final float calif;
         String disp;
         final double lati, latf;
         final double lngi, lngf;
@@ -111,6 +111,7 @@ public class MasInformacion extends AppCompatActivity {
                 final String idesta = id;
                 final String tipoesta = tipo;
                 final String nameesta = name;
+                final float calificacion = calif;
 
                         Button tvComentar = (Button) findViewById(R.id.btnComentarEst);
                 tvComentar.setOnClickListener(new View.OnClickListener() {
@@ -137,6 +138,7 @@ public class MasInformacion extends AppCompatActivity {
                         funcalf.putExtra("id",idesta);
                         funcalf.putExtra("tipo",tipoesta);
                         funcalf.putExtra("name",nameesta);
+                        funcalf.putExtra("calif",calif);
                         startActivity(funcalf);
                     }
                 });
