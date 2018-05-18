@@ -1,6 +1,7 @@
 package com.SQLib;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -22,6 +23,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,6 +42,8 @@ public class ConsultasDB {
     public static final String OBTENERCOMENT_URL = "http://54.145.165.9/php-solvo/obtenerComentarios.php";
     public static final String INSERTARCOMENT_URL = "http://54.145.165.9/php-solvo/insertarComentario.php";
     public static final String INSERTARCALIF_URL = "http://54.145.165.9/php-solvo/insertarCalificacion.php";
+    public static final String OBTENERCALIF_URL = "http://54.145.165.9/php-solvo/obtenerCalif.php";
+    public static final String ACTUALIZARCALIF_URL = "http://54.145.165.9/php-solvo/actualizarCalificacionEst.php";
 
     static Context elContexto;
     public static String obtenercon = "";
@@ -94,6 +99,7 @@ public class ConsultasDB {
                             notifyUser("CALIFICACION NO INSERTADA EN BD");
                         }
                         obtenerComent(elContexto);
+                        obtenercalif(elContexto,CALIFICACION, ID_EST);
 
 
 
@@ -186,6 +192,149 @@ public class ConsultasDB {
 
     }
 
+
+
+    public static void actualizarCalf(final Context context, final String CalfEst, final String ID_EST){
+        elContexto = context;
+
+        if(checkNetworkConnection(context)){
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, ACTUALIZARCALIF_URL, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    try {
+
+                        JSONObject jsonObject = new JSONObject(response);
+                        String Response = jsonObject.getString("response");
+                        if(Response != null){
+                            System.out.println(Response);
+                        }
+                        if(Response.equals("Calificacion Est Actualizada")){
+                            //System.out.println("ENTRO*****2-4");
+                            //System.out.println("ESTADO DE CONDUCTOR CAMBIADO EN BD");
+                            //notifyUser("CALIFICACION DE EST ACTUALIZADA EN BD");
+                            //MenuPrincipal.db = new DatabaseHelper(elContexto);
+                            //ConsultasDB.obtenerEstabl(elContexto, MenuPrincipal.db);
+
+
+
+                            notifyUser("LOS ESTABLECIMIENTOS SE ESTAN ACTUALIZANDO");
+                            for(Establecimiento est: MenuPrincipal.estableList){
+                                if(est.getIDEST().equals(ID_EST)){
+                                    String Calf = CalfEst.replaceAll(",",".");
+                                    System.out.println(Calf);
+                                    float califE = Float.parseFloat(Calf);
+                                    System.out.println("ACTUALIZAR--"+califE);
+                                    est.setCALIFICACION(califE);
+                                    MenuPrincipal.db.updateEstablecimiento(est);
+                                }
+
+                            }
+                        }
+                        if(Response.equals("CALIFICACION DE EST ACTUALIZADA EN BD")){
+
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                }
+            }){
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    System.out.println("ENTRO*****3");
+                    Map<String,String> params = new HashMap<>();
+                    params.put("IDEST",ID_EST);
+                    params.put("ESTCALIF",CalfEst);
+
+                    //return super.getParams();
+                    return params;
+                }
+            };
+            System.out.println("ENTRO*****4");
+            MySingleton.getmInstance(context).addToRequestQue(stringRequest);
+            System.out.println("ENTRO*****5");
+
+
+        }
+    }
+
+    public static void obtenercalif(final Context context, final String CalfUsuario, final String ID_EST){
+        float califEstList = (float) 0.0;
+        for(Establecimiento est: MenuPrincipal.estableList){
+            if(est.getIDEST().equals(ID_EST)){
+                califEstList = est.getCALIFICACION();
+            }
+
+        }
+        elContexto = context;
+        if(checkNetworkConnection(context)){
+            final float finalCalifEstList = califEstList;
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, OBTENERCALIF_URL, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    try {
+                        System.out.println("Respuesta Cal->"+response);
+                        JSONArray jsonarray = new JSONArray(response);
+                        System.out.println("TAMAÑO--->"+jsonarray.length());
+                        MenuPrincipal.listaComentarios.clear();
+                        List<Float> califEstablSolvo = new ArrayList<>();
+                        califEstablSolvo.add(finalCalifEstList);
+                        for(int i=0; i < jsonarray.length(); i++) {
+                            JSONObject jsonobject = jsonarray.getJSONObject(i);
+                            float calf = Float.parseFloat(java.net.URLDecoder.decode( quitarPorcentajes(jsonobject.getString("CALFSOLVO")),"UTF-8").trim());
+                            califEstablSolvo.add(calf);
+                        }
+                        float sumCalif =0;
+                        for(float flo: califEstablSolvo){
+                            System.out.println("Principal:"+ finalCalifEstList +"Usuario"+CalfUsuario+"-vs-"+flo);
+                            sumCalif = sumCalif + flo;
+                        }
+                        float calFinal = sumCalif/califEstablSolvo.size();
+                        System.out.println("CALIFICACION FINAL DE "+ID_EST+"-->"+calFinal+" Tam:"+califEstablSolvo.size());
+
+
+                        //String strCalFinal = ""+calFinal;
+                        String strCalFinal = String.format ("%.2f", calFinal);
+
+                        actualizarCalf(elContexto,strCalFinal,ID_EST);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                }
+            }){
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    System.out.println("ENTRO*****3");
+                    Map<String,String> params = new HashMap<>();
+                    params.put("ID_EST",ID_EST);
+                    //return super.getParams();
+                    return params;
+                }
+            };
+            System.out.println("ENTRO*****4");
+            MySingleton.getmInstance(context).addToRequestQue(stringRequest);
+            System.out.println("ENTRO*****5");
+        }
+
+
+    }
+
     public static void obtenerCantidadCalif(final Context context, final String CALIFICACION, final String CON_USER, final String ID_EST){
         elContexto = context;
 
@@ -231,6 +380,8 @@ public class ConsultasDB {
         }
 
     }
+
+
 
     public static void  obtenCantidadComent(final Context context, final String COMENTARIO, final String COND_USER, final String ID_EST){
         elContexto = context;
@@ -355,7 +506,7 @@ public class ConsultasDB {
                             double lat_est = Double.parseDouble(jsonobject.getString("LAT_EST").trim());
                             double long_est =  Double.parseDouble(jsonobject.getString("LONG_EST").trim());
                             String niv_precio = java.net.URLDecoder.decode( quitarPorcentajes(jsonobject.getString("NIV_PRECIO")),"UTF-8").trim();
-                            float calificacion = Float.parseFloat(jsonobject.getString("CALIFICACION").trim());
+                            float calificacion = Float.parseFloat(java.net.URLDecoder.decode((quitarPorcentajes(jsonobject.getString("CALIFICACION")).trim()),"UTF-8"));
 
                            // Establecimiento e = new Establecimiento(idest,nombre_est,id_serv,dir_est,telefono_est,email_est,lat_est,long_est,niv_precio,calificacion);
                             //estableList.add(e);
@@ -615,6 +766,7 @@ public class ConsultasDB {
         cadena = cadena.replaceAll("%ED","í");
         cadena = cadena.replaceAll("%F1","ñ");
         cadena = cadena.replaceAll("%92","’");
+        cadena = cadena.replaceAll("%2C",".");
         return cadena;
     }
 

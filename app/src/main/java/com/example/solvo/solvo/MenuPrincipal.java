@@ -35,7 +35,7 @@ public class MenuPrincipal extends AppCompatActivity
 
     AWSLoginModel awsLoginModel;
     Context contextMenu;
-    public DatabaseHelper db;
+    public static DatabaseHelper db;
     public static List<Establecimiento> estableList = new ArrayList<>();
     public static List<Establecimiento> Alojamientos = new ArrayList<>();
     public static List<Establecimiento> Restaurantes = new ArrayList<>();
@@ -127,6 +127,7 @@ public class MenuPrincipal extends AppCompatActivity
         });
 
     }
+
 
     @Override
     public void onBackPressed() {
