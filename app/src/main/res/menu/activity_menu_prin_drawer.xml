@@ -9,6 +9,16 @@
             android:icon="@drawable/ic_power_settings_new_black_24dp"
             android:title="Cerrar Sesión" />
         <item
+            android:id="@+id/nav_PerfilUSolvo"
+            android:icon="@drawable/baseline_account_circle_black_18dp"
+            android:title="Perfil Conductor"
+            />
+        <item
+            android:id="@+id/nav_PuntosSolvo"
+            android:icon="@drawable/ic_monetization_on_black_24dp"
+            android:title="Puntos Solvo"
+            />
+        <!--<item
             android:id="@+id/nav_camera"
             android:icon="@drawable/ic_menu_camera"
             android:title="Import" />
@@ -23,19 +33,19 @@
         <item
             android:id="@+id/nav_manage"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:title="Tools" />-->
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="Redes Sociales">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:id="@+id/nav_Instagram"
+                android:icon="@drawable/baseline_camera_alt_black_18dp"
+                android:title="Instagram" />
             <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:id="@+id/nav_Twitter"
+                android:icon="@drawable/baseline_alternate_email_black_18dp"
+                android:title="Twitter" />
         </menu>
     </item>
 

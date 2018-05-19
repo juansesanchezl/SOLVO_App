@@ -44,6 +44,7 @@ public class ConsultasDB {
     public static final String INSERTARCALIF_URL = "http://54.145.165.9/php-solvo/insertarCalificacion.php";
     public static final String OBTENERCALIF_URL = "http://54.145.165.9/php-solvo/obtenerCalif.php";
     public static final String ACTUALIZARCALIF_URL = "http://54.145.165.9/php-solvo/actualizarCalificacionEst.php";
+    public static final String OBTENERCONDSOLVO_URL = "http://54.145.165.9/php-solvo/obtenerConducSolvo.php";
 
     static Context elContexto;
     public static String obtenercon = "";
@@ -192,7 +193,58 @@ public class ConsultasDB {
 
     }
 
+    public static void obtenerConducSolvo(final Context context, final String CONUSER){
+        elContexto = context;
 
+        if(checkNetworkConnection(context)){
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, OBTENERCONDSOLVO_URL, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    try {
+                        System.out.println("Respondido---->"+response);
+                        JSONArray jsonarray = new JSONArray(response);
+                        for (int i = 0; i < jsonarray.length(); i++){
+                            JSONObject jsonobject = jsonarray.getJSONObject(i);
+                            //JSONObject jsonobject = new JSONObject(response);
+                            String usuario = java.net.URLDecoder.decode( quitarPorcentajes(jsonobject.getString("USUARIO")),"UTF-8").trim();
+                            String nombrecompl = java.net.URLDecoder.decode( quitarPorcentajes(jsonobject.getString("NOMBRECOMPL")),"UTF-8").trim();
+                            String numcontacto = java.net.URLDecoder.decode( quitarPorcentajes(jsonobject.getString("NUMCONTACTO")),"UTF-8").trim();
+                            String fechanac = java.net.URLDecoder.decode( quitarPorcentajes(jsonobject.getString("FECHANAC")),"UTF-8").trim();
+                            String genero = java.net.URLDecoder.decode( quitarPorcentajes(jsonobject.getString("GENERO")),"UTF-8").trim();
+                            String correo = java.net.URLDecoder.decode( quitarPorcentajes(jsonobject.getString("CORREO")),"UTF-8").trim();
+                            String ciudad = java.net.URLDecoder.decode( quitarPorcentajes(jsonobject.getString("CIUDAD")),"UTF-8").trim();
+                            String puntos = java.net.URLDecoder.decode( quitarPorcentajes(jsonobject.getString("PUNTOS")),"UTF-8").trim();
+                            System.out.println("Conductor-->"+usuario+","+nombrecompl+","+numcontacto+","+fechanac+","+genero+","+correo+","+ciudad+","+puntos+";");
+                            ConductorSolvo conductorSolvo = new ConductorSolvo(nombrecompl,usuario,numcontacto,fechanac,genero,correo,ciudad,puntos);
+                            MenuPrincipal.conductorActual = conductorSolvo;
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                }
+            }){
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    System.out.println("ENTRO**CONUSER--"+CONUSER);
+                    Map<String,String> params = new HashMap<>();
+                    params.put("CONUSER",CONUSER);
+                    return params;
+                }
+            };
+            System.out.println("ENTRO*****4");
+            MySingleton.getmInstance(context).addToRequestQue(stringRequest);
+            System.out.println("ENTRO*****5");
+
+        }
+    }
 
     public static void actualizarCalf(final Context context, final String CalfEst, final String ID_EST){
         elContexto = context;

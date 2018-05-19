@@ -26,6 +26,7 @@ import com.amazonaws.mobile.client.AWSMobileClient;
 import com.amazonaws.mobile.client.AWSStartupHandler;
 import com.amazonaws.mobile.client.AWSStartupResult;
 import com.solvo.awsandroid.AWSLoginModel;
+import com.SQLib.ConductorSolvo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +47,7 @@ public class MenuPrincipal extends AppCompatActivity
     public static boolean listaEstaLlena = false;
     public static double Kilometros_Radio = 100;
     public static List<Comentario> listaComentarios = new ArrayList<>();
+    public static ConductorSolvo conductorActual;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +56,8 @@ public class MenuPrincipal extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         contextMenu = getApplicationContext();
-
-
+        String who = AWSLoginModel.getSavedUserName(MenuPrincipal.this);
+        ConsultasDB.obtenerConducSolvo(contextMenu,who);
         db = new DatabaseHelper(this);
         estableList.addAll(db.getEstablecimientos());
         if(estableList.size() == 0){
@@ -155,7 +157,7 @@ public class MenuPrincipal extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            Toast.makeText(MenuPrincipal.this, "ESTA FUNCIÓN SE ENCUENTRA EN CONSTRUCCIÓN", Toast.LENGTH_LONG).show();
+            //Toast.makeText(MenuPrincipal.this, "ESTA FUNCIÓN SE ENCUENTRA EN CONSTRUCCIÓN", Toast.LENGTH_LONG).show();
             MenuPrincipal.this.startActivity(new Intent(MenuPrincipal.this, Configuracion.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
             return true;
         }
@@ -170,23 +172,40 @@ public class MenuPrincipal extends AppCompatActivity
         int id = item.getItemId();
         if(id == R.id.nav_SignOut) {
             cerrarSesionAction();
-        }else if (id == R.id.nav_camera) {
+        }else if (id == R.id.nav_PerfilUSolvo) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+            perfilUSolvo();
+        } else if (id == R.id.nav_PuntosSolvo) {
+            puntosSolvo();
+        } else if (id == R.id.nav_Instagram) {
+            Intent intent = new Intent(Intent.ACTION_VIEW, android.net.Uri.parse("https://www.instagram.com/solvotg/"));
+            this.startActivity(intent);
+        } else if (id == R.id.nav_Twitter) {
+            Intent intent = null;
+            try {
+                // get the Twitter app if possible
+                this.getPackageManager().getPackageInfo("com.twitter.android", 0);
+                intent = new Intent(Intent.ACTION_VIEW, android.net.Uri.parse("twitter://user?user_id=924786592212013058"));
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            } catch (Exception e) {
+                // no Twitter app, revert to browser
+                intent = new Intent(Intent.ACTION_VIEW, android.net.Uri.parse("https://twitter.com/solvotg"));
+            }
+            this.startActivity(intent);
 
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void perfilUSolvo(){
+        MenuPrincipal.this.startActivity(new Intent(MenuPrincipal.this, perfilUSolvo.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+    }
+    private void puntosSolvo(){
+        MenuPrincipal.this.startActivity(new Intent(MenuPrincipal.this, puntosSolvo.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+
     }
 
     @Override

@@ -105,7 +105,9 @@
         <activity android:name=".RestablecerContra" />
         <activity android:name=".FunComentar" />
         <activity android:name=".FunCalificar" />
-        <activity android:name=".Configuracion"></activity>
+        <activity android:name=".Configuracion" />
+        <activity android:name=".perfilUSolvo" />
+        <activity android:name=".puntosSolvo"></activity>
     </application>
 
 </manifest>
