@@ -45,6 +45,7 @@ public class ConsultasDB {
     public static final String OBTENERCALIF_URL = "http://54.145.165.9/php-solvo/obtenerCalif.php";
     public static final String ACTUALIZARCALIF_URL = "http://54.145.165.9/php-solvo/actualizarCalificacionEst.php";
     public static final String OBTENERCONDSOLVO_URL = "http://54.145.165.9/php-solvo/obtenerConducSolvo.php";
+    public static final String ACTUALIZARPUNTOSOLVO_URL = "http://54.145.165.9/php-solvo/actualizarPuntoSolvo.php";
 
     static Context elContexto;
     public static String obtenercon = "";
@@ -242,6 +243,59 @@ public class ConsultasDB {
             System.out.println("ENTRO*****4");
             MySingleton.getmInstance(context).addToRequestQue(stringRequest);
             System.out.println("ENTRO*****5");
+
+        }
+    }
+
+    public static void actualizarPuntosSolvo(final Context context, final String CONUSER, final String CONPUNTOS){
+        elContexto = context;
+
+        if(checkNetworkConnection(context)){
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, ACTUALIZARPUNTOSOLVO_URL, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    try {
+
+                        JSONObject jsonObject = new JSONObject(response);
+                        String Response = jsonObject.getString("response");
+                        if(Response != null){
+                            System.out.println(Response);
+                        }
+                        if(Response.equals("Puntos Actualizados")){
+                            notifyUser("PUNTOS SOLVO ACTUALIZADOS");
+                            MenuPrincipal.conductorActual.setPuntos(CONPUNTOS);
+                        }
+                        if(Response.equals("Puntos No Actualizados")){
+
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                }
+            }){
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    System.out.println("ENTRO*****3");
+                    Map<String,String> params = new HashMap<>();
+                    params.put("CONUSER",CONUSER);
+                    params.put("CONPUNTOS",CONPUNTOS);
+
+                    //return super.getParams();
+                    return params;
+                }
+            };
+            System.out.println("ENTRO*****4");
+            MySingleton.getmInstance(context).addToRequestQue(stringRequest);
+            System.out.println("ENTRO*****5");
+
 
         }
     }

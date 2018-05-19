@@ -66,6 +66,10 @@ public class FunCalificar extends AppCompatActivity {
                 String usuarioActual = AWSLoginModel.getSavedUserName(FunCalificar.this);
                 if(!finalidest.isEmpty()) {
                     ConsultasDB.obtenerCantidadCalif(context, califUser.trim(), usuarioActual.trim(), finalidest);
+                    int puntosantes = Integer.parseInt(MenuPrincipal.conductorActual.getPuntos());
+                    int puntosdespues = puntosantes + 5;
+                    String puntosTotal = "" + puntosdespues;
+                    ConsultasDB.actualizarPuntosSolvo(context, usuarioActual.trim(),puntosTotal);
                     FunCalificar.this.finish();
                 }
             }
