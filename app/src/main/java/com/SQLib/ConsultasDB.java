@@ -95,10 +95,10 @@ public class ConsultasDB {
                         }
                         if(Response.equals("Calificacion Insertada")){
                             System.out.println("ENTRO*****2-4");
-                            notifyUser("CALIFICACION INSERTADA EN BD");
+                            //notifyUser("CALIFICACION INSERTADA EN BD");
                         }
                         if(Response.equals("Calificacion No Insertada")){
-                            notifyUser("CALIFICACION NO INSERTADA EN BD");
+                            //notifyUser("CALIFICACION NO INSERTADA EN BD");
                         }
                         obtenerComent(elContexto);
                         obtenercalif(elContexto,CALIFICACION, ID_EST);
@@ -154,10 +154,10 @@ public class ConsultasDB {
                         }
                         if(Response.equals("Comentario Insertado")){
                             System.out.println("ENTRO*****2-4");
-                            notifyUser("COMENTARIO INSERTADO EN BD");
+                            //notifyUser("COMENTARIO INSERTADO EN BD");
                         }
                         if(Response.equals("Comentario No Insertado")){
-                            notifyUser("COMENTARIO NO INSERTADO EN BD");
+                            //notifyUser("COMENTARIO NO INSERTADO EN BD");
                         }
                         obtenerComent(elContexto);
 
@@ -262,7 +262,7 @@ public class ConsultasDB {
                             System.out.println(Response);
                         }
                         if(Response.equals("Puntos Actualizados")){
-                            notifyUser("PUNTOS SOLVO ACTUALIZADOS");
+                            //notifyUser("PUNTOS SOLVO ACTUALIZADOS");
                             MenuPrincipal.conductorActual.setPuntos(CONPUNTOS);
                         }
                         if(Response.equals("Puntos No Actualizados")){
@@ -323,7 +323,7 @@ public class ConsultasDB {
 
 
 
-                            notifyUser("LOS ESTABLECIMIENTOS SE ESTAN ACTUALIZANDO");
+                            //notifyUser("LOS ESTABLECIMIENTOS SE ESTAN ACTUALIZANDO");
                             for(Establecimiento est: MenuPrincipal.estableList){
                                 if(est.getIDEST().equals(ID_EST)){
                                     String Calf = CalfEst.replaceAll(",",".");
@@ -600,6 +600,9 @@ public class ConsultasDB {
                         JSONArray jsonarray = new JSONArray(response);
                         System.out.println("TAMAÑO--->"+jsonarray.length());
                         MenuPrincipal.estableList.clear();
+                        SQLiteDatabase datab = db.getWritableDatabase();
+                        //String borrarQuery = "DELETE  * FROM " + Establecimiento.TABLE_NAME;
+                        System.out.println("Lo Retorno--"+datab.delete(Establecimiento.TABLE_NAME,"1",null));
                         //List<Establecimiento> estableList = new ArrayList<>();
                         for(int i=0; i < jsonarray.length(); i++) {
                             JSONObject jsonobject = jsonarray.getJSONObject(i);
@@ -628,7 +631,7 @@ public class ConsultasDB {
                         }
                         MenuPrincipal.estableList.addAll(db.getEstablecimientos());
                         //List<Establecimiento> establecimientos = db.getEstablecimientos();
-                        notifyUser("LLEGARON-"+ MenuPrincipal.estableList.size()+"-ESTBL");
+                        //notifyUser("LLEGARON-"+ MenuPrincipal.estableList.size()+"-ESTBL");
                         MenuPrincipal.listaEstaLlena = true;
                         MenuPrincipal.imprimirLista(MenuPrincipal.estableList);
 

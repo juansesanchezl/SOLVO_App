@@ -24,6 +24,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     public void onCreate(SQLiteDatabase db) {
 
         // create notes table
+        db.execSQL("DROP TABLE IF EXISTS " + Establecimiento.TABLE_NAME);
         db.execSQL(Establecimiento.CREATE_TABLE);
 
     }
@@ -37,6 +38,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         // Create tables again
         onCreate(db);
     }
+
+
 
     public long insertEstablecimiento(String IDEST, String NOMBRE_EST, String ID_SERV, String DIR_EST, String  TELEFONO_EST, String EMAIL_EST,
                                       double LAT_EST, double LONG_EST, String NIV_PRECIO,  float CALIFICACION) {
@@ -108,11 +111,13 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
         // Select All Query
         String selectQuery = "SELECT  * FROM " + Establecimiento.TABLE_NAME;
+        //String borrarQuery = "DROP TABLE IF EXISTS " + Establecimiento.TABLE_NAME;
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         // looping through all rows and adding to list
+        establecimientos.clear();
         if (cursor.moveToFirst()) {
             do {
                 Establecimiento establecimiento = new Establecimiento();

@@ -94,7 +94,7 @@
         android:layout_marginLeft="108dp"
         android:layout_marginRight="108dp"
         android:layout_marginStart="108dp"
-        android:text="Calificar"
+        android:text="Calificar (+5)"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

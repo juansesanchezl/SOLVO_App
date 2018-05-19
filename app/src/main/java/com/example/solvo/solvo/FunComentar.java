@@ -59,7 +59,7 @@ public class FunComentar extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(!(tvCom.getText().toString().trim().equals(""))){
-                    notifyUser("GRACIAS SU COMENTARIO SE ESTA AÑADIENDO...");
+                    notifyUser("GRACIAS, SU COMENTARIO SE ESTA AÑADIENDO...");
                     String Coment = tvCom.getText().toString().trim();
                     String user = AWSLoginModel.getSavedUserName(FunComentar.this);
                     ConsultasDB.obtenCantidadComent(contextFunCom,Coment,user.trim(),idCom);

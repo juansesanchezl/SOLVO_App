@@ -62,7 +62,7 @@ public class FunCalificar extends AppCompatActivity {
                 TextView tvCalif = (TextView) findViewById(R.id.CalifNum);
                 String califUser = "" + califUsuario;
                 tvCalif.setText(califUser);
-                notifyUser("Calificación: "+califUser);
+                //notifyUser("Calificación: "+califUser);
                 String usuarioActual = AWSLoginModel.getSavedUserName(FunCalificar.this);
                 if(!finalidest.isEmpty()) {
                     ConsultasDB.obtenerCantidadCalif(context, califUser.trim(), usuarioActual.trim(), finalidest);
@@ -70,6 +70,7 @@ public class FunCalificar extends AppCompatActivity {
                     int puntosdespues = puntosantes + 5;
                     String puntosTotal = "" + puntosdespues;
                     ConsultasDB.actualizarPuntosSolvo(context, usuarioActual.trim(),puntosTotal);
+                    notifyUser("GRACIAS, POR SU CALIFICACIÓN DE "+califUser+", SE ESTA AÑADIENDO...");
                     FunCalificar.this.finish();
                 }
             }

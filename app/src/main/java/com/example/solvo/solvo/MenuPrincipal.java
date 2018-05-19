@@ -58,16 +58,24 @@ public class MenuPrincipal extends AppCompatActivity
         contextMenu = getApplicationContext();
         String who = AWSLoginModel.getSavedUserName(MenuPrincipal.this);
         ConsultasDB.obtenerConducSolvo(contextMenu,who);
+        estableList.clear();
         db = new DatabaseHelper(this);
-        estableList.addAll(db.getEstablecimientos());
-        if(estableList.size() == 0){
+        if(db.getEstablecimientos().size()>0){
+            estableList.addAll(db.getEstablecimientos());
+            //notifyUser(estableList.size()+"--ESTABLECIMIENTOS CARGADOS");
+            listaEstaLlena = true;
+        }else{
+            System.out.println("ENTROOOO A DATABASE HELPER");
+            ConsultasDB.obtenerEstabl(MenuPrincipal.this, db);
+        }
+        /*if(estableList.size() == 0){
             System.out.println("ENTROOOO A DATABASE HELPER");
             ConsultasDB.obtenerEstabl(MenuPrincipal.this, db);
             //estableList.addAll(db.getEstablecimientos());
         }else{
             notifyUser(estableList.size()+"--ESTABLECIMIENTOS CARGADOS");
             listaEstaLlena = true;
-        }
+        }*/
         ConsultasDB.obtenerComent(contextMenu);
         imprimirLista(estableList);
         int idcomen = listaComentarios.size() + 1 ;
