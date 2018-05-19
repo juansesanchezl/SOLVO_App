@@ -157,9 +157,10 @@ public class Alojamiento extends FragmentActivity implements
 
         List<Float> distancias = new ArrayList<>();
         List<Establecimiento> establ = new ArrayList<>();
+        int contEst = 0;
 
         if(MenuPrincipal.Alojamientos.size()>0) {
-
+            establ.clear();
             for(Establecimiento e: MenuPrincipal.Alojamientos){
                 if(calcularRadio(latitudeUser,longitudeUser,e.getLAT_EST(),e.getLONG_EST())) {
                     distancias.add(distanciaRadio(latitudeUser,longitudeUser,e.getLAT_EST(),e.getLONG_EST()));
@@ -170,6 +171,7 @@ public class Alojamiento extends FragmentActivity implements
             System.out.println("____________________________________________________");
             while(!distancias.isEmpty()) {
                 float maximum = Collections.max(distancias);
+                System.out.println("Entroooo______");
                 for (Establecimiento e : establ) {
                     float distan = distanciaRadio(latitudeUser, longitudeUser, e.getLAT_EST(), e.getLONG_EST());
                     if (distan == maximum) {
@@ -184,6 +186,8 @@ public class Alojamiento extends FragmentActivity implements
                         mMap.addMarker(markerOptions).showInfoWindow();
                         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
                         mMap.animateCamera(CameraUpdateFactory.zoomTo(10.8f));
+                        contEst++;
+
                         if(!distancias.isEmpty()){
                             maximum = Collections.max(distancias);
                         }
@@ -193,7 +197,7 @@ public class Alojamiento extends FragmentActivity implements
             }
             System.out.println("____________________________________________________");
 
-            Snackbar.make(view, Html.fromHtml("<font color=\"#FFBF00\">"+establ.size()+" ALOJAMIENTOS CERCANOS...</font>"), Snackbar.LENGTH_LONG)
+            Snackbar.make(view, Html.fromHtml("<font color=\"#FFBF00\">"+contEst+" ALOJAMIENTOS CERCANOS...</font>"), Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
         }else{
             notifyUser("No hay Alojamientos Disponibles");
