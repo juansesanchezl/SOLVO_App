@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style name="AppTheme.WhiteAccent">
+    <item name="colorAccent">@color/white</item> <!-- Whatever color you want-->
+</style>

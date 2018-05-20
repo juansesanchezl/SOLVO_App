@@ -2,12 +2,15 @@ package com.example.solvo.solvo;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -35,6 +38,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener, AW
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         contexta = getApplicationContext();
+
+
         this.deleteDatabase("solvo_db");
         ProgressBar progressBar = findViewById(R.id.progressBar2);
         progressBar.setVisibility(View.GONE);
@@ -45,6 +50,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener, AW
             }else{
                 if((extras.getString("PB")).equals("N")){
                     progressBar.setVisibility(View.GONE);
+                    progressBar.getIndeterminateDrawable().setColorFilter(Color.rgb(255,165,0), PorterDuff.Mode.SRC_IN);
                 }else if((extras.getString("PB")).equals("Y")){
                     progressBar.setVisibility(View.VISIBLE);
                 }

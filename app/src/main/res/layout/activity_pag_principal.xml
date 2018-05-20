@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.solvo.solvo.PagPrincipal">
+
+    tools:context="com.example.solvo.solvo.PagPrincipal"
+    android:background="@color/colorPrimary">
 
     <ImageView
         android:id="@+id/Userimage"
@@ -26,10 +28,10 @@
         android:layout_marginEnd="75dp"
         android:layout_marginStart="75dp"
         android:layout_marginTop="30dp"
-        android:fontFamily="sans-serif-condensed"
+        android:fontFamily="@font/paytoneone_regular"
         android:text="BIENVENIDO"
         android:textAlignment="center"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/cardview_light_background"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/progressBar"
@@ -47,10 +49,10 @@
         android:layout_marginStart="136dp"
         android:layout_marginTop="35dp"
         android:visibility="visible"
-
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
 
 </android.support.constraint.ConstraintLayout>

@@ -632,7 +632,7 @@ public class ConsultasDB {
                         }
                         //MenuPrincipal.estableList.addAll(db.getEstablecimientos());
                         //List<Establecimiento> establecimientos = db.getEstablecimientos();
-                        notifyUser("LLEGARON-"+ MenuPrincipal.estableList.size()+"-ESTBL");
+                        //notifyUser("LLEGARON-"+ MenuPrincipal.estableList.size()+"-ESTBL");
                         MenuPrincipal.listaEstaLlena = true;
                         MenuPrincipal.imprimirLista(MenuPrincipal.estableList);
 
