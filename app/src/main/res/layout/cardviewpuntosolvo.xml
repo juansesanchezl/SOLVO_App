@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#FFFF"
+        >
+
+        <ImageView
+            android:id="@+id/imgPuntos"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="11dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/ic_launcher_background"
+            android:scaleType="centerCrop"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/headingText"
+            android:layout_width="273dp"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/imgPuntos"
+            android:paddingLeft="16sp"
+            android:paddingRight="16dp"
+            android:text="Title"
+            android:textColor="#000"
+            android:textSize="18sp"
+            tools:ignore="RtlHardcoded" />
+
+        <TextView
+            android:id="@+id/subHeaderText"
+            style="@style/Base.TextAppearance.AppCompat.Subhead"
+            android:layout_width="273dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/headingText"
+            android:layout_toRightOf="@+id/imgPuntos"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:text="SubTiltle"
+            android:textColor="#000"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/subHeadingText"
+            android:layout_width="278dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/subHeaderText"
+            android:layout_toRightOf="@+id/imgPuntos"
+            android:gravity="left"
+            android:lines="5"
+            android:maxLines="5"
+            android:paddingBottom="16dp"
+            android:paddingLeft="16dp"
+            android:paddingTop="16dp"
+            android:text="stories_detailstories_detailstories_detailstories_detailstories_detailstories_detailstories_detailstories_detailstories_detailstories_detailstories_detailstories_detailstories_detailstories_detailstories_detailstories_detailstories_detailstories_detailstories_detailstories_detailstories_detailstories_detailstories_detailstories_detailstories_detailstories_detailstories_detailstories_detailstories_detailstories_detail"
+            android:textColor="#737078"
+            android:textSize="14sp" />
+
+        <Button
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:id="@+id/getDealBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/subHeadingText"
+            android:textColor="#FFFFFF"
+            android:background="#ffa500"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:text="Button"/>
+
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

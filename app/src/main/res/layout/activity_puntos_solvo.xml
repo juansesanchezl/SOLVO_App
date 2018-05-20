@@ -25,5 +25,258 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="415dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView12">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FFFF"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imgPuntos"
+                        android:layout_width="72dp"
+                        android:layout_height="72dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="11dp"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/ic_local_dining_black_24dp"
+                        android:scaleType="centerCrop"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:id="@+id/headingText"
+                        android:layout_width="273dp"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/imgPuntos"
+                        android:paddingLeft="16sp"
+                        android:paddingRight="16dp"
+                        android:text="PROMOCION "
+                        android:textColor="#000"
+                        android:textSize="18sp"
+                        tools:ignore="RtlHardcoded" />
+
+                    <TextView
+                        android:id="@+id/subHeaderText"
+                        style="@style/Base.TextAppearance.AppCompat.Subhead"
+                        android:layout_width="273dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/headingText"
+                        android:layout_toRightOf="@+id/imgPuntos"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
+                        android:text="1/2 POLLO ASADO"
+                        android:textColor="#000"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/subHeadingText"
+                        android:layout_width="278dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/subHeaderText"
+                        android:layout_toRightOf="@+id/imgPuntos"
+                        android:gravity="left"
+                        android:lines="5"
+                        android:maxLines="5"
+                        android:paddingBottom="16dp"
+                        android:paddingLeft="16dp"
+                        android:paddingTop="16dp"
+                        android:text="Puntos(+80): para obtener esta promoción debes tener la cantidad indicada. (Click para más información)"
+                        android:textColor="#737078"
+                        android:textSize="14sp" />
+
+                    <Button
+                        android:id="@+id/btnRest"
+                        style="@style/Base.Widget.AppCompat.Button.Borderless"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/subHeadingText"
+                        android:background="#ffa500"
+                        android:text="RESTAURANTE"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FFFF"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imgParking"
+                        android:layout_width="72dp"
+                        android:layout_height="72dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="11dp"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/ic_local_parking_black_24dp"
+                        android:scaleType="centerCrop"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:id="@+id/tituloParking"
+                        android:layout_width="273dp"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/imgParking"
+                        android:paddingLeft="16sp"
+                        android:paddingRight="16dp"
+                        android:text="PROMOCION "
+                        android:textColor="#000"
+                        android:textSize="18sp"
+                        tools:ignore="RtlHardcoded" />
+
+                    <TextView
+                        android:id="@+id/subtituloParking"
+                        style="@style/Base.TextAppearance.AppCompat.Subhead"
+                        android:layout_width="273dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tituloParking"
+                        android:layout_toRightOf="@+id/imgParking"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
+                        android:text="5 HRS GRATIS DE PARKING"
+                        android:textColor="#000"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/textoInfoParking"
+                        android:layout_width="278dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/subtituloParking"
+                        android:layout_toRightOf="@+id/imgParking"
+                        android:gravity="left"
+                        android:lines="5"
+                        android:maxLines="5"
+                        android:paddingBottom="16dp"
+                        android:paddingLeft="16dp"
+                        android:paddingTop="16dp"
+                        android:text="Puntos(+80): para obtener esta promoción debes tener la cantidad indicada. (Click para más información)"
+                        android:textColor="#737078"
+                        android:textSize="14sp" />
+
+                    <Button
+                        android:id="@+id/btnPark"
+                        style="@style/Base.Widget.AppCompat.Button.Borderless"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/textoInfoParking"
+                        android:background="#ffa500"
+                        android:text="PARQUEADERO"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+            <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FFFF"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imgEst"
+                        android:layout_width="72dp"
+                        android:layout_height="72dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="11dp"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/ic_local_gas_station_black_24dp"
+                        android:scaleType="centerCrop"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:id="@+id/tituloEst"
+                        android:layout_width="273dp"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/imgEst"
+                        android:paddingLeft="16sp"
+                        android:paddingRight="16dp"
+                        android:text="PROMOCION "
+                        android:textColor="#000"
+                        android:textSize="18sp"
+                        tools:ignore="RtlHardcoded" />
+
+                    <TextView
+                        android:id="@+id/subTituloEst"
+                        style="@style/Base.TextAppearance.AppCompat.Subhead"
+                        android:layout_width="273dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tituloEst"
+                        android:layout_toRightOf="@+id/imgEst"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
+                        android:text="40% DE DESCUENTO POR TANQUEAR"
+                        android:textColor="#000"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/txtEst"
+                        android:layout_width="278dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/subTituloEst"
+                        android:layout_toRightOf="@+id/imgEst"
+                        android:gravity="left"
+                        android:lines="5"
+                        android:maxLines="5"
+                        android:paddingBottom="16dp"
+                        android:paddingLeft="16dp"
+                        android:paddingTop="16dp"
+                        android:text="Puntos(+80): para obtener esta promoción debes tener la cantidad indicada. (Click para más información)"
+                        android:textColor="#737078"
+                        android:textSize="14sp" />
+
+                    <Button
+                        android:id="@+id/btnEst"
+                        style="@style/Base.Widget.AppCompat.Button.Borderless"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/txtEst"
+                        android:background="#ffa500"
+                        android:text="ESTACIÓN DE SERVICIO"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+    </ScrollView>
+
+
+
 
 </android.support.constraint.ConstraintLayout>

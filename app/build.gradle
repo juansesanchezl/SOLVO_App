@@ -56,4 +56,7 @@ dependencies {
     implementation files('libs/activation.jar')
     implementation files('libs/additionnal.jar')
     implementation files('libs/mail.jar')
+    implementation 'com.android.support:cardview-v7:26.1.0'
+
+
 }

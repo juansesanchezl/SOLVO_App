@@ -1,6 +1,7 @@
 package com.example.solvo.solvo;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -14,8 +15,10 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.text.Html;
 import android.view.View;
+import android.view.Window;
 import android.widget.Toast;
 
 import com.SQLib.ConsultasDB;
@@ -69,6 +72,7 @@ public class Alojamiento extends FragmentActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alojamiento);
         contexta = getApplicationContext();
+
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             checkLocationPermission();
         }
@@ -82,7 +86,13 @@ public class Alojamiento extends FragmentActivity implements
             public void onClick(View view) {
                 /*Snackbar.make(view, Html.fromHtml("<font color=\"#FFBF00\">CARGANDO ALOJAMIENTOS...</font>"), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-                visualizarAlojamientos();*/
+                visualizarAlojamientos();
+                String la = ""+latitudeUser;
+                if(la.equals("0.0")){
+                    showDialog();
+                }else {
+                    exponerAlojamientos(view);
+                }*/
                 exponerAlojamientos(view);
             }
         });
@@ -90,6 +100,14 @@ public class Alojamiento extends FragmentActivity implements
 
     public static Context getContext(){
         return contexta;
+    }
+
+    public void showDialog(){
+        Dialog dialog = new Dialog(Alojamiento.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.alerta_posicion_design);
+        //dialog.setTitle("ALERTA");
+        dialog.show();
     }
 
     @Override
@@ -134,11 +152,13 @@ public class Alojamiento extends FragmentActivity implements
             @Override
             public void onMyLocationChange(Location location) {
                 if(iterador == 0) {
+
                     CameraUpdate center = CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude()));
                     CameraUpdate zoom = CameraUpdateFactory.zoomTo(12);
                     mMap.moveCamera(center);
                     mMap.animateCamera(zoom);
                     iterador++;
+
                 }
             }
         });
@@ -209,6 +229,7 @@ public class Alojamiento extends FragmentActivity implements
         float[] Check_distance = new float[2];//variable to take distance from our location to center of crcle
 
         double circ_rad = MenuPrincipal.Kilometros_Radio*1000;
+        System.out.println("LATU:"+lati+"LNGU:"+lngi);
 
         Location.distanceBetween(lati, lngi, latf, lngf, Check_distance);
 

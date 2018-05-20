@@ -1,8 +1,12 @@
 package com.example.solvo.solvo;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,6 +35,7 @@ import com.SQLib.ConductorSolvo;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class MenuPrincipal extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -56,6 +62,9 @@ public class MenuPrincipal extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         contextMenu = getApplicationContext();
+        //showDialog();
+
+
         String who = AWSLoginModel.getSavedUserName(MenuPrincipal.this);
         ConsultasDB.obtenerConducSolvo(contextMenu,who);
         estableList.clear();
@@ -138,6 +147,13 @@ public class MenuPrincipal extends AppCompatActivity
 
     }
 
+    /*public void showDialog(){
+        Dialog dialog = new Dialog(MenuPrincipal.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.alerta_posicion_design);
+        //dialog.setTitle("ALERTA");
+        dialog.show();
+    }*/
 
     @Override
     public void onBackPressed() {
@@ -323,3 +339,5 @@ public class MenuPrincipal extends AppCompatActivity
     }
 
 }
+
+

@@ -1,6 +1,7 @@
 package com.example.solvo.solvo;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -16,6 +17,7 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.text.Html;
 import android.view.View;
+import android.view.Window;
 import android.widget.Toast;
 
 import com.SQLib.ConsultasDB;
@@ -83,6 +85,7 @@ public class Taller extends FragmentActivity implements
                 /*Snackbar.make(view, Html.fromHtml("<font color=\"#FFBF00\">CARGANDO TALLERES...</font>"), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
                 visualizarTalleres();*/
+
                 exponerTalleres(view);
             }
         });
@@ -90,6 +93,14 @@ public class Taller extends FragmentActivity implements
 
     public static Context getContext(){
         return contexta;
+    }
+
+    public void showDialog(){
+        Dialog dialog = new Dialog(Taller.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.alerta_posicion_design);
+        //dialog.setTitle("ALERTA");
+        dialog.show();
     }
 
     @Override
