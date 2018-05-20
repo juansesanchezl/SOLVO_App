@@ -26,16 +26,19 @@ import com.SQLib.Comentario;
 import com.SQLib.ConsultasDB;
 import com.SQLib.DatabaseHelper;
 import com.SQLib.Establecimiento;
+import com.amazonaws.AmazonServiceException;
 import com.amazonaws.mobile.auth.core.IdentityManager;
 import com.amazonaws.mobile.client.AWSMobileClient;
 import com.amazonaws.mobile.client.AWSStartupHandler;
 import com.amazonaws.mobile.client.AWSStartupResult;
+import com.dynamodb.ExceptionHandler;
 import com.solvo.awsandroid.AWSLoginModel;
 import com.SQLib.ConductorSolvo;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
+import org.apache.commons.io.FileUtils;
 
 public class MenuPrincipal extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -66,15 +69,17 @@ public class MenuPrincipal extends AppCompatActivity
 
 
         String who = AWSLoginModel.getSavedUserName(MenuPrincipal.this);
+        System.out.println("WHOO-->"+who);
         ConsultasDB.obtenerConducSolvo(contextMenu,who);
         estableList.clear();
         db = new DatabaseHelper(this);
         if(db.getEstablecimientos().size()>0){
-            estableList.addAll(db.getEstablecimientos());
+            //estableList.addAll(db.getEstablecimientos());
             //notifyUser(estableList.size()+"--ESTABLECIMIENTOS CARGADOS");
             listaEstaLlena = true;
         }else{
             System.out.println("ENTROOOO A DATABASE HELPER");
+
             ConsultasDB.obtenerEstabl(MenuPrincipal.this, db);
         }
         /*if(estableList.size() == 0){
@@ -264,25 +269,59 @@ public class MenuPrincipal extends AppCompatActivity
 
     private void cerrarSesionAction(){
         System.out.println("VA A CERRAR SESIÓN");
+        estableList.clear();
+        //FileUtils.deleteQuietly(MenuPrincipal.this.getCacheDir());
+        try {
+            AWSMobileClient.getInstance().initialize(MenuPrincipal.this, new AWSStartupHandler() {
+                @Override
+                public void onComplete(AWSStartupResult awsStartupResult) {
+                    try {
+                        IdentityManager identityManager = IdentityManager.getDefaultIdentityManager();
+                        finish();
+                        identityManager.signOut();
+                        Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(MenuPrincipal.this));
 
-        AWSMobileClient.getInstance().initialize(MenuPrincipal.this, new AWSStartupHandler() {
-            @Override
-            public void onComplete(AWSStartupResult awsStartupResult) {
-                IdentityManager identityManager = IdentityManager.getDefaultIdentityManager();
-                try{
-                    MenuPrincipal.this.finish();
-                    identityManager.signOut();
+                    } catch (NullPointerException n) {
+                        System.out.println("EXP-Null: " + n.getStackTrace());
+                    }
+                }
+            }).execute();
+            String who = AWSLoginModel.getSavedUserName(MenuPrincipal.this);
+            cambiarEstado(who, "INACTIVO");
 
-                }catch (NullPointerException n){
-                    System.out.println("EXP-Null: "+n.getStackTrace());
+            MenuPrincipal.this.startActivity(new Intent(MenuPrincipal.this, PagPrincipal.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+
+        } catch (AmazonServiceException ase){
+            System.out.println("ASE ERROR--"+ase.toString());
+        } catch (Exception e){
+            System.out.println("Error---"+e);
+        }
+
+
+    }
+
+    public static void deleteCache(Context context) {
+        try {
+            File dir = context.getCacheDir();
+            deleteDir(dir);
+        } catch (Exception e) {}
+    }
+
+    public static boolean deleteDir(File dir) {
+        if (dir != null && dir.isDirectory()) {
+            String[] children = dir.list();
+            for (int i = 0; i < children.length; i++) {
+                boolean success = deleteDir(new File(dir, children[i]));
+                if (!success) {
+                    return false;
                 }
             }
-        }).execute();
-        String who = AWSLoginModel.getSavedUserName(MenuPrincipal.this);
-        cambiarEstado(who,"INACTIVO");
-
-        MenuPrincipal.this.startActivity(new Intent(MenuPrincipal.this, PagPrincipal.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-
+            return dir.delete();
+        } else if(dir!= null && dir.isFile()) {
+            return dir.delete();
+        } else {
+            return false;
+        }
     }
 
     public void cambiarEstado(String user, String estado){
@@ -291,6 +330,12 @@ public class MenuPrincipal extends AppCompatActivity
     }
 
     public static void imprimirLista(List<Establecimiento> establecimientos){
+        Alojamientos.clear();
+        Restaurantes.clear();
+        Peajes.clear();
+        EstServicio.clear();
+        Parqueaderos.clear();
+        Talleres.clear();
 
         if(listaEstaLlena){
             //notifyUser("SE IMPRIMIO LA LISTA");

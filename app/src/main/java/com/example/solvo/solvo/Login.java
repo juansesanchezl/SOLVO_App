@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -21,6 +22,7 @@ import com.amazonaws.regions.Regions;
 import com.solvo.awsandroid.AWSLoginModel;
 import com.solvo.awsandroid.AWSRegistryHandler;
 
+import java.util.regex.Pattern;
 
 
 public class Login extends AppCompatActivity implements View.OnClickListener, AWSRegistryHandler {
@@ -33,6 +35,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener, AW
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         contexta = getApplicationContext();
+        this.deleteDatabase("solvo_db");
         ProgressBar progressBar = findViewById(R.id.progressBar2);
         progressBar.setVisibility(View.GONE);
         if(savedInstanceState == null){
@@ -60,6 +63,13 @@ public class Login extends AppCompatActivity implements View.OnClickListener, AW
 
     public static Context getContext(){
         return contexta;
+    }
+
+    @Override
+    public void onResume() {
+
+        super.onResume();
+        this.deleteDatabase("solvo_db");
     }
 
     @Override
@@ -105,7 +115,12 @@ public class Login extends AppCompatActivity implements View.OnClickListener, AW
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.loginButton:
-                loginAction();
+                EditText etUsuario = findViewById(R.id.loginUserOrEmail);
+                if(!validarEmail(etUsuario.getText().toString())) {
+                    loginAction();
+                }else{
+                    notifyUser("DEBES USAR TU USUARIO NO TU CORREO");
+                }
                 break;
             case R.id.registroButton:
                 registrarAction();
@@ -114,6 +129,15 @@ public class Login extends AppCompatActivity implements View.OnClickListener, AW
                 olvidarContraAction();
                 break;
         }
+    }
+
+    private void notifyUser(String message){
+        Toast.makeText(Login.this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    private boolean validarEmail(String email) {
+        Pattern pattern = Patterns.EMAIL_ADDRESS;
+        return pattern.matcher(email).matches();
     }
 
     private void loginAction() {

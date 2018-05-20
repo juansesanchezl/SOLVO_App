@@ -53,5 +53,12 @@ public class PagPrincipal extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+
+    }
+
 
 }

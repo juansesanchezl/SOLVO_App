@@ -39,7 +39,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Username/E-mail:" />
+                    android:text="Usuario:" />
 
                 <EditText
                     android:id="@+id/loginUserOrEmail"
@@ -56,7 +56,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Password:" />
+                    android:text="Contraseña:" />
 
                 <EditText
                     android:id="@+id/loginPassword"

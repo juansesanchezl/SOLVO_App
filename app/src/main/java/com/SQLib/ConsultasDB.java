@@ -600,9 +600,9 @@ public class ConsultasDB {
                         JSONArray jsonarray = new JSONArray(response);
                         System.out.println("TAMAÑO--->"+jsonarray.length());
                         MenuPrincipal.estableList.clear();
-                        SQLiteDatabase datab = db.getWritableDatabase();
+                        //SQLiteDatabase datab = db.getWritableDatabase();
                         //String borrarQuery = "DELETE  * FROM " + Establecimiento.TABLE_NAME;
-                        System.out.println("Lo Retorno--"+datab.delete(Establecimiento.TABLE_NAME,"1",null));
+                        //System.out.println("Lo Retorno--"+datab.delete(Establecimiento.TABLE_NAME,"1",null));
                         //List<Establecimiento> estableList = new ArrayList<>();
                         for(int i=0; i < jsonarray.length(); i++) {
                             JSONObject jsonobject = jsonarray.getJSONObject(i);
@@ -625,13 +625,14 @@ public class ConsultasDB {
                             System.out.println("["+(i+1)+"]------- "+idest+","+nombre_est+","+id_serv+","+dir_est
                                     +","+telefono_est+","+email_est+","+lat_est+","+long_est+","+niv_precio+","+calificacion);
                             System.out.println("<----------------------------->");
-                            db.insertEstablecimiento(idest,nombre_est,id_serv,dir_est,telefono_est,email_est,lat_est,long_est,niv_precio,calificacion);
-
+                            //db.insertEstablecimiento(idest,nombre_est,id_serv,dir_est,telefono_est,email_est,lat_est,long_est,niv_precio,calificacion);
+                            Establecimiento e = new Establecimiento(idest,nombre_est,id_serv,dir_est,telefono_est,email_est,lat_est,long_est,niv_precio,calificacion);
+                            MenuPrincipal.estableList.add(e);
 
                         }
-                        MenuPrincipal.estableList.addAll(db.getEstablecimientos());
+                        //MenuPrincipal.estableList.addAll(db.getEstablecimientos());
                         //List<Establecimiento> establecimientos = db.getEstablecimientos();
-                        //notifyUser("LLEGARON-"+ MenuPrincipal.estableList.size()+"-ESTBL");
+                        notifyUser("LLEGARON-"+ MenuPrincipal.estableList.size()+"-ESTBL");
                         MenuPrincipal.listaEstaLlena = true;
                         MenuPrincipal.imprimirLista(MenuPrincipal.estableList);
 
