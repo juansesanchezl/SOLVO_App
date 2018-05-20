@@ -159,8 +159,27 @@ public class MasInformacion extends AppCompatActivity {
                 }else{
                     tvCalif.setText("Calificación: No Disponible");
                 }
-                if(!icono.isEmpty()){
+                /*if(!icono.isEmpty()){
                     AsyncTask<String, Void, Bitmap> downLoadImageTask = new DownLoadImageTask(tvIcono).execute(icono);
+                }*/
+                //int id = getResources().getIdentifier("yourpackagename:drawable/" + , null, null);
+                if(tipo.equals("Restaurante")) {
+                    tvIcono.setImageDrawable(getResources().getDrawable(R.drawable.restaurante));
+                }
+                if(tipo.equals("Parqueadero")) {
+                    tvIcono.setImageDrawable(getResources().getDrawable(R.drawable.parqueadero));
+                }
+                if(tipo.equals("Alojamiento")) {
+                    tvIcono.setImageDrawable(getResources().getDrawable(R.drawable.alojamiento));
+                }
+                if(tipo.equals("EstServicio")) {
+                    tvIcono.setImageDrawable(getResources().getDrawable(R.drawable.estacionservicio));
+                }
+                if(tipo.equals("Peaje")) {
+                    tvIcono.setImageDrawable(getResources().getDrawable(R.drawable.peaje));
+                }
+                if(tipo.equals("Taller")) {
+                    tvIcono.setImageDrawable(getResources().getDrawable(R.drawable.taller));
                 }
 
             }

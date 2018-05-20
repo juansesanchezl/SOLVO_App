@@ -57,7 +57,7 @@
                         android:layout_alignParentTop="true"
                         android:layout_marginStart="11dp"
                         android:layout_marginTop="12dp"
-                        android:background="@drawable/ic_local_dining_black_24dp"
+                        android:background="@drawable/restaurante"
                         android:scaleType="centerCrop"
                         tools:ignore="ContentDescription" />
 
@@ -84,7 +84,8 @@
                         android:paddingRight="16dp"
                         android:text="1/2 POLLO ASADO"
                         android:textColor="#000"
-                        android:textSize="15sp" />
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/subHeadingText"
@@ -136,7 +137,7 @@
                         android:layout_alignParentTop="true"
                         android:layout_marginStart="11dp"
                         android:layout_marginTop="12dp"
-                        android:background="@drawable/ic_local_parking_black_24dp"
+                        android:background="@drawable/parqueadero"
                         android:scaleType="centerCrop"
                         tools:ignore="ContentDescription" />
 
@@ -163,7 +164,8 @@
                         android:paddingRight="16dp"
                         android:text="5 HRS GRATIS DE PARKING"
                         android:textColor="#000"
-                        android:textSize="15sp" />
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/textoInfoParking"
@@ -214,7 +216,7 @@
                         android:layout_alignParentTop="true"
                         android:layout_marginStart="11dp"
                         android:layout_marginTop="12dp"
-                        android:background="@drawable/ic_local_gas_station_black_24dp"
+                        android:background="@drawable/estacionservicio"
                         android:scaleType="centerCrop"
                         tools:ignore="ContentDescription" />
 
@@ -241,7 +243,8 @@
                         android:paddingRight="16dp"
                         android:text="40% DE DESCUENTO POR TANQUEAR"
                         android:textColor="#000"
-                        android:textSize="15sp" />
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/txtEst"
