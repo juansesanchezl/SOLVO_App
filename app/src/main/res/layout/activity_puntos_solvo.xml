@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".puntosSolvo">
+    tools:context=".puntosSolvo"
+    android:background="@android:color/white">
 
     <TextView
         android:id="@+id/textView12"
@@ -18,8 +19,8 @@
         android:gravity="center"
         android:text="PUNTOS SOLVO"
         android:textAllCaps="true"
-        android:textColor="@android:color/black"
-        android:textSize="24sp"
+        android:textColor="#FF0000"
+        android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,6 +29,10 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="415dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -118,6 +123,12 @@
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
 
+            <TextView
+                android:id="@+id/espacio1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="" />
+
             <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
@@ -197,6 +208,13 @@
 
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
+
+            <TextView
+                android:id="@+id/espacio2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="" />
+
             <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
@@ -274,8 +292,14 @@
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
+
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
+            <TextView
+                android:id="@+id/espacio3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="" />
         </LinearLayout>
     </ScrollView>
 

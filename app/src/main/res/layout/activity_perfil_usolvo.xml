@@ -18,8 +18,8 @@
         android:gravity="center"
         android:text="PERFIL USUARIO"
         android:textAllCaps="true"
-        android:textColor="@android:color/background_dark"
-        android:textSize="24sp"
+        android:textColor="#FF0000"
+        android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,7 +36,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/baseline_account_circle_black_18dp" />
+        app:srcCompat="@drawable/person_male" />
 
     <LinearLayout
         android:layout_width="269dp"
@@ -59,6 +59,7 @@
             android:layout_height="30dp"
             android:text="Nombre:"
             android:textSize="16sp"
+            android:textColor="@android:color/black"
             tools:layout_editor_absoluteX="91dp"
             tools:layout_editor_absoluteY="127dp" />
 
@@ -68,6 +69,7 @@
             android:layout_height="30dp"
             android:text="Usuario:"
             android:textSize="16sp"
+            android:textColor="@android:color/black"
             tools:layout_editor_absoluteX="92dp"
             tools:layout_editor_absoluteY="177dp" />
 
@@ -77,6 +79,7 @@
             android:layout_height="30dp"
             android:text="Número:"
             android:textSize="16sp"
+            android:textColor="@android:color/black"
             tools:layout_editor_absoluteX="92dp"
             tools:layout_editor_absoluteY="228dp" />
 
@@ -86,6 +89,7 @@
             android:layout_height="31dp"
             android:text="Fecha de Nacimiento:"
             android:textSize="16sp"
+            android:textColor="@android:color/black"
             tools:layout_editor_absoluteX="94dp"
             tools:layout_editor_absoluteY="281dp" />
 
@@ -94,6 +98,7 @@
             android:layout_width="match_parent"
             android:layout_height="32dp"
             android:text="Género:"
+            android:textColor="@android:color/black"
             android:textSize="16sp" />
 
         <TextView
@@ -101,6 +106,7 @@
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:text="Ciudad:"
+            android:textColor="@android:color/black"
             android:textSize="16sp" />
 
         <TextView
@@ -108,13 +114,15 @@
             android:layout_width="match_parent"
             android:layout_height="34dp"
             android:text="Correo:"
+            android:textColor="@android:color/black"
             android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tvPuntoSolvo"
             android:layout_width="match_parent"
             android:layout_height="31dp"
-            android:text="Puntos Solvo:" />
+            android:text="Puntos Solvo:"
+            android:textColor="@android:color/black"/>
 
     </LinearLayout>
 

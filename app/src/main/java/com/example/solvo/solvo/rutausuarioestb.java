@@ -59,18 +59,12 @@ public class rutausuarioestb extends FragmentActivity implements OnMapReadyCallb
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "BOTÓN COOL", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
         listPoints = new ArrayList<>();
         listPoints.clear();
         double lati, latf;
         double lngi, lngf;
+        final float distancia;
         if(savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
             if(extras == null){
@@ -78,6 +72,7 @@ public class rutausuarioestb extends FragmentActivity implements OnMapReadyCallb
                 latf = 0;
                 lngi = 0;
                 lngf = 0;
+                distancia = 0;
             }else{
                 lati = extras.getDouble("lati");
                 lngi = extras.getDouble("lngi");
@@ -88,6 +83,7 @@ public class rutausuarioestb extends FragmentActivity implements OnMapReadyCallb
                 lnggi = lngi;
                 lattf = latf;
                 lnggf = lngf;
+                distancia = distanciaRadio(lati, lngi, latf, lngf)/1000;
 
                 LatLng latLngi = new LatLng(lati,lngi);
                 LatLng latLngf = new LatLng(latf,lngf);
@@ -97,7 +93,24 @@ public class rutausuarioestb extends FragmentActivity implements OnMapReadyCallb
                 listPoints.add(latLngi);
                 listPoints.add(latLngf);
             }
+            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String msg = "Se encuentra a " + String.format ("%.2f", distancia)+" Kilometros.";
+                    Snackbar.make(view, msg, Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
+            });
         }
+
+    }
+
+    private float distanciaRadio(double lati,double lngi, double latf, double lngf){
+        float[] Check_distance = new float[2];//variable to take distance from our location to center of crcle
+        double circ_rad = MenuPrincipal.Kilometros_Radio*1000;
+        Location.distanceBetween(lati, lngi, latf, lngf, Check_distance);
+        return  Check_distance[0];
 
     }
 

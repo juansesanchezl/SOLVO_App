@@ -11,24 +11,30 @@
         android:layout_width="205dp"
         android:layout_height="31dp"
         android:layout_marginBottom="15dp"
-        android:layout_marginEnd="57dp"
-        android:layout_marginStart="58dp"
+        android:layout_marginEnd="75dp"
+        android:layout_marginLeft="104dp"
+        android:layout_marginRight="75dp"
+        android:layout_marginStart="104dp"
         android:layout_marginTop="16dp"
         android:text="MÁS INFORMACIÓN"
         android:textAlignment="center"
-        android:textColor="@color/common_google_signin_btn_text_dark_focused"
-        android:textSize="18sp"
+        android:textColor="#FF0000"
+        android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
         android:id="@+id/image_mrk"
-        android:layout_width="57dp"
-        android:layout_height="62dp"
-        android:layout_marginEnd="5dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="14dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="104dp"
         app:layout_constraintEnd_toStartOf="@+id/linearLayout2"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,14 +43,13 @@
 
     <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="242dp"
-        android:layout_height="189dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="60dp"
+        android:layout_width="252dp"
+        android:layout_height="199dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginRight="28dp"
+        android:layout_marginTop="72dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/image_mrk"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
@@ -55,6 +60,7 @@
             android:textAlignment="center"
             android:textColor="@android:color/black"
             android:textSize="18sp"
+            android:textStyle="bold|italic"
             tools:layout_editor_absoluteX="116dp"
             tools:layout_editor_absoluteY="72dp" />
 
@@ -63,6 +69,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="INFO MARCADOR"
+            android:textColor="@android:color/black"
             tools:layout_editor_absoluteX="156dp"
             tools:layout_editor_absoluteY="224dp" />
 
@@ -71,6 +78,7 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:text="DIRECCION"
+            android:textColor="@android:color/black"
             tools:layout_editor_absoluteX="116dp"
             tools:layout_editor_absoluteY="98dp" />
 
@@ -78,25 +86,29 @@
             android:id="@+id/tel_mrk"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TELEFONO" />
+            android:text="TELEFONO"
+            android:textColor="@android:color/black" />
 
         <TextView
             android:id="@+id/email_mrk"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="EMAIL" />
+            android:text="EMAIL"
+            android:textColor="@android:color/black" />
 
         <TextView
             android:id="@+id/precio_mrk"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="PRECIO" />
+            android:text="PRECIO"
+            android:textColor="@android:color/black" />
 
         <TextView
             android:id="@+id/calf_mrk"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="CALIFICACION" />
+            android:text="CALIFICACION"
+            android:textColor="@android:color/black" />
 
     </LinearLayout>
 
@@ -104,56 +116,85 @@
         android:id="@+id/ratingBar"
         android:layout_width="233dp"
         android:layout_height="51dp"
-        android:layout_marginBottom="208dp"
+        android:layout_marginBottom="188dp"
         android:layout_marginEnd="29dp"
         android:layout_marginStart="58dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="13dp"
         android:isIndicator="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.765"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-        app:layout_constraintVertical_bias="0.6" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
     <LinearLayout
-        android:layout_width="164dp"
-        android:layout_height="186dp"
-        android:layout_marginEnd="65dp"
-        android:layout_marginStart="91dp"
-        android:layout_marginTop="4dp"
+        android:layout_width="155dp"
+        android:layout_height="102dp"
+        android:layout_marginBottom="60dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="26dp"
         android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ratingBar">
-
-        <Button
-            android:id="@+id/btnRuta"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:text="MOSTRAR RUTA"
-            tools:layout_editor_absoluteX="126dp"
-            tools:layout_editor_absoluteY="306dp" />
 
         <Button
             android:id="@+id/btnNavegar"
             android:layout_width="match_parent"
             android:layout_height="45dp"
+            android:background="#ED1E1E"
             android:text="NAVEGAR"
+            android:textColor="#FFF"
+            android:textStyle="bold"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="306dp" />
+
+        <Button
+            android:id="@+id/btnRuta"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="5dp"
+            android:background="#ED621E"
+            android:text="MOSTRAR RUTA"
+            android:textColor="#FFF"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="126dp"
+            tools:layout_editor_absoluteY="306dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="164dp"
+        android:layout_height="103dp"
+        android:layout_marginBottom="59dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="26dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ratingBar">
 
         <Button
             android:id="@+id/btnComentarEst"
             android:layout_width="match_parent"
             android:layout_height="45dp"
+            android:background="#579FF9"
             android:text="COMENTAR"
+            android:textColor="#FFF"
+            android:textStyle="bold"
             tools:layout_editor_absoluteX="202dp"
             tools:layout_editor_absoluteY="306dp" />
 
         <Button
             android:id="@+id/btnCalificar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Calificar" />
+            android:layout_height="45dp"
+            android:layout_marginTop="5dp"
+            android:background="#2FB427"
+            android:text="Calificar"
+            android:textColor="#FFF"
+            android:textStyle="bold" />
+
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

@@ -6,6 +6,7 @@ import android.graphics.PorterDuff;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Window;
 import android.widget.ProgressBar;
 
 import com.amazonaws.mobile.auth.core.IdentityManager;
@@ -21,6 +22,7 @@ public class PagPrincipal extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pag_principal);
+
         ProgressBar pb = (ProgressBar) findViewById(R.id.progressBar);
         //Rojo cool Color.rgb(255,112,67) #FF7043
         pb.getIndeterminateDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
