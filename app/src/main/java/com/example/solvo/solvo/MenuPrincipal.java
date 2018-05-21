@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.CardView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -106,7 +107,7 @@ public class MenuPrincipal extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         /*BOTONES*/
-        Button btnRestaurante = (Button) findViewById(R.id.btnRestaurante);
+        /*Button btnRestaurante = (Button) findViewById(R.id.btnRestaurante);
         btnRestaurante.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -146,6 +147,48 @@ public class MenuPrincipal extends AppCompatActivity
         btnTaller.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MenuPrincipal.this.startActivity(new Intent(MenuPrincipal.this, Taller.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+            }
+        });*/
+        CardView cardRestaurante = (CardView) findViewById(R.id.cardRestaurante);
+        cardRestaurante.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MenuPrincipal.this.startActivity(new Intent(MenuPrincipal.this, Restaurante.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+            }
+        });
+        CardView cardParqueadero = (CardView) findViewById(R.id.cardParqueadero);
+        cardParqueadero.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MenuPrincipal.this.startActivity(new Intent(MenuPrincipal.this, Parqueadero.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+            }
+        });
+        CardView cardAlojamiento = (CardView) findViewById(R.id.cardAlojamiento);
+        cardAlojamiento.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MenuPrincipal.this.startActivity(new Intent(MenuPrincipal.this, Alojamiento.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+            }
+        });
+        CardView cardEstServicio = (CardView) findViewById(R.id.cardEstServicio);
+        cardEstServicio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MenuPrincipal.this.startActivity(new Intent(MenuPrincipal.this, EstServicio.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+            }
+        });
+        CardView cardPeaje = (CardView) findViewById(R.id.cardPeaje);
+        cardPeaje.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MenuPrincipal.this.startActivity(new Intent(MenuPrincipal.this, Peaje.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+            }
+        });
+        CardView cardTaller = (CardView) findViewById(R.id.cardTaller);
+        cardTaller.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 MenuPrincipal.this.startActivity(new Intent(MenuPrincipal.this, Taller.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
             }
         });

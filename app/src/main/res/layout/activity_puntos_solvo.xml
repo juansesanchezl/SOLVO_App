@@ -99,7 +99,7 @@
                         android:paddingBottom="16dp"
                         android:paddingLeft="16dp"
                         android:paddingTop="16dp"
-                        android:text="Puntos(+80): para obtener esta promoción debes tener la cantidad indicada. (Click para más información)"
+                        android:text="Puntos(+320): para obtener esta promoción debes tener la cantidad indicada. (Click para más información)"
                         android:textColor="#737078"
                         android:textSize="14sp" />
 
@@ -179,7 +179,7 @@
                         android:paddingBottom="16dp"
                         android:paddingLeft="16dp"
                         android:paddingTop="16dp"
-                        android:text="Puntos(+80): para obtener esta promoción debes tener la cantidad indicada. (Click para más información)"
+                        android:text="Puntos(+450): para obtener esta promoción debes tener la cantidad indicada. (Click para más información)"
                         android:textColor="#737078"
                         android:textSize="14sp" />
 
@@ -258,7 +258,7 @@
                         android:paddingBottom="16dp"
                         android:paddingLeft="16dp"
                         android:paddingTop="16dp"
-                        android:text="Puntos(+80): para obtener esta promoción debes tener la cantidad indicada. (Click para más información)"
+                        android:text="Puntos(+680): para obtener esta promoción debes tener la cantidad indicada. (Click para más información)"
                         android:textColor="#737078"
                         android:textSize="14sp" />
 
